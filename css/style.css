@@ -1,0 +1,129 @@
+body
+{
+    background-image: url("../images/dark.jpg");
+    color: #f2dede;
+    /*font-family: 'Trocchi', serif;*/
+}
+
+.container
+{
+    width: 1000px;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+h1
+{
+    font-family: 'Trocchi', serif;
+    font-size: 45px;
+    font-weight: normal;
+    line-height: 48px;
+}
+
+.forms, #username, #password, #id
+{
+    width: 30%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: #0f192a;
+}
+
+.button, button
+{
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 30%;
+    border-radius: 4px;
+}
+
+.links
+{
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 30%;
+    border-radius: 4px;
+}
+
+/*.file*/
+/*{*/
+    /*width: 300px;*/
+    /*margin: 0 auto;*/
+    /*padding: 12px 20px;*/
+    /*border: 1px solid #ccc;*/
+    /*border-radius: 4px;*/
+    /*color: #ccc;*/
+/*}*/
+
+.g-recaptcha
+{
+    width: 300px;
+    margin: 0 auto;
+}
+
+.user
+{
+    float: right;
+    margin-top: -15px;
+}
+
+/*.img-thumbnail1*/
+/*{*/
+    /*display: inline-block;*/
+    /*padding: 5px;*/
+/*}*/
+
+footer.footer
+{
+    font-size: 20px;
+    width: 100%;
+    padding: 10px 0;
+    background-color: teal;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/*.commentText {*/
+    /*background: rgba(255, 255, 255, 0.60);*/
+    /*color: #000;*/
+
+    /*height: auto;*/
+    /*border: 2px #1883d6 solid;*/
+    /*resize: vertical;*/
+/*}*/
+
+/*.commentText:focus {*/
+    /*border-color: #00579a;*/
+    /*background: #fff;*/
+/*}*/
+
+/*.toggle-comment-form .toggle {*/
+    /*font-weight: bold;*/
+    /*cursor: pointer;*/
+/*}*/
+
+/*.toggle-comment-form .commentText,*/
+/*.toggle-comment-form button {*/
+    /*display: none;*/
+/*}*/
+
+/*.toggle-comment-form.s-expanded .commentText,*/
+/*.toggle-comment-form.s-expanded button {*/
+    /*display: block;*/
+    /*width: 30%;*/
+    /*margin: 0 auto;*/
+/*}*/
+
+/*.group-list*/
+/*{*/
+    /*font-size: 22px;*/
+/*}*/

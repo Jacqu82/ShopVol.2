@@ -101,25 +101,9 @@ class User
      */
     public function setHash($hash)
     {
-        $this->hash = $hash;
+        $this->password1 = $hash;
         return $this;
     }
-
-//    /**
-//     * @return string
-//     */
-//    public function getPassword2()
-//    {
-//        return $this->password2;
-//    }
-//
-//    /**
-//     * @param string $password2
-//     */
-//    public function setPassword2($password2)
-//    {
-//        $this->password2 = $password2;
-//    }
 
     /**
      * @return string
