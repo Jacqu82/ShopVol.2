@@ -29,8 +29,8 @@ include 'header.php';
     <h3>Witaj <?php echo $admin->getLogin(). "!"; ?></h3>
     <h3>Panel Administracyjny</h3>
 
-<!--    <a href="addNationalTeam.php" class="btn btn-success links">Dodaj reprezentacje do bazy</a>-->
-<!--    <a href="addNationalTeamImage.php" class="btn btn-info links">Dodaj zdjęcia reprezentacji</a>-->
+    <a href="addCategory.php" class="btn btn-success links">Dodaj kategorię przedmiotów</a>
+    <a href="editOrDeleteCategory.php" class="btn btn-warning links">Edytuj lub usuń kategorię</a>
 <!--    <a href="editNationalTeamImages.php" class="btn btn-success links">Edytuj zdjęcia reprezentacji</a>-->
 <!--    <a href="managePosts.php" class="btn btn-primary links">Zarządzaj postami</a>-->
 <!--    <a href="manageComments.php" class="btn btn-info links">Zarządzaj komentarzami</a>-->
