@@ -22,15 +22,13 @@ include '../widget/head.php';
     <hr/>
     <form method="POST" action="register.php">
         <div>
-            <div>
-                <input type="text" name="username" class="forms" placeholder="Login"
-                       value="<?php
-                       if (isset($_SESSION['fr_username'])) {
-                           echo $_SESSION['fr_username'];
-                           unset($_SESSION['fr_username']);
-                       }
-                       ?>"/>
-            </div>
+            <input type="text" name="username" class="forms" placeholder="Login"
+                   value="<?php
+                   if (isset($_SESSION['fr_username'])) {
+                       echo $_SESSION['fr_username'];
+                       unset($_SESSION['fr_username']);
+                   }
+                   ?>"/>
         </div>
         <?php
         if (isset($_SESSION['e_username'])) {
@@ -41,15 +39,13 @@ include '../widget/head.php';
         }
         ?>
         <div>
-            <div>
-                <input type="email" name="email" class="forms" placeholder="E-mail"
-                       value="<?php
-                       if (isset($_SESSION['fr_email'])) {
-                           echo $_SESSION['fr_email'];
-                           unset($_SESSION['fr_email']);
-                       }
-                       ?>"/>
-            </div>
+            <input type="email" name="email" class="forms" placeholder="E-mail"
+                   value="<?php
+                   if (isset($_SESSION['fr_email'])) {
+                       echo $_SESSION['fr_email'];
+                       unset($_SESSION['fr_email']);
+                   }
+                   ?>"/>
         </div>
         <?php
         if (isset($_SESSION['e_email'])) {
@@ -60,15 +56,13 @@ include '../widget/head.php';
         }
         ?>
         <div>
-            <div>
-                <input type="password" name="password1" class="forms" placeholder="Hasło"
-                       value="<?php
-                       if (isset($_SESSION['fr_password1'])) {
-                           echo $_SESSION['fr_password1'];
-                           unset($_SESSION['fr_password1']);
-                       }
-                       ?>"/>
-            </div>
+            <input type="password" name="password1" class="forms" placeholder="Hasło"
+                   value="<?php
+                   if (isset($_SESSION['fr_password1'])) {
+                       echo $_SESSION['fr_password1'];
+                       unset($_SESSION['fr_password1']);
+                   }
+                   ?>"/>
         </div>
         <?php
         if (isset($_SESSION['e_password'])) {
@@ -79,15 +73,25 @@ include '../widget/head.php';
         }
         ?>
         <div>
-            <div>
-                <input type="password" name="password2" class="forms" placeholder="Powtórz hasło"
-                       value="<?php
-                       if (isset($_SESSION['fr_password2'])) {
-                           echo $_SESSION['fr_password2'];
-                           unset($_SESSION['fr_password2']);
-                       }
-                       ?>"/>
-            </div>
+            <input type="password" name="password2" class="forms" placeholder="Powtórz hasło"
+                   value="<?php
+                   if (isset($_SESSION['fr_password2'])) {
+                       echo $_SESSION['fr_password2'];
+                       unset($_SESSION['fr_password2']);
+                   }
+                   ?>"/>
+        </div>
+        <div>
+            <input type="text" name="city" class="forms" placeholder="Miasto"/>
+        </div>
+        <div>
+            <input type="text" name="postalCode" class="forms" placeholder="Kod pocztowy"/>
+        </div>
+        <div>
+            <input type="text" name="street" class="forms" placeholder="Ulica, Numer domu"/>
+        </div>
+        <div>
+            <input type="number" name="houseNr" class="forms" placeholder="Numer mieszkania"/>
         </div>
         <label>
             <input type="checkbox" name="terms" <?php

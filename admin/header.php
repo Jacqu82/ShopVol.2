@@ -1,6 +1,6 @@
 <?php
 
-$user = loggedUser($connection);
+$admin = loggedAdmin($connection);
 
 ?>
 <div class="container">
@@ -23,13 +23,13 @@ $user = loggedUser($connection);
 <!--                            <span class="badge">--><?php //echo $unread; ?><!--</span></a></li>-->
 <!--                    <li><a href="../web/searchUsers.php">Szukaj znajomych</a></li>-->
                     <li style="margin-top: 15px">Zalogowany jako:
-                        <a class="user" href="../web/userPanel.php">
+                        <a class="user" href="#">
                             <?php
-                            echo $user->getUsername();
+                            echo $admin->getLogin();
                             ?>
                         </a>
                     </li>
-                    <li><a href="../web/logout.php">
+                    <li><a href="logout.php">
                             <span class="glyphicon glyphicon-log-out"></span> Wyloguj
                         </a>
                     </li>

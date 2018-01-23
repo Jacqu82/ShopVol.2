@@ -9,17 +9,23 @@ class UserRepository
         $username = $user->getUsername();
         $email = $user->getEmail();
         $password = $user->getPassword1();
-        $role = $user->getRole();
+        $city = $user->getCity();
+        $postalCode = $user->getPostalCode();
+        $street = $user->getStreet();
+        $houseNr = $user->getHouseNr();
 
         if ($id == -1) {
-            $sql = "INSERT INTO users (username, email, password, role)
-                    VALUES (:username, :email, :password, :role)";
+            $sql = "INSERT INTO users (username, email, password, city, postal_code, street, house_nr)
+                    VALUES (:username, :email, :password, :city, :postal_code, :street, :house_nr)";
 
             $result = $connection->prepare($sql);
             $result->bindParam('username', $username, PDO::PARAM_STR);
             $result->bindParam('email', $email, PDO::PARAM_STR);
             $result->bindParam('password', $password, PDO::PARAM_STR);
-            $result->bindParam('role', $role, PDO::PARAM_STR);
+            $result->bindParam('city', $city, PDO::PARAM_STR);
+            $result->bindParam('postal_code', $postalCode, PDO::PARAM_INT);
+            $result->bindParam('street', $street, PDO::PARAM_STR);
+            $result->bindParam('house_nr', $houseNr, PDO::PARAM_INT);
 
             $result->execute();
             return true;
@@ -90,7 +96,10 @@ class UserRepository
                 ->setUsername($row['username'])
                 ->setEmail($row['email'])
                 ->setHash($row['password'])
-                ->setRole($row['role'])
+                ->setCity($row['city'])
+                ->setPostalCode($row['postal_code'])
+                ->setStreet($row['street'])
+                ->setHouseNr($row['house_nr'])
                 ->setCreatedAt($row['created_at']);
 
             return $user;

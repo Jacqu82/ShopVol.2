@@ -8,8 +8,11 @@ class User
     private $email;
     private $password1;
     private $password2;
+    private $city;
+    private $postalCode;
+    private $street;
+    private $houseNr;
     private $createdAt;
-    private $role;
 
 
     public function __construct()
@@ -19,8 +22,11 @@ class User
         $this->email = '';
         $this->password1 = '';
         $this->password2 = '';
+        $this->city = '';
+        $this->postalCode = '';
+        $this->street = '';
+        $this->houseNr = '';
         $this->createdAt = '';
-        $this->role = 'user';
     }
 
     /**
@@ -108,6 +114,78 @@ class User
     /**
      * @return string
      */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param string $city
+     * @return $this
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPostalCode()
+    {
+        return $this->postalCode;
+    }
+
+    /**
+     * @param string $postalCode
+     * @return $this
+     */
+    public function setPostalCode($postalCode)
+    {
+        $this->postalCode = $postalCode;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStreet()
+    {
+        return $this->street;
+    }
+
+    /**
+     * @param string $street
+     * @return $this
+     */
+    public function setStreet($street)
+    {
+        $this->street = $street;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHouseNr()
+    {
+        return $this->houseNr;
+    }
+
+    /**
+     * @param string $houseNr
+     * @return $this
+     */
+    public function setHouseNr($houseNr)
+    {
+        $this->houseNr = $houseNr;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
     public function getCreatedAt()
     {
         return $this->createdAt;
@@ -120,24 +198,6 @@ class User
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    /**
-     * @param string $role
-     * @return $this
-     */
-    public function setRole($role)
-    {
-        $this->role = $role;
         return $this;
     }
 }

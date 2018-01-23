@@ -7,7 +7,9 @@ require_once 'autoload.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['username']) && isset($_POST['email'])
-        && isset($_POST['password1']) && isset($_POST['password2'])) {
+        && isset($_POST['password1']) && isset($_POST['password2'])
+        && isset($_POST['city']) && isset($_POST['postalCode'])
+        && isset($_POST['street']) && isset($_POST['houseNr'])) {
         $is_ok = true;
         //check validate
 
@@ -15,6 +17,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
         $password1 = filter_input(INPUT_POST, 'password1', FILTER_SANITIZE_STRING);
         $password2 = filter_input(INPUT_POST, 'password2', FILTER_SANITIZE_STRING);
+        $city = filter_input(INPUT_POST, 'city', FILTER_SANITIZE_STRING);
+        $postalCode = filter_input(INPUT_POST, 'postalCode', FILTER_SANITIZE_STRING);
+        $street = filter_input(INPUT_POST, 'street', FILTER_SANITIZE_STRING);
+        $houseNr = filter_input(INPUT_POST, 'houseNr', FILTER_SANITIZE_NUMBER_INT);
 
         //check username length
         if ((strlen($username) < 3) || (strlen($username) > 15)) {
@@ -98,7 +104,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $user
                 ->setUsername($username)
                 ->setEmail($email)
-                ->setPassword1($password1);
+                ->setPassword1($password1)
+                ->setCity($city)
+                ->setPostalCode($postalCode)
+                ->setStreet($street)
+                ->setHouseNr($houseNr);
             UserRepository::saveToDB($connection, $user);
 
             $_SESSION['register_success'] = true;

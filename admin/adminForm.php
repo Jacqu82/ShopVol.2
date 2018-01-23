@@ -13,11 +13,13 @@ include '../widget/head.php';
 ?>
 <body>
 <div class="container text-center">
-    <h1>Zaloguj się na swoje konto</h1>
-    <form method="POST" action="login.php">
+    <h1>Zaloguj się jako Administrator</h1>
+    <hr/>
+    <form method="POST" action="adminLogin.php">
         <div>
-            <input type="text" name="username" class="forms" placeholder="Login"/>
+            <input type="text" name="login" class="forms" placeholder="Login"/>
         </div>
+
         <div>
             <input type="password" name="password" class="forms" placeholder="Hasło"/>
         </div>
@@ -34,11 +36,7 @@ include '../widget/head.php';
         ?>
     </form>
     <hr/>
-    <div class="row">
-        <h3>Nie masz konta?</h3>
-        <h4><a href="registerForm.php" class="btn btn-info links">Zarejestruj się</a></h4>
-    </div>
-    <a href="index.php" class="btn btn-default links">Powrót</a>
+    <a href="../web/index.php" class="btn btn-default links">Powrót</a>
 </div>
 <?php
 include '../widget/footer.php';
