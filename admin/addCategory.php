@@ -1,4 +1,5 @@
 <?php
+
 require_once '../src/lib.php';
 require_once '../connection.php';
 session_start();
@@ -6,10 +7,8 @@ if (!isset($_SESSION['admin'])) {
     header('Location: ../web/index.php');
     exit();
 }
-//if for every page for logged user!!!
 
 $admin = loggedAdmin($connection);
-
 
 ?>
 
@@ -44,9 +43,9 @@ include 'header.php';
 
     ?>
 
-    <form method="POST" action="addCategory.php">
+    <form method="POST" action="#">
         <div>
-            <input type="text" name="name" class="forms" placeholder="Kategoria"/>
+            <input type="text" name="name" class="forms" placeholder="Nazwa"/>
         </div>
         <div>
             <button type="submit" class="btn btn-success button">Dodaj</button>

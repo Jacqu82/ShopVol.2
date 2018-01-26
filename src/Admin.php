@@ -10,6 +10,9 @@ class Admin
     private $createdAt;
 
 
+    /**
+     * Admin constructor.
+     */
     public function __construct()
     {
         $this->id = -1;

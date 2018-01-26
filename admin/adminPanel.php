@@ -21,7 +21,9 @@ include '../widget/head.php';
 ?>
 <body>
 <?php
+
 include 'header.php';
+
 ?>
 <div class="container text-center">
     <h1>All Or Nothing</h1>
@@ -30,16 +32,16 @@ include 'header.php';
     <h3>Panel Administracyjny</h3>
 
     <a href="addCategory.php" class="btn btn-success links">Dodaj kategorię przedmiotów</a>
-    <a href="editOrDeleteCategory.php" class="btn btn-warning links">Edytuj lub usuń kategorię</a>
-<!--    <a href="editNationalTeamImages.php" class="btn btn-success links">Edytuj zdjęcia reprezentacji</a>-->
-<!--    <a href="managePosts.php" class="btn btn-primary links">Zarządzaj postami</a>-->
+    <a href="categoryList.php" class="btn btn-warning links">Edytuj lub usuń kategorię</a>
+    <a href="addProduct.php" class="btn btn-success links">Dodaj nowy przedmiot do bazy</a>
+    <a href="addProductImage.php" class="btn btn-primary links">Dodaj zdjęcia do produktu</a>
 <!--    <a href="manageComments.php" class="btn btn-info links">Zarządzaj komentarzami</a>-->
 <!--    <a href="manageImages.php" class="btn btn-primary links">Zarządzaj zdjęciami użytkowników</a>-->
 <!--    <a href="addNationalTeamFlag.php" class="btn btn-warning links">Dodaj flagi reprezentacji</a>-->
 <!--    <a href="editNationalTeamFlag.php" class="btn btn-warning links">Edytuj flage reprezentacji</a>-->
 
     <hr/>
-    <a href="../web/mainPage.php" class="btn btn-default links">Strona główna</a>
+<!--    <a href="../web/mainPage.php" class="btn btn-default links">Strona główna</a>-->
     <hr/>
 </div>
 

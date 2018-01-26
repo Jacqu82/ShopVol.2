@@ -14,7 +14,9 @@ class User
     private $houseNr;
     private $createdAt;
 
-
+    /**
+     * User constructor.
+     */
     public function __construct()
     {
         $this->id = -1;

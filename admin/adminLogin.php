@@ -23,7 +23,7 @@ if (isset($_POST['login']) || isset($_POST['password'])) {
         unset($_SESSION['error']);
         header('Location: adminPanel.php');
     } else {
-        $_SESSION['error'] = 'Niepoprawny login lub hasło!!!!!';
+        $_SESSION['error'] = 'Niepoprawny login lub hasło!';
         header('Location: adminForm.php');
     }
 } else {

@@ -1,7 +1,3 @@
-<?php
-
-?>
-
 <!DOCTYPE html>
 <html lang="pl">
 <?php
@@ -16,12 +12,11 @@ include '../widget/head.php';
     <hr/>
 
     <h3><a href="loginForm.php" class="btn btn-primary links">Zaloguj się na swoje konto</a></h3>
-    <h3><a href="../admin/adminForm.php" class="btn btn-danger links">Zaloguj jako Administrator</a></h3>
+    <h3><a href="../admin/adminLoginForm.php" class="btn btn-danger links">Zaloguj jako Administrator</a></h3>
     <h3><a href="registerForm.php" class="btn btn-primary links">Utwórz nowe konto</a></h3>
     <div>
         <img src="../images/shop.jpg" width="500" height="300" />
     </div>
-
 
     <hr/>
 </div>

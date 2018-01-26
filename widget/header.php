@@ -12,8 +12,6 @@ $user = loggedUser($connection);
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
 <!--                    <li><a href="../web/groups.php">Grupy</a></li>-->
-<!--                    <li><a href="">Terminarz</a></li>-->
-<!--                    <li><a href="">Tabele</a></li>-->
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
 <!--                    --><?php

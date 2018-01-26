@@ -3,6 +3,11 @@
 
 class AdminRepository
 {
+    /**
+     * @param PDO $connection
+     * @param $login
+     * @return Admin|bool
+     */
     public static function loadAdminByLogin(PDO $connection, $login)
     {
         $sql = "SELECT * FROM admins WHERE login = :login";
@@ -27,7 +32,12 @@ class AdminRepository
         return false;
     }
 
-    public static function loadUserById(PDO $connection, $id)
+    /**
+     * @param PDO $connection
+     * @param $id
+     * @return Admin|bool
+     */
+    public static function loadAdminById(PDO $connection, $id)
     {
         $sql = "SELECT * FROM admins WHERE id = :id";
 
@@ -50,6 +60,4 @@ class AdminRepository
 
         return false;
     }
-
-
 }

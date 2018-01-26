@@ -3,6 +3,11 @@
 
 class UserRepository
 {
+    /**
+     * @param PDO $connection
+     * @param User $user
+     * @return bool
+     */
     public static function saveToDB(PDO $connection, User $user)
     {
         $id = $user->getId();
@@ -34,6 +39,11 @@ class UserRepository
         return false;
     }
 
+    /**
+     * @param PDO $connection
+     * @param $username
+     * @return PDOStatement
+     */
     public static function loadAllUsersByUsername(PDO $connection, $username)
     {
         $sql = "SELECT id FROM users WHERE username = :username";
@@ -45,6 +55,11 @@ class UserRepository
         return $result;
     }
 
+    /**
+     * @param PDO $connection
+     * @param $email
+     * @return PDOStatement
+     */
     public static function loadAllUsersByEmail(PDO $connection, $email)
     {
         $sql = "SELECT id FROM users WHERE email = :email";
@@ -56,6 +71,11 @@ class UserRepository
         return $result;
     }
 
+    /**
+     * @param PDO $connection
+     * @param $username
+     * @return bool|User
+     */
     public static function loadUserByUsername(PDO $connection, $username)
     {
         $sql = "SELECT * FROM users WHERE username = :username";
@@ -80,6 +100,11 @@ class UserRepository
         return false;
     }
 
+    /**
+     * @param PDO $connection
+     * @param $id
+     * @return bool|User
+     */
     public static function loadUserById(PDO $connection, $id)
     {
         $sql = "SELECT * FROM users WHERE id = :id";
@@ -107,6 +132,4 @@ class UserRepository
 
         return false;
     }
-
-
 }

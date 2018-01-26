@@ -1,20 +1,31 @@
 <?php
 
 
-class Category
+class Image
 {
     private $id;
-    private $name;
+    private $imagePath;
+    private $productId;
     private $createdAt;
 
     /**
-     * Category constructor.
+     * Image constructor.
      */
     public function __construct()
     {
         $this->id = -1;
-        $this->name = '';
-        $this->createdAt = '';
+        $this->imagePath = '';
+        $this->productId = '';
+    }
+
+    /**
+     * @param $id
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
     }
 
     /**
@@ -26,31 +37,39 @@ class Category
     }
 
     /**
-     * @param int $id
+     * @param $imagePath
      * @return $this
      */
-    public function setId($id)
+    public function setImagePath($imagePath)
     {
-        $this->id = $id;
+        $this->imagePath = $imagePath;
         return $this;
     }
 
     /**
      * @return string
      */
-    public function getName()
+    public function getImagePath()
     {
-        return $this->name;
+        return $this->imagePath;
     }
 
     /**
-     * @param string $name
+     * @param $productId
      * @return $this
      */
-    public function setName($name)
+    public function setProductId($productId)
     {
-        $this->name = $name;
+        $this->productId = $productId;
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProductId()
+    {
+        return $this->productId;
     }
 
     /**
