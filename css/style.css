@@ -19,7 +19,7 @@ h1
     line-height: 48px;
 }
 
-.forms, #username, #password, #id
+.forms
 {
     width: 30%;
     padding: 12px 20px;

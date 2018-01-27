@@ -96,6 +96,25 @@ class CategoryRepository
         return false;
     }
 
+    public static function loadAllCategoriesById(PDO $connection, $id)
+    {
+        $sql = "SELECT * FROM categories WHERE id = :id";
+        $result = $connection->prepare($sql);
+        if (!$result) {
+            die("Query Error!" . $connection->errorInfo());
+        }
+
+        $result->bindParam('id', $id);
+        $result->execute();
+        if ($result->rowCount() > 0) {
+            while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                return $row;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * @param PDO $connection
      * @param Category $category
