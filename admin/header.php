@@ -7,7 +7,7 @@ $admin = loggedAdmin($connection);
     <div class="navbar-header">
         <div class="container text-center">
             <div class="navbar-header">
-                <a class="navbar-brand" href="../web/mainPage.php">Strona główna</a>
+                <a class="navbar-brand" href="../admin/adminPanel.php">Strona główna</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">

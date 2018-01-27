@@ -218,6 +218,19 @@ class ProductRepository
         return $result;
     }
 
+    public static function loadProductDetailsById(PDO $connection, $id)
+    {
+        $sql = "SELECT p.id, p.name, p.price, p.description, p.availability, i.image_path FROM products p
+                LEFT JOIN images i ON i.product_id = p.id
+                WHERE p.id = :id";
+
+        $result = $connection->prepare($sql);
+        $result->bindParam('id', $id);
+        $result->execute();
+
+        return $result;
+    }
+
     /**
      * @param PDO $connection
      * @param Product $product

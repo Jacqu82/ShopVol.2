@@ -40,7 +40,13 @@ include '../widget/header.php';
         $products = ProductRepository::loadAllProductsByCategoryId($connection, $category['id']);
         foreach ($products as $product) {
 
-            echo '<h3>' . $product['name'] . '</h3>';
+            $id = $product['id'];
+            $name = $product['name'];
+
+            echo "<h3><a href='productPage.php?id=$id'
+                class='btn btn-success links'>$name</a></h3>";
+
+            //echo '<h3>' . $product['name'] . '</h3>';
             $price = number_format($product['price'], 2);
             echo '<h5>Cena: ' . $price . ' zł</h5>';
             ?>

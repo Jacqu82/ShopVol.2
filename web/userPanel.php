@@ -33,17 +33,14 @@ include '../widget/header.php';
     <h3>Twój adres E-mail: <?php echo $user->getEmail(); ?></h3>
     <h3>Adres do wysyłki:</h3>
     <h3><?php echo $user->getPostalCode() . ', ' . $user->getCity(); ?></h3>
-    <h3><?php echo $user->getStreet() . '/' . $user->getHouseNr(); ?></h3>
+    <h3><?php echo 'ul.'.$user->getStreet() . '/' . $user->getHouseNr(); ?></h3>
     <h3>Data utworzenia profilu: <?php echo $user->getCreatedAt(); ?></h3>
 
 
-
-<!--    <h3><a href="addImage.php" class="btn btn-success links">Dodaj zdjęcia</a></h3>-->
-<!--    <h3><a href="editUserProfile.php" class="btn btn-warning links">Edytuj profil</a></h3>-->
+    <h3><a href="editUserProfile.php" class="btn btn-warning links">Edytuj profil</a></h3>
 <!--    <h3><a href="editImages.php" class="btn btn-primary links">Edytuj zdjęcia</a></h3>-->
     <hr/>
     <h3><a href="mainPage.php" class="btn btn-default links">Powrót do Strony głównej</a></h3>
-
 </div>
 <?php
 include '../widget/footer.php';

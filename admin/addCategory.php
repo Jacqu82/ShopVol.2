@@ -30,14 +30,32 @@ include 'header.php';
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($_POST['name'])) {
             $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
+            $is_ok = true;
 
-            $category = new Category();
-            $category->setName($name);
-            CategoryRepository::saveToDB($connection, $category);
 
-            echo "<div class=\"flash-message alert alert-success alert-dismissible\" role=\"alert\">";
-            echo '<strong>Poprawnie dodano kategorię do bazy</strong>';
-            echo "</div>";
+            if (strlen($name) > 30) {
+                echo "<div class=\"text-center alert alert-danger\">";
+                echo "<strong>Nazwa kategorii może zawierać max 30 znaków!</strong>";
+                echo "</div>";
+                $is_ok = false;
+            }
+
+            if (empty($name)) {
+                echo "<div class=\"text-center alert alert-danger\">";
+                echo "<strong>Nazwa kategorii nie może być pusta!</strong>";
+                echo "</div>";
+                $is_ok = false;
+            }
+
+            if ($is_ok) {
+                $category = new Category();
+                $category->setName($name);
+                CategoryRepository::saveToDB($connection, $category);
+
+                echo "<div class=\"flash-message alert alert-success alert-dismissible\" role=\"alert\">";
+                echo '<strong>Poprawnie dodano kategorię do bazy</strong>';
+                echo "</div>";
+            }
         }
     }
 

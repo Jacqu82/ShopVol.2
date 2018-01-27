@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         //alphanumeric letters
         if (ctype_alnum($username) === false) {
             $is_ok = false;
-            $_SESSION['e_username'] = 'Nick może skaładać się tylko z liter i cyfr (bez polskich znaków)';
+            $_SESSION['e_username'] = 'Login może skaładać się tylko z liter i cyfr (bez polskich znaków)';
             header('Location: registerForm.php');
         }
 
@@ -56,7 +56,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (empty($email)) {
             $is_ok = false;
             $_SESSION['e_email'] = 'To nie jest poprawny adres e-mail!';
-            //echo $_POST['email'] . "<br/>" . $email;
             header('Location: registerForm.php');
         }
 
@@ -70,6 +69,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($password1 != $password2) {
             $is_ok = false;
             $_SESSION['e_password'] = 'Hasła muszą być identyczne!';
+            header('Location: registerForm.php');
+        }
+
+        if (empty($city)) {
+            $is_ok = false;
+            $_SESSION['e_city'] = 'Nazwa miasta nie może być pusta!';
+            header('Location: registerForm.php');
+        }
+
+        if (empty($postalCode)) {
+            $is_ok = false;
+            $_SESSION['e_postal_code'] = 'Uzupełnij kod pocztowy!';
+            header('Location: registerForm.php');
+        }
+
+        if (empty($street)) {
+            $is_ok = false;
+            $_SESSION['e_street'] = 'Uzupełnij ulice i nr domu!';
+            header('Location: registerForm.php');
+        }
+
+        if (empty($houseNr)) {
+            $is_ok = false;
+            $_SESSION['e_house_nr'] = 'Uzupełnij nr mieszkania!';
             header('Location: registerForm.php');
         }
 
@@ -94,6 +117,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['fr_email'] = $email;
         $_SESSION['fr_password1'] = $password1;
         $_SESSION['fr_password2'] = $password2;
+        $_SESSION['fr_city'] = $city;
+        $_SESSION['fr_postal_code'] = $postalCode;
+        $_SESSION['fr_street'] = $street;
+        $_SESSION['fr_house_nr'] = $houseNr;
         if (isset($_POST['terms'])) {
             $_SESSION['fr_terms'] = true;
         }
