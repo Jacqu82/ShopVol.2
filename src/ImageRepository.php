@@ -52,6 +52,45 @@ class ImageRepository
 
     /**
      * @param PDO $connection
+     * @param $productId
+     * @return PDOStatement
+     */
+    public static function loadImageByProductId(PDO $connection, $productId)
+    {
+        $sql = "SELECT image_path FROM images WHERE product_id = :product_id";
+
+        $result = $connection->prepare($sql);
+        $result->bindParam('product_id', $productId, PDO::PARAM_INT);
+        $result->execute();
+
+        return $result;
+    }
+
+    /**
+     * @param PDO $connection
+     * @param $productId
+     * @return mixed|null
+     */
+    public static function loadFirstImageDetailsByProductId(PDO $connection, $productId)
+    {
+        $sql = "SELECT image_path FROM images WHERE product_id = :product_id";
+
+        $result = $connection->prepare($sql);
+        if (!$result) {
+            die("Query Error!" . $connection->errorInfo());
+        }
+
+        $result->bindParam('product_id', $productId);
+        $result->execute();
+
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            return $row;
+        }
+        return null;
+    }
+
+    /**
+     * @param PDO $connection
      * @param $id
      * @return mixed
      */

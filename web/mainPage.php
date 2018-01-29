@@ -45,17 +45,15 @@ include '../widget/header.php';
 
             echo "<h3><a href='productPage.php?id=$id'
                 class='btn btn-success links'>$name</a></h3>";
-
-            //echo '<h3>' . $product['name'] . '</h3>';
             $price = number_format($product['price'], 2);
             echo '<h5>Cena: ' . $price . ' zł</h5>';
-            ?>
-            <div class='img-thumbnail1'>
-                <img src="  <?php echo $product['image_path']; ?> " width='150' height='100'/><br/>
-            </div>
-            <hr/>
-    <?php
 
+            $image = ImageRepository::loadFirstImageDetailsByProductId($connection, $id);
+            echo "
+            <div class='img-thumbnail1'>
+                <img src='" . $image['image_path'] . "' width='150' height='100'/><br/>
+            </div>
+            <hr/>";
         }
     }
 

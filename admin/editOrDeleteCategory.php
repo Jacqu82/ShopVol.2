@@ -54,11 +54,7 @@ include 'header.php';
         }
     }
 
-    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        if (isset($_GET['id'])) {
-            $id = $_GET['id'];
-        }
-
+        $id = $_GET['id'];
         $category = CategoryRepository::loadCategoryById($connection, $id);
 
         ?>
@@ -76,12 +72,6 @@ include 'header.php';
             </div>
         </form>
         <hr/>
-
-        <?php
-
-    }
-
-    ?>
 
     <h3><a href="categoryList.php" class="btn btn-default links">Powrót do listy kategorii</a></h3>
 </div>

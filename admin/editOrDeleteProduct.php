@@ -27,6 +27,8 @@ include 'header.php';
 
     <?php
 
+    var_dump($_GET);
+
     $product = ProductRepository::loadProductById($connection, $_GET['id']);
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {

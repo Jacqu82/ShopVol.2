@@ -33,21 +33,21 @@ include '../widget/header.php';
 
     <?php
 
-    $products = ProductRepository::loadProductDetailsById($connection, $_GET['id']);
-    foreach ($products as $product) {
+    $product = ProductRepository::loadProductDetailsById($connection, $_GET['id']);
 
-        echo '<h3>' . $product['name'] . '</h3>';
-        $price = number_format($product['price'], 2);
-        echo '<h2>Cena: ' . $price . ' zł</h2>';
-        ?>
+    echo '<h3>' . $product->getName() . '</h3>';
+    $price = number_format($product->getPrice(), 2);
+    echo '<h2>Cena: ' . $price . ' zł</h2>';
+    echo '<h4>' . $product->getDescription() . '</h4>';
+    echo '<h4>Dostępnych: ' . $product->getAvailability() . ' szt.</h4>';
+
+    $images = ImageRepository::loadImageByProductId($connection, $_GET['id']);
+    foreach ($images as $image) {
+
+        echo "
         <div class='img-thumbnail1'>
-            <img src="  <?php echo $product['image_path']; ?> " width='450' height='300'/><br/>
-        </div>
-        <hr/>
-        <?php
-        echo '<h4>' . $product['description'] . '</h4>';
-        echo '<h4>Dostępnych: ' . $product['availability'] . ' szt.</h4>';
-
+            <img src='" . $image['image_path'] . "' width='450' height='300'/><br/>
+        </div>";
     }
 
     ?>

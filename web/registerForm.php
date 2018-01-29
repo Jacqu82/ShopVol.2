@@ -20,6 +20,9 @@ include '../widget/head.php';
         <h4><a href="loginForm.php" class="btn btn-info links">Zaloguj się</a></h4>
     </div>
     <hr/>
+    <?php
+    var_dump($_SESSION);
+    ?>
     <form method="POST" action="register.php">
         <div>
             <input type="text" name="username" class="forms" placeholder="Login"

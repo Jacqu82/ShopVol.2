@@ -7,7 +7,7 @@ $admin = loggedAdmin($connection);
     <div class="navbar-header">
         <div class="container text-center">
             <div class="navbar-header">
-                <a class="navbar-brand" href="../admin/adminPanel.php">Strona główna</a>
+                <a class="navbar-brand" href="../admin/adminPanel.php">Panel administracyjny</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
@@ -21,7 +21,7 @@ $admin = loggedAdmin($connection);
 <!--                            <span class="badge">--><?php //echo $unread; ?><!--</span></a></li>-->
 <!--                    <li><a href="../web/searchUsers.php">Szukaj znajomych</a></li>-->
                     <li style="margin-top: 15px">Zalogowany jako:
-                        <a class="user" href="#">
+                        <a class="user" href="adminPanel.php">
                             <?php
                             echo $admin->getLogin();
                             ?>

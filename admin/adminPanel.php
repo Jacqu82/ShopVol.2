@@ -48,11 +48,9 @@ include 'header.php';
     <a href="addProductImage.php" class="btn btn-primary links">Dodaj zdjęcia do produktu</a>
     <a href="categoryProductList.php" class="btn btn-info links">Edytuj lub usuń przedmiot</a>
     <a href="editOrDeleteProductImages.php" class="btn btn-primary links">Edytuj lub usuń zdjęcia przedmiotu</a>
-<!--    <a href="addNationalTeamFlag.php" class="btn btn-warning links">Dodaj flagi reprezentacji</a>-->
+    <a href="sendMessage.php" class="btn btn-success links">Napisz wiadomość do użytkownika</a>
 <!--    <a href="editNationalTeamFlag.php" class="btn btn-warning links">Edytuj flage reprezentacji</a>-->
 
-    <hr/>
-<!--    <a href="../web/mainPage.php" class="btn btn-default links">Strona główna</a>-->
     <hr/>
 </div>
 

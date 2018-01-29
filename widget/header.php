@@ -14,12 +14,12 @@ $user = loggedUser($connection);
 <!--                    <li><a href="../web/groups.php">Grupy</a></li>-->
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-<!--                    --><?php
-//                    $unread = MessageRepository::countAllUnreadMessages($connection, $user->getId());
-//                    ?>
-<!--                    <li><a href="../web/messageSite.php">Messanger-->
-<!--                            <span class="badge">--><?php //echo $unread; ?><!--</span></a></li>-->
-<!--                    <li><a href="../web/searchUsers.php">Szukaj znajomych</a></li>-->
+                    <?php
+                    $unread = MessageRepository::countAllUnreadMessagesByUserId($connection, $user->getId());
+                    ?>
+                    <li><a href="../web/inbox.php">Messanger
+                            <span class="badge"><?php echo $unread; ?></span>
+                        </a></li>
                     <li style="margin-top: 15px">Zalogowany jako:
                         <a class="user" href="../web/userPanel.php">
                             <?php

@@ -206,9 +206,8 @@ class ProductRepository
      */
     public static function loadAllProductsByCategoryId(PDO $connection, $categoryId)
     {
-        $sql = "SELECT p.id, p.name, p.price, i.image_path FROM products p
+        $sql = "SELECT p.id, p.name, p.price FROM products p
                 LEFT JOIN categories c ON p.category_id = c.id
-                LEFT JOIN images i ON i.product_id = p.id
                 WHERE p.category_id = :category_id";
 
         $result = $connection->prepare($sql);
@@ -218,17 +217,32 @@ class ProductRepository
         return $result;
     }
 
+    /**
+     * @param PDO $connection
+     * @param $id
+     * @return bool|Product
+     */
     public static function loadProductDetailsById(PDO $connection, $id)
     {
-        $sql = "SELECT p.id, p.name, p.price, p.description, p.availability, i.image_path FROM products p
-                LEFT JOIN images i ON i.product_id = p.id
-                WHERE p.id = :id";
+        $sql = "SELECT * FROM products WHERE id = :id";
 
         $result = $connection->prepare($sql);
         $result->bindParam('id', $id);
         $result->execute();
 
-        return $result;
+        if ($result->rowCount() > 0) {
+            $row = $result->fetch();
+            $product = new Product();
+            $product
+                ->setName($row['name'])
+                ->setPrice($row['price'])
+                ->setDescription($row['description'])
+                ->setAvailability($row['availability']);
+
+            return $product;
+        }
+
+        return false;
     }
 
     /**

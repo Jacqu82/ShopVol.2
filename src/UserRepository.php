@@ -41,6 +41,29 @@ class UserRepository
 
     /**
      * @param PDO $connection
+     * @return array|bool
+     */
+    public static function loadAllUsers(PDO $connection)
+    {
+        $sql = "SELECT id, username FROM users";
+
+        $result = $connection->prepare($sql);
+        $result->execute();
+
+        $users = array();
+        if ($result->rowCount() > 0) {
+            while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                $users[] = $row;
+            }
+
+            return $users;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param PDO $connection
      * @param $username
      * @return PDOStatement
      */
