@@ -2,6 +2,7 @@
 
 require_once '../src/lib.php';
 require_once '../connection.php';
+
 session_start();
 if (!isset($_SESSION['admin'])) {
     header('Location: ../web/index.php');
@@ -47,21 +48,9 @@ include 'header.php';
             $pathToDelete = ImageRepository::loadImagePath($connection, $imageId);
             unlink($pathToDelete);
 
-            $filename = $_FILES['imageFile']['name'];
-            $path = '../content/images/products/' . $productId . '/';
-            if (!file_exists($path)) {
-                mkdir($path);
-            }
-            $path .= $filename;
-            if (!file_exists($path)) {
-                $upload = move_uploaded_file($_FILES['imageFile']['tmp_name'], $path);
-            } else {
-                echo "<div class=\"flash-message text-center alert alert-danger alert-dismissible\" role=\"alert\">";
-                echo '<strong>Zdjęcie o podanej nazwie już istnieje!</strong>';
-                echo "</div>";
-                die();
-            }
-
+            $addImage = ImageOperations::imageOperation($productId);
+            $path = $addImage['path'];
+            $upload = $addImage['upload'];
             if ($upload) {
                 ImageRepository::updateImagePath($connection, $path, $imageId);
                 echo "<div class=\"flash-message alert alert-success alert-dismissible\" role=\"alert\">";
@@ -106,8 +95,10 @@ include 'header.php';
 
 </div>
 <?php
+
 include '../widget/footer.php';
 include '../widget/scripts.php';
+
 ?>
 </body>
 </html>

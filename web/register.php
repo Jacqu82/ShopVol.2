@@ -5,8 +5,6 @@ session_start();
 require_once '../connection.php';
 require_once 'autoload.php';
 
-
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['username']) && isset($_POST['email'])
         && isset($_POST['password1']) && isset($_POST['password2'])

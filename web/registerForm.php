@@ -21,7 +21,7 @@ include '../widget/head.php';
     </div>
     <hr/>
     <?php
-    var_dump($_SESSION);
+//    var_dump($_SESSION);
     ?>
     <form method="POST" action="register.php">
         <div>
@@ -185,8 +185,10 @@ include '../widget/head.php';
     <a href="index.php" class="btn btn-default links">Powrót</a>
 </div>
 <?php
+
 include '../widget/footer.php';
 include '../widget/scripts.php';
+
 ?>
 </body>
 </html>

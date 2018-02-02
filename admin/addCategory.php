@@ -15,11 +15,15 @@ $admin = loggedAdmin($connection);
 <!DOCTYPE html>
 <html lang="pl">
 <?php
+
 include '../widget/head.php';
+
 ?>
 <body>
 <?php
+
 include 'header.php';
+
 ?>
 <div class="container text-center">
     <h1>All Or Nothing</h1>
@@ -32,10 +36,9 @@ include 'header.php';
             $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
             $is_ok = true;
 
-
-            if (strlen($name) > 30) {
+            if (strlen($name) > 20) {
                 echo "<div class=\"text-center alert alert-danger\">";
-                echo "<strong>Nazwa kategorii może zawierać max 30 znaków!</strong>";
+                echo "<strong>Nazwa kategorii może zawierać max 20 znaków!</strong>";
                 echo "</div>";
                 $is_ok = false;
             }
@@ -85,8 +88,10 @@ include 'header.php';
     <h3><a href="adminPanel.php" class="btn btn-default links">Powrót do panelu Admina</a></h3>
 </div>
 <?php
+
 include '../widget/footer.php';
 include '../widget/scripts.php';
+
 ?>
 </body>
 </html>

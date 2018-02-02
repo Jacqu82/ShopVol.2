@@ -47,31 +47,30 @@ include 'header.php';
         if (isset($_POST['category_id']) && isset($_POST['delete'])) {
             $toDelete = CategoryRepository::loadCategoryById($connection, $_POST['category_id']);
             if (CategoryRepository::delete($connection, $toDelete)) {
-                echo "<div class=\"flash-message alert alert-success alert-dismissible\" role=\"alert\">";
-                echo '<strong>Poprawnie usunięto kategorię</strong>';
-                echo "</div>";
+                $_SESSION['delete'] = 'Poprawnie usunięto kategorię!';
+                header('Location: categoryList.php');
             }
         }
     }
 
-        $id = $_GET['id'];
-        $category = CategoryRepository::loadCategoryById($connection, $id);
+    $id = $_GET['id'];
+    $category = CategoryRepository::loadCategoryById($connection, $id);
 
-        ?>
+    ?>
 
-        <form method="POST" action="#">
-            <div>
-                <input type="text" name="name" class="forms"
-                       value="<?php echo $category->getName(); ?>"/><br/>
-                <input type="hidden" name="category_id" value="<?php echo $id; ?>"/>
-                <input type="submit" class="btn btn-warning links" name="update" value="Edytuj"/>
-            </div>
-            <div>
-                <input type='hidden' name='category_id' value="<?php echo $id; ?> ">
-                <input type="submit" class="btn btn-danger links" name="delete" value="Usuń kategorię"/>
-            </div>
-        </form>
-        <hr/>
+    <form method="POST" action="#">
+        <div>
+            <input type="text" name="name" class="forms"
+                   value="<?php echo $category->getName(); ?>"/><br/>
+            <input type="hidden" name="category_id" value="<?php echo $id; ?>"/>
+            <input type="submit" class="btn btn-warning links" name="update" value="Edytuj"/>
+        </div>
+        <div>
+            <input type='hidden' name='category_id' value="<?php echo $id; ?> ">
+            <input type="submit" class="btn btn-danger links" name="delete" value="Usuń kategorię"/>
+        </div>
+    </form>
+    <hr/>
 
     <h3><a href="categoryList.php" class="btn btn-default links">Powrót do listy kategorii</a></h3>
 </div>

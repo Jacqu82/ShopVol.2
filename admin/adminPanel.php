@@ -28,7 +28,7 @@ include 'header.php';
 <div class="container text-center">
     <h1>All Or Nothing</h1>
     <hr/>
-    <h3>Witaj <?php echo $admin->getLogin(). "!"; ?></h3>
+    <h3>Witaj <?php echo $admin->getLogin() . "!"; ?></h3>
     <h3>Panel Administracyjny</h3>
 
     <?php
@@ -49,7 +49,7 @@ include 'header.php';
     <a href="categoryProductList.php" class="btn btn-info links">Edytuj lub usuń przedmiot</a>
     <a href="editOrDeleteProductImages.php" class="btn btn-primary links">Edytuj lub usuń zdjęcia przedmiotu</a>
     <a href="sendMessage.php" class="btn btn-success links">Napisz wiadomość do użytkownika</a>
-<!--    <a href="editNationalTeamFlag.php" class="btn btn-warning links">Edytuj flage reprezentacji</a>-->
+    <!--    <a href="editNationalTeamFlag.php" class="btn btn-warning links">Edytuj flage reprezentacji</a>-->
 
     <hr/>
 </div>
@@ -58,6 +58,7 @@ include 'header.php';
 
 include '../widget/footer.php';
 include '../widget/scripts.php';
+
 ?>
 </body>
 </html>

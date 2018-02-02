@@ -2,6 +2,7 @@
 
 require_once '../src/lib.php';
 require_once '../connection.php';
+
 session_start();
 if (!isset($_SESSION['admin'])) {
     header('Location: ../web/index.php');
@@ -15,11 +16,15 @@ $admin = loggedAdmin($connection);
 <!DOCTYPE html>
 <html lang="pl">
 <?php
+
 include '../widget/head.php';
+
 ?>
 <body>
 <?php
+
 include 'header.php';
+
 ?>
 <div class="container text-center">
     <h1>All Or Nothing</h1>
@@ -49,27 +54,27 @@ include 'header.php';
     <?php
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        if (isset($_POST['userId']) && isset($_POST['text'])) {
-            $userId = (int)$_POST['userId'];
-            $text = filter_input(INPUT_POST, 'text', FILTER_SANITIZE_STRING);
+    if (isset($_POST['userId']) && isset($_POST['text'])) {
+    $userId = (int)$_POST['userId'];
+    $text = filter_input(INPUT_POST, 'text', FILTER_SANITIZE_STRING);
 
-            $message = new Message();
-            $message
-                ->setAdminId($admin->getId())
-                ->setUserId($userId)
-                ->setText($text)
-                ->setIsRead(0);
+    $message = new Message();
+    $message
+        ->setAdminId($admin->getId())
+        ->setUserId($userId)
+        ->setText($text)
+        ->setIsRead(0);
 
-            if ($message) {
-                MessageRepository::saveToDB($connection, $message);
-        ?>
-            <div class="flash-message alert alert-success alert-dismissible" role="alert">
-                <strong>Wysłałeś wiadomość do
-                    <?php foreach ($users as $user) {
-                        if ($userId === $user['id']) {
-                            echo $user['username'];
-                        }
-                    }
+    if ($message) {
+    MessageRepository::saveToDB($connection, $message);
+    ?>
+    <div class="flash-message alert alert-success alert-dismissible" role="alert">
+        <strong>Wysłałeś wiadomość do
+            <?php foreach ($users as $user) {
+                if ($userId === $user['id']) {
+                    echo $user['username'];
+                }
+            }
             echo '</strong>
             </div>';
             }
@@ -84,11 +89,13 @@ include 'header.php';
         <span class="badge"><?php echo $sent; ?></span></a>
 
     <h3><a href="adminPanel.php" class="btn btn-default links">Powrót do panelu Admina</a></h3>
-</div>
+    </div>
 
-<?php
-include '../widget/footer.php';
-include '../widget/scripts.php';
-?>
+    <?php
+
+    include '../widget/footer.php';
+    include '../widget/scripts.php';
+
+    ?>
 </body>
 </html>

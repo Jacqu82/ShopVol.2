@@ -99,8 +99,10 @@ include '../widget/head.php';
     <h3><a href="loginForm.php" class="btn btn-info links">Zaloguj się na swoje konto</a></h3>
 </div>
 <?php
+
 include '../widget/footer.php';
 include '../widget/scripts.php';
+
 ?>
 </body>
 </html>

@@ -2,6 +2,7 @@
 
 require_once '../src/lib.php';
 require_once '../connection.php';
+
 session_start();
 if (!isset($_SESSION['admin'])) {
     header('Location: ../web/index.php');
@@ -15,11 +16,15 @@ $admin = loggedAdmin($connection);
 <!DOCTYPE html>
 <html lang="pl">
 <?php
+
 include '../widget/head.php';
+
 ?>
 <body>
 <?php
+
 include 'header.php';
+
 ?>
 <div class="container text-center">
     <h1>All Or Nothing</h1>
@@ -61,8 +66,10 @@ include 'header.php';
 </div>
 
 <?php
+
 include '../widget/footer.php';
 include '../widget/scripts.php';
+
 ?>
 </body>
 </html>

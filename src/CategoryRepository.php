@@ -96,6 +96,11 @@ class CategoryRepository
         return false;
     }
 
+    /**
+     * @param PDO $connection
+     * @param $id
+     * @return bool|mixed
+     */
     public static function loadAllCategoriesById(PDO $connection, $id)
     {
         $sql = "SELECT * FROM categories WHERE id = :id";

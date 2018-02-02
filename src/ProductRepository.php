@@ -219,34 +219,6 @@ class ProductRepository
 
     /**
      * @param PDO $connection
-     * @param $id
-     * @return bool|Product
-     */
-    public static function loadProductDetailsById(PDO $connection, $id)
-    {
-        $sql = "SELECT * FROM products WHERE id = :id";
-
-        $result = $connection->prepare($sql);
-        $result->bindParam('id', $id);
-        $result->execute();
-
-        if ($result->rowCount() > 0) {
-            $row = $result->fetch();
-            $product = new Product();
-            $product
-                ->setName($row['name'])
-                ->setPrice($row['price'])
-                ->setDescription($row['description'])
-                ->setAvailability($row['availability']);
-
-            return $product;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param PDO $connection
      * @param Product $product
      * @return bool
      */

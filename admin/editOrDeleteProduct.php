@@ -2,6 +2,7 @@
 
 require_once '../src/lib.php';
 require_once '../connection.php';
+
 session_start();
 if (!isset($_SESSION['admin'])) {
     header('Location: ../web/index.php');
@@ -15,19 +16,21 @@ $admin = loggedAdmin($connection);
 <!DOCTYPE html>
 <html lang="pl">
 <?php
+
 include '../widget/head.php';
+
 ?>
 <body>
 <?php
+
 include 'header.php';
+
 ?>
 <div class="container text-center">
     <h1>All Or Nothing</h1>
     <hr/>
 
     <?php
-
-    var_dump($_GET);
 
     $product = ProductRepository::loadProductById($connection, $_GET['id']);
 
@@ -39,7 +42,7 @@ include 'header.php';
             //validate name
             if (strlen($name) > 30) {
                 echo "<div class=\"text-center alert alert-danger\">";
-                echo "<strong>Nazwa przedmiotu może zawierać max 50 znaków!</strong>";
+                echo "<strong>Nazwa przedmiotu może zawierać max 30 znaków!</strong>";
                 echo "</div>";
                 $is_ok = false;
             }
@@ -183,8 +186,10 @@ include 'header.php';
     ?>
 </div>
 <?php
+
 include '../widget/footer.php';
 include '../widget/scripts.php';
+
 ?>
 </body>
 </html>
