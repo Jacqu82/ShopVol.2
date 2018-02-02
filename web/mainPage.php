@@ -37,23 +37,30 @@ include '../widget/header.php';
     foreach ($categories as $category) {
         echo '<h2>' . $category['name'] . '</h2>';
 
-        $products = ProductRepository::loadAllProductsByCategoryId($connection, $category['id']);
-        foreach ($products as $product) {
+        $products = ProductRepository::loadTwoRandomProductsByCategoryId($connection, $category['id']);
 
-            $id = $product['id'];
-            $name = $product['name'];
+        if ($products->rowCount() > 0) {
+            foreach ($products as $product) {
 
-            echo "<h3><a href='productPage.php?id=$id'
+                $id = $product['id'];
+                $name = $product['name'];
+
+                echo "<h3><a href='productPage.php?id=$id'
                 class='btn btn-success links'>$name</a></h3>";
-            $price = number_format($product['price'], 2);
-            echo '<h5>Cena: ' . $price . ' zł</h5>';
+                $price = number_format($product['price'], 2);
+                echo '<h5>Cena: ' . $price . ' zł</h5>';
 
-            $image = ImageRepository::loadFirstImageDetailsByProductId($connection, $id);
-            echo "
+                $image = ImageRepository::loadFirstImageDetailsByProductId($connection, $id);
+                echo "
             <div class='img-thumbnail1'>
                 <img src='" . $image['image_path'] . "' width='150' height='100'/><br/>
             </div>
             <hr/>";
+            }
+        } else {
+            echo '<div class="alert alert-warning">';
+            echo '<strong>Brak produktów w kategorii ' . $category['name'] . '</strong>';
+            echo '</div>';
         }
     }
 

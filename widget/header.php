@@ -14,6 +14,7 @@ $user = loggedUser($connection);
 <!--                    <li><a href="../web/groups.php">Grupy</a></li>-->
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    <li><a href="../web/shopHistory.php">Historia zakupów</a></li>
                     <?php
                     $unread = MessageRepository::countAllUnreadMessagesByUserId($connection, $user->getId());
                     ?>

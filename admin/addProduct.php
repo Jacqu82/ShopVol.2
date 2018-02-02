@@ -41,9 +41,9 @@ include 'header.php';
             $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
             $availability = filter_input(INPUT_POST, 'availability', FILTER_SANITIZE_NUMBER_INT);
 
-            if (strlen($name) > 30) {
+            if (strlen($name) > 40) {
                 echo "<div class=\"text-center alert alert-danger\">";
-                echo "<strong>Nazwa przedmiotu może zawierać max 30 znaków!</strong>";
+                echo "<strong>Nazwa przedmiotu może zawierać max 40 znaków!</strong>";
                 echo "</div>";
                 $is_ok = false;
             }

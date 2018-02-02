@@ -219,6 +219,25 @@ class ProductRepository
 
     /**
      * @param PDO $connection
+     * @param $categoryId
+     * @return PDOStatement
+     */
+    public static function loadTwoRandomProductsByCategoryId(PDO $connection, $categoryId)
+    {
+        $sql = "SELECT p.id, p.name, p.price FROM products p
+                LEFT JOIN categories c ON p.category_id = c.id
+                WHERE p.category_id = :category_id
+                ORDER BY RAND() LIMIT 2";
+
+        $result = $connection->prepare($sql);
+        $result->bindParam('category_id', $categoryId);
+        $result->execute();
+
+        return $result;
+    }
+
+    /**
+     * @param PDO $connection
      * @param Product $product
      * @return bool
      */
@@ -237,5 +256,27 @@ class ProductRepository
         }
 
         return false;
+    }
+
+    /**
+     * @param PDO $connection
+     * @param $quantity
+     * @param $id
+     * @return bool
+     */
+    public static function updateAvailabilityByQuantity(PDO $connection, $quantity, $id)
+    {
+        $sql = "UPDATE products SET availability = availability - :quantity WHERE id = :id";
+        $result = $connection->prepare($sql);
+
+        if (!$result) {
+            die("Query Error!" . $connection->errorInfo());
+        }
+
+        $result->bindParam('quantity', $quantity, PDO::PARAM_INT);
+        $result->bindParam('id', $id, PDO::PARAM_INT);
+        $result->execute();
+
+        return true;
     }
 }
