@@ -73,7 +73,8 @@ class ImageRepository
      */
     public static function loadFirstImageDetailsByProductId(PDO $connection, $productId)
     {
-        $sql = "SELECT image_path FROM images WHERE product_id = :product_id";
+        $sql = "SELECT image_path FROM images WHERE product_id = :product_id
+                ORDER BY RAND()";
 
         $result = $connection->prepare($sql);
         if (!$result) {

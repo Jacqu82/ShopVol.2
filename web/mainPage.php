@@ -31,41 +31,52 @@ include '../widget/header.php';
     <h1>All Or Nothing</h1>
     <hr/>
 
-    <?php
+    <div class="col-md-4 navbar-left">
+        <h2>Wszystkie kategorie</h2>
+        <hr/>
+        <?php
 
-    $categories = CategoryRepository::loadAllCategories($connection);
-    foreach ($categories as $category) {
-        echo '<h2>' . $category['name'] . '</h2>';
-
-        $products = ProductRepository::loadTwoRandomProductsByCategoryId($connection, $category['id']);
-
-        if ($products->rowCount() > 0) {
-            foreach ($products as $product) {
-
-                $id = $product['id'];
-                $name = $product['name'];
-
-                echo "<h3><a href='productPage.php?id=$id'
-                class='btn btn-success links'>$name</a></h3>";
-                $price = number_format($product['price'], 2);
-                echo '<h5>Cena: ' . $price . ' zł</h5>';
-
-                $image = ImageRepository::loadFirstImageDetailsByProductId($connection, $id);
-                echo "
-            <div class='img-thumbnail1'>
-                <img src='" . $image['image_path'] . "' width='150' height='100'/><br/>
-            </div>
-            <hr/>";
-            }
-        } else {
-            echo '<div class="alert alert-warning">';
-            echo '<strong>Brak produktów w kategorii ' . $category['name'] . '</strong>';
-            echo '</div>';
+        $categories = CategoryRepository::loadAllCategories($connection);
+        foreach ($categories as $category) {
+            $id = $category['id'];
+            echo '<h3><ul class="nav nav-pills nav-stacked">
+                <li><a href="category.php?id=' . $id . '">' . $category['name'] . '</a></li>
+                </ul></h3>';
         }
-    }
 
-    ?>
+        ?>
+    </div>
+    <div class="col-md-8">
 
+        <?php
+
+        $categories = CategoryRepository::loadAllCategories($connection);
+        foreach ($categories as $category) {
+            echo '<h2>' . $category['name'] . '</h2>';
+
+            $products = ProductRepository::loadTwoRandomProductsByCategoryId($connection, $category['id']);
+
+            if ($products->rowCount() > 0) {
+                foreach ($products as $product) {
+
+                    $id = $product['id'];
+                    $name = $product['name'];
+                    $image = ImageRepository::loadFirstImageDetailsByProductId($connection, $id);
+                    echo '<div class="col-md-5"><ul class="nav navbar-nav">';
+                    echo "<li><a href='productPage.php?id=$id'>$name</a>";
+                    $price = number_format($product['price'], 2);
+                    echo 'Cena: ' . $price . ' zł</li></ul></div>';
+                    echo "<img src='" . $image['image_path'] . "' width='150' height='100'/><hr/>";
+                }
+            } else {
+                echo '<div class="alert alert-warning">';
+                echo '<strong>Brak produktów w kategorii ' . $category['name'] . '</strong>';
+                echo '</div>';
+            }
+        }
+
+        ?>
+    </div>
     <hr/>
 </div>
 <?php

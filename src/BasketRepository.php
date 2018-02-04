@@ -53,6 +53,11 @@ class BasketRepository
         return $result;
     }
 
+    /**
+     * @param PDO $connection
+     * @param $userId
+     * @return bool
+     */
     public static function sumBasketProductsByUserId(PDO $connection, $userId)
     {
         $sql = "SELECT sum(amount) as sum FROM basket WHERE user_id = :user_id";
@@ -70,6 +75,11 @@ class BasketRepository
         return false;
     }
 
+    /**
+     * @param PDO $connection
+     * @param $userId
+     * @return bool
+     */
     public static function countBasketProductsByUserId(PDO $connection, $userId)
     {
         $sql = "SELECT count(id) as count FROM basket WHERE user_id = :user_id";
@@ -87,6 +97,11 @@ class BasketRepository
         return false;
     }
 
+    /**
+     * @param PDO $connection
+     * @param $id
+     * @return Basket|bool
+     */
     public static function loadBasketById(PDO $connection, $id)
     {
         $sql = "SELECT * FROM basket WHERE id = :id";
@@ -112,7 +127,11 @@ class BasketRepository
         return false;
     }
 
-    //to fix!!!
+    /**
+     * @param PDO $connection
+     * @param Basket $basket
+     * @return bool
+     */
     public static function delete(PDO $connection, Basket $basket)
     {
         $id = $basket->getId();
@@ -128,6 +147,12 @@ class BasketRepository
         return false;
     }
 
+    /**
+     * @param PDO $connection
+     * @param Basket $basket
+     * @param $userId
+     * @return bool
+     */
     public static function deleteWholeBasketByUserId(PDO $connection, Basket $basket, $userId)
     {
         $sql = "DELETE FROM basket WHERE user_id = :user_id";

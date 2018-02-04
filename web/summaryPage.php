@@ -54,7 +54,7 @@ include '../widget/header.php';
 
     echo '<h3>Adres do wysyłki:</h3>';
     echo '<h3>' . $user->getPostalCode() . ', ' . $user->getCity() . '</h3>';
-    echo '<h3>ul.'.$user->getStreet() . '/' . $user->getHouseNr() . '</h3>';
+    echo '<h3>ul.' . $user->getStreet() . '/' . $user->getHouseNr() . '</h3>';
 
     ?>
 
