@@ -49,13 +49,12 @@ include '../widget/header.php';
         if (isset($_POST['deliveryMethod']) && isset($_POST['paymentMethod'])) {
             $deliveryMethod = filter_input(INPUT_POST, 'deliveryMethod', FILTER_SANITIZE_STRING);
             $paymentMethod = filter_input(INPUT_POST, 'paymentMethod', FILTER_SANITIZE_STRING);
+            $_SESSION['deliveryMethod'] = $deliveryMethod;
+            $_SESSION['paymentMethod'] = $paymentMethod;
 
             if (OrderRepository::updateDeliveryAndPayment($connection, $user->getId(), $deliveryMethod, $paymentMethod)) {
-                $toDelete = BasketRepository::loadBasketById($connection, $item['id']);
-                BasketRepository::deleteWholeBasketByUserId($connection, $toDelete, $user->getId());
-                echo "<div class=\"flash-message alert alert-success alert-dismissible\" role=\"alert\">";
-                echo '<strong>Poprawnie dokonano płatności :)</strong>';
-                echo "</div>";
+                header('Location: summaryBasketPage.php');
+                $_SESSION['payment_done'] = 'Poprawnie dokonano płatności :)';
             }
         }
     }

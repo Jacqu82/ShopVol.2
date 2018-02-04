@@ -3,7 +3,6 @@
 
 class OrderRepository
 {
-
     /**
      * @param PDO $connection
      * @param Order $order
@@ -16,16 +15,18 @@ class OrderRepository
         $productId = $order->getProductId();
         $quantity = $order->getQuantity();
         $amount = $order->getAmount();
+        $kind = $order->getKind();
 
         if ($id == -1) {
-            $sql = "INSERT INTO orders (user_id, product_id, quantity, amount)
-                    VALUES (:user_id, :product_id, :quantity, :amount)";
+            $sql = "INSERT INTO orders (user_id, product_id, quantity, amount, kind)
+                    VALUES (:user_id, :product_id, :quantity, :amount, :kind)";
 
             $result = $connection->prepare($sql);
             $result->bindParam('user_id', $userId, PDO::PARAM_INT);
             $result->bindParam('product_id', $productId, PDO::PARAM_INT);
             $result->bindParam('quantity', $quantity, PDO::PARAM_INT);
             $result->bindParam('amount', $amount, PDO::PARAM_INT);
+            $result->bindParam('kind', $kind, PDO::PARAM_INT);
 
             $result->execute();
             return true;
@@ -41,7 +42,8 @@ class OrderRepository
      */
     public static function loadLastOrderByUserId(PDO $connection, $userId)
     {
-        $sql = "SELECT o.id, o.quantity, o.amount, o.status, p.name, i.image_path FROM orders o
+        $sql = "SELECT o.id, o.quantity, o.amount, o.payment_method, o.delivery_method, p.name, i.image_path 
+                FROM orders o
                 LEFT JOIN products p ON o.product_id = p.id
                 LEFT JOIN images i ON i.product_id = p.id
                 WHERE o.user_id = :user_id

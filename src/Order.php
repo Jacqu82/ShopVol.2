@@ -9,6 +9,7 @@ class Order
     private $quantity;
     private $status;
     private $amount;
+    private $kind;
     private $paymentMethod;
     private $deliveryMethod;
     private $createdAt;
@@ -24,6 +25,7 @@ class Order
         $this->quantity = 0;
         $this->status = 'Nieopłacony';
         $this->amount = 0;
+        $this->kind = '';
         $this->paymentMethod = null;
         $this->deliveryMethod = null;
         $this->createdAt = '';
@@ -134,6 +136,24 @@ class Order
     public function setAmount($amount)
     {
         $this->amount = $amount;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getKind()
+    {
+        return $this->kind;
+    }
+
+    /**
+     * @param string $kind
+     * @return $this
+     */
+    public function setKind($kind)
+    {
+        $this->kind = $kind;
         return $this;
     }
 

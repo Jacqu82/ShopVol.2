@@ -45,7 +45,6 @@ include '../widget/header.php';
         <div class='img-thumbnail1'>
             <img src='" . $order['image_path'] . "' width='150' height='100'/><br/>
         </div><br/>";
-        $_SESSION['order_id'] = $order['id'];
     }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -53,10 +52,9 @@ include '../widget/header.php';
             $deliveryMethod = filter_input(INPUT_POST, 'deliveryMethod', FILTER_SANITIZE_STRING);
             $paymentMethod = filter_input(INPUT_POST, 'paymentMethod', FILTER_SANITIZE_STRING);
 
-            if (OrderRepository::updateDeliveryAndPayment($connection, $_SESSION['order_id'], $deliveryMethod, $paymentMethod)) {
-                echo "<div class=\"flash-message alert alert-success alert-dismissible\" role=\"alert\">";
-                echo '<strong>Poprawnie dokonano płatności :)</strong>';
-                echo "</div>";
+            if (OrderRepository::updateDeliveryAndPayment($connection, $user->getId(), $deliveryMethod, $paymentMethod)) {
+                header('Location: summaryPage.php');
+                $_SESSION['payment_done'] = 'Poprawnie dokonano płatności :)';
             }
         }
     }

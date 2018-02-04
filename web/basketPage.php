@@ -69,7 +69,8 @@ include '../widget/header.php';
                     ->setUserId($userId)
                     ->setProductId($item['product_id'])
                     ->setQuantity($item['quantity'])
-                    ->setAmount($amount);
+                    ->setAmount($item['amount'])
+                    ->setKind('Koszyk');
                 OrderRepository::saveToDB($connection, $order);
                 header('Location: paymentBasketPage.php');
             }

@@ -57,7 +57,8 @@ include '../widget/header.php';
                     ->setUserId($userId)
                     ->setProductId($productId)
                     ->setQuantity($quantity)
-                    ->setAmount($amount);
+                    ->setAmount($amount)
+                    ->setKind('Kup Teraz');
                 if ($is_ok) {
                     OrderRepository::saveToDB($connection, $order);
                     ProductRepository::updateAvailabilityByQuantity($connection, $quantity, $productId);
@@ -113,11 +114,11 @@ include '../widget/header.php';
                 <input type="hidden" name="user_id" value="<?php echo $user->getId(); ?>"/>
                 <input type="hidden" name="product_id" value="<?php echo $product->getId(); ?>"/>
                 <?php
-                if ($product->getAvailability() > 1) {
-                    ?>
-                    <input type="number" name="o_quantity" placeholder="Wybierz ilość" class="forms"/><br/>
-                    <?php
-                }
+                //                if ($product->getAvailability() > 1) {
+                ?>
+                <input type="number" name="o_quantity" placeholder="Wybierz ilość" class="forms"/><br/>
+                <?php
+                //                }
                 if (isset($_SESSION['o_quantity'])) {
                     echo '<div class="flash-message alert alert-warning">';
                     echo '<strong>' . $_SESSION['o_quantity'] . '</strong>';
@@ -135,11 +136,11 @@ include '../widget/header.php';
                 <input type="hidden" name="user_id" value="<?php echo $user->getId(); ?>"/>
                 <input type="hidden" name="product_id" value="<?php echo $product->getId(); ?>"/>
                 <?php
-                if ($product->getAvailability() > 1) {
-                    ?>
-                    <input type="number" name="quantity" placeholder="Wybierz ilość" class="forms"/><br/>
-                    <?php
-                }
+                //                if ($product->getAvailability() > 1) {
+                ?>
+                <input type="number" name="quantity" placeholder="Wybierz ilość" class="forms"/><br/>
+                <?php
+                //                }
                 if (isset($_SESSION['b_quantity'])) {
                     echo '<div class="flash-message alert alert-warning">';
                     echo '<strong>' . $_SESSION['b_quantity'] . '</strong>';
