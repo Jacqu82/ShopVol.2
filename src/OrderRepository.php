@@ -56,20 +56,20 @@ class OrderRepository
 
     /**
      * @param PDO $connection
-     * @param $id
+     * @param $userId
      * @param $delivery
      * @param $payment
      * @return bool
      */
-    public static function updateDeliveryAndPayment(PDO $connection, $id, $delivery, $payment)
+    public static function updateDeliveryAndPayment(PDO $connection, $userId, $delivery, $payment)
     {
         $sql = "UPDATE orders SET delivery_method = :delivery_method,
                                   payment_method = :payment_method,
                                   status = :status
-                WHERE id = :id";
+                WHERE user_id = :user_id AND status = 'Nieopłacony'";
 
         $result = $connection->prepare($sql);
-        $result->bindParam('id', $id, PDO::PARAM_INT);
+        $result->bindParam('user_id', $userId, PDO::PARAM_INT);
         $result->bindParam('delivery_method', $delivery, PDO::PARAM_STR);
         $result->bindParam('payment_method', $payment, PDO::PARAM_STR);
         $result->bindValue('status', 'Opłacony');
@@ -85,7 +85,8 @@ class OrderRepository
      */
     public static function loadAllOrdersByUserId(PDO $connection, $userId)
     {
-        $sql = "SELECT o.id, o.quantity, o.amount, o.status, o.delivery_method, o.payment_method, p.name FROM orders o
+        $sql = "SELECT o.id, o.quantity, o.amount, o.status, o.delivery_method, o.payment_method, o.created_at, p.name 
+                FROM orders o
                 LEFT JOIN products p ON o.product_id = p.id
                 WHERE o.user_id = :user_id
                 ORDER BY o.created_at DESC";

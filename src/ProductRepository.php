@@ -279,4 +279,26 @@ class ProductRepository
 
         return true;
     }
+
+    /**
+     * @param PDO $connection
+     * @param $quantity
+     * @param $id
+     * @return bool
+     */
+    public static function updateAvailabilityAfterDeleteFromBasket(PDO $connection, $quantity, $id)
+    {
+        $sql = "UPDATE products SET availability = availability + :quantity WHERE id = :id";
+        $result = $connection->prepare($sql);
+
+        if (!$result) {
+            die("Query Error!" . $connection->errorInfo());
+        }
+
+        $result->bindParam('quantity', $quantity, PDO::PARAM_INT);
+        $result->bindParam('id', $id, PDO::PARAM_INT);
+        $result->execute();
+
+        return true;
+    }
 }

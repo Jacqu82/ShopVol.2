@@ -11,7 +11,13 @@ $user = loggedUser($connection);
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
-<!--                    <li><a href="../web/groups.php">Grupy</a></li>-->
+                    <?php
+                    $basketCount = BasketRepository::countBasketProductsByUserId($connection, $user->getId());
+                    ?>
+                    <li><a href="../web/basketPage.php">Koszyk
+                            <span class="glyphicon glyphicon-shopping-cart"></span>
+                            <span class="badge"><?php echo $basketCount; ?></span>
+                        </a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="../web/shopHistory.php">Historia zakupów</a></li>
@@ -19,6 +25,7 @@ $user = loggedUser($connection);
                     $unread = MessageRepository::countAllUnreadMessagesByUserId($connection, $user->getId());
                     ?>
                     <li><a href="../web/inbox.php">Messanger
+                            <span class="glyphicon glyphicon-envelope"></span>
                             <span class="badge"><?php echo $unread; ?></span>
                         </a></li>
                     <li style="margin-top: 15px">Zalogowany jako:

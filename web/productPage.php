@@ -36,16 +36,16 @@ include '../widget/header.php';
     $product = ProductRepository::loadProductById($connection, $_GET['id']);
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] == 'buyNow') {
-        if (isset($_POST['user_id']) && isset($_POST['product_id']) && isset($_POST['quantity'])) {
+        if (isset($_POST['user_id']) && isset($_POST['product_id']) && isset($_POST['o_quantity'])) {
             $userId = (int)$_POST['user_id'];
             $productId = (int)$_POST['product_id'];
-            $quantity = (int)$_POST['quantity'];
+            $quantity = (int)$_POST['o_quantity'];
             $amount = $product->getPrice() * $quantity;
             $is_ok = true;
 
             if (empty($quantity)) {
                 $is_ok = false;
-                $_SESSION['e_quantity'] = 'Wybierz ilość!';
+                $_SESSION['o_quantity'] = 'Wybierz ilość!';
             }
             if ($product->getAvailability() < $quantity) {
                 echo '<div class="flash-message alert alert-warning">';
@@ -66,6 +66,38 @@ include '../widget/header.php';
             }
         }
     }
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] == 'basket') {
+        if (isset($_POST['user_id']) && isset($_POST['product_id']) && isset($_POST['quantity'])) {
+            $userId = (int)$_POST['user_id'];
+            $productId = (int)$_POST['product_id'];
+            $quantity = (int)$_POST['quantity'];
+            $amount = $product->getPrice() * $quantity;
+            $is_ok = true;
+
+            if (empty($quantity)) {
+                $is_ok = false;
+                $_SESSION['b_quantity'] = 'Wybierz ilość!';
+            }
+            if ($product->getAvailability() < $quantity) {
+                echo '<div class="flash-message alert alert-warning">';
+                echo '<strong>Brak takiej ilości na stanie!, dostępnych: ' . $product->getAvailability() . ' szt.</strong>';
+                echo '</div>';
+            } else {
+                $basket = new Basket();
+                $basket
+                    ->setUserId($userId)
+                    ->setProductId($productId)
+                    ->setQuantity($quantity)
+                    ->setAmount($amount);
+                if ($is_ok) {
+                    BasketRepository::saveToDB($connection, $basket);
+                    ProductRepository::updateAvailabilityByQuantity($connection, $quantity, $productId);
+                    header('Location: basketPage.php');
+                }
+            }
+        }
+    }
+
 
     echo '<h3>' . $product->getName() . '</h3>';
     $price = number_format($product->getPrice(), 2);
@@ -83,18 +115,40 @@ include '../widget/header.php';
                 <?php
                 if ($product->getAvailability() > 1) {
                     ?>
-                    Wybierz ilość:<br/>
-                    <input type="number" name="quantity" value="1" class="forms"/><br/>
+                    <input type="number" name="o_quantity" placeholder="Wybierz ilość" class="forms"/><br/>
                     <?php
                 }
-                if (isset($_SESSION['e_quantity'])) {
+                if (isset($_SESSION['o_quantity'])) {
                     echo '<div class="flash-message alert alert-warning">';
-                    echo '<strong>' . $_SESSION['e_quantity'] . '</strong>';
+                    echo '<strong>' . $_SESSION['o_quantity'] . '</strong>';
                     echo '</div>';
-                    unset($_SESSION['e_quantity']);
+                    unset($_SESSION['o_quantity']);
                 }
                 ?>
                 <button type="submit" class="btn btn-info links">Kup Teraz</button>
+            </div>
+        </form>
+        <hr/>
+        <form method="POST" action="#">
+            <div>
+                <input type="hidden" name="action" value="basket"/>
+                <input type="hidden" name="user_id" value="<?php echo $user->getId(); ?>"/>
+                <input type="hidden" name="product_id" value="<?php echo $product->getId(); ?>"/>
+                <?php
+                if ($product->getAvailability() > 1) {
+                    ?>
+                    <input type="number" name="quantity" placeholder="Wybierz ilość" class="forms"/><br/>
+                    <?php
+                }
+                if (isset($_SESSION['b_quantity'])) {
+                    echo '<div class="flash-message alert alert-warning">';
+                    echo '<strong>' . $_SESSION['b_quantity'] . '</strong>';
+                    echo '</div>';
+                    unset($_SESSION['b_quantity']);
+                }
+                ?>
+
+                <button type="submit" class="btn btn-danger links">Kup przez koszyk</button>
             </div>
         </form>
 

@@ -42,6 +42,7 @@ include '../widget/header.php';
             <th>Status</th>
             <th>Metoda dostawy</th>
             <th>Metoda płatności</th>
+            <th>Data zamówienia</th>
         </tr>
         </thead>
         <?php
@@ -58,6 +59,7 @@ include '../widget/header.php';
                 <td><?php echo $order['status']; ?></td>
                 <td><?php echo $order['delivery_method']; ?></td>
                 <td><?php echo $order['payment_method']; ?></td>
+                <td><?php echo $order['created_at']; ?></td>
             </tr>
             </tbody>
             <?php

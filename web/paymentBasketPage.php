@@ -33,27 +33,26 @@ include '../widget/header.php';
 
     <?php
 
-    echo '<h3>Kupiłeś:</h3>';
-
-    $orders = OrderRepository::loadLastOrderByUserId($connection, $user->getId());
-
-    foreach ($orders as $order) {
-        echo '<h2>' . $order['name'] . ' - ' . $order['quantity'] . ' szt.</h2>';
-        $amount = number_format($order['amount'], 2);
-        echo '<h3>Łączna kwota: ' . $amount . ' zł</h3>';
-        echo "
-        <div class='img-thumbnail1'>
-            <img src='" . $order['image_path'] . "' width='150' height='100'/><br/>
-        </div><br/>";
-        $_SESSION['order_id'] = $order['id'];
+    $sum = BasketRepository::sumBasketProductsByUserId($connection, $user->getId());
+    $basket = BasketRepository::loadBasketProductsByUserId($connection, $user->getId());
+    foreach ($basket as $item) {
+        echo "<img src='" . $item['image_path'] . "' width='100' height='75'/>";
+        echo '<h3>' . $item['name'] . ' | ';
+        $amount = number_format($item['amount'], 2);
+        echo 'Cena: ' . $amount . ' zł | Ilość: ' . $item['quantity'] . '</h3>';
     }
+
+    $total = number_format($sum, 2);
+    echo '<h3>Łączna kwota do zapłaty ' . $total . '</h3>';
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($_POST['deliveryMethod']) && isset($_POST['paymentMethod'])) {
             $deliveryMethod = filter_input(INPUT_POST, 'deliveryMethod', FILTER_SANITIZE_STRING);
             $paymentMethod = filter_input(INPUT_POST, 'paymentMethod', FILTER_SANITIZE_STRING);
 
-            if (OrderRepository::updateDeliveryAndPayment($connection, $_SESSION['order_id'], $deliveryMethod, $paymentMethod)) {
+            if (OrderRepository::updateDeliveryAndPayment($connection, $user->getId(), $deliveryMethod, $paymentMethod)) {
+                $toDelete = BasketRepository::loadBasketById($connection, $item['id']);
+                BasketRepository::deleteWholeBasketByUserId($connection, $toDelete, $user->getId());
                 echo "<div class=\"flash-message alert alert-success alert-dismissible\" role=\"alert\">";
                 echo '<strong>Poprawnie dokonano płatności :)</strong>';
                 echo "</div>";
