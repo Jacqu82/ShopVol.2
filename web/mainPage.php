@@ -39,9 +39,9 @@ include '../widget/header.php';
         $categories = CategoryRepository::loadAllCategories($connection);
         foreach ($categories as $category) {
             $id = $category['id'];
-            echo '<h3><ul class="nav nav-pills nav-stacked">
+            echo '<h4><ul class="nav nav-pills nav-stacked sidebar">
                 <li><a href="category.php?id=' . $id . '">' . $category['name'] . '</a></li>
-                </ul></h3>';
+                </ul></h4>';
         }
 
         ?>
@@ -52,20 +52,28 @@ include '../widget/header.php';
 
         $categories = CategoryRepository::loadAllCategories($connection);
         foreach ($categories as $category) {
-            echo '<h2>' . $category['name'] . '</h2>';
-
+            $categoryName = $category['name'];
+            echo '<h2>' . $categoryName . '</h2>';
             $products = ProductRepository::loadTwoRandomProductsByCategoryId($connection, $category['id']);
 
             if ($products->rowCount() > 0) {
                 foreach ($products as $product) {
-
                     $id = $product['id'];
-                    $name = $product['name'];
+                    $name = substr($product['name'], 0, 30);
+
                     $image = ImageRepository::loadFirstImageDetailsByProductId($connection, $id);
-                    echo '<div class="col-md-5"><ul class="nav navbar-nav">';
+                    $sumProducts = OrderRepository::sumBoughtProducts($connection, $id);
+                    $countUsers = OrderRepository::countUsersFromOrders($connection, $user->getId(), $id);
+                    echo '<div class="col-md-4 col-md-offset-1"><ul class="nav navbar-nav">';
                     echo "<li><a href='productPage.php?id=$id'>$name</a>";
                     $price = number_format($product['price'], 2);
-                    echo 'Cena: ' . $price . ' zł</li></ul></div>';
+                    echo '<span class="price">Cena: ' . $price . ' zł</span></li><br/>';
+                    if (($sumProducts === null) && (!$countUsers)) {
+                        echo '<span class="glyphicon glyphicon-user"></span> 0 osób kupiło 0 sztuk';
+                    } else {
+                        echo '<span class="glyphicon glyphicon-user"></span> ' . $countUsers . ' osób kupiło ' . $sumProducts . ' sztuk';
+                    }
+                    echo '</ul></div>';
                     echo "<img src='" . $image['image_path'] . "' width='150' height='100'/><hr/>";
                 }
             } else {

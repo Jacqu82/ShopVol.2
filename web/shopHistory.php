@@ -42,6 +42,7 @@ include '../widget/header.php';
             <th>Status</th>
             <th>Metoda dostawy</th>
             <th>Metoda płatności</th>
+            <th>Rodzaj zakupu</th>
             <th>Data zamówienia</th>
         </tr>
         </thead>
@@ -50,6 +51,7 @@ include '../widget/header.php';
         $orders = OrderRepository::loadAllOrdersByUserId($connection, $user->getId());
         foreach ($orders as $order) {
             $amount = number_format($order['amount'], 2);
+            $wholeAmount = OrderRepository::sumOrderAmountByUserId($connection, $user->getId());
             ?>
             <tbody>
             <tr>
@@ -59,12 +61,18 @@ include '../widget/header.php';
                 <td><?php echo $order['status']; ?></td>
                 <td><?php echo $order['delivery_method']; ?></td>
                 <td><?php echo $order['payment_method']; ?></td>
+                <td><?php echo $order['kind']; ?></td>
                 <td><?php echo $order['created_at']; ?></td>
             </tr>
             </tbody>
             <?php
         }
         ?>
+        <tfoot>
+        <tr>
+            <td colspan="8"><?php echo 'Łączna kwota Twoich zakupów: ' . number_format($wholeAmount, 2) ?></td>
+        </tr>
+        </tfoot>
     </table>
 
     <hr/>

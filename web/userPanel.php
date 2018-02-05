@@ -33,7 +33,7 @@ include '../widget/header.php';
     <h3>Twój adres E-mail: <?php echo $user->getEmail(); ?></h3>
     <h3>Adres do wysyłki:</h3>
     <h3><?php echo $user->getPostalCode() . ', ' . $user->getCity(); ?></h3>
-    <h3><?php echo 'ul.'.$user->getStreet() . '/' . $user->getHouseNr(); ?></h3>
+    <h3><?php echo 'ul.' . $user->getStreet() . '/' . $user->getHouseNr(); ?></h3>
     <h3>Data utworzenia profilu: <?php echo $user->getCreatedAt(); ?></h3>
 
     <h3><a href="editUserProfile.php" class="btn btn-warning links">Edytuj profil</a></h3>

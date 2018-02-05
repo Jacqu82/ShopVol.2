@@ -40,8 +40,10 @@ include '../widget/head.php';
 </div>
 
 <?php
+
 include '../widget/footer.php';
 include '../widget/scripts.php';
+
 ?>
 
 </body>

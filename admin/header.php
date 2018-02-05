@@ -11,15 +11,12 @@ $admin = loggedAdmin($connection);
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
-<!--                    <li><a href="../web/groups.php">Grupy</a></li>-->
+                    <li><a href="wholeShopHistory.php">Pełna historia zakupów</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-<!--                    --><?php
-//                    $unread = MessageRepository::countAllUnreadMessages($connection, $user->getId());
-//                    ?>
 <!--                    <li><a href="../web/messageSite.php">Messanger-->
 <!--                            <span class="badge">--><?php //echo $unread; ?><!--</span></a></li>-->
-<!--                    <li><a href="../web/searchUsers.php">Szukaj znajomych</a></li>-->
+                    <li><a href="sendMessage.php">Wyślij wiadomość</a></li>
                     <li style="margin-top: 15px">Zalogowany jako:
                         <a class="user" href="adminPanel.php">
                             <?php

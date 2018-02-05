@@ -87,7 +87,8 @@ class OrderRepository
      */
     public static function loadAllOrdersByUserId(PDO $connection, $userId)
     {
-        $sql = "SELECT o.id, o.quantity, o.amount, o.status, o.delivery_method, o.payment_method, o.created_at, p.name 
+        $sql = "SELECT o.quantity, o.amount, o.status, o.kind,
+                o.delivery_method, o.payment_method, o.created_at, p.name 
                 FROM orders o
                 LEFT JOIN products p ON o.product_id = p.id
                 WHERE o.user_id = :user_id
@@ -98,5 +99,95 @@ class OrderRepository
         $result->execute();
 
         return $result;
+    }
+
+    /**
+     * @param PDO $connection
+     * @param $productId
+     * @return bool
+     */
+    public static function sumBoughtProducts(PDO $connection, $productId)
+    {
+        $sql = "SELECT sum(quantity) as sum 
+                FROM orders WHERE product_id = :product_id";
+        $result = $connection->prepare($sql);
+        $result->bindParam('product_id', $productId, PDO::PARAM_INT);
+        $result->execute();
+
+        if ($result->rowCount() > 0) {
+            foreach ($result as $row) {
+                return $row['sum'];
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param PDO $connection
+     * @param $userId
+     * @param $productId
+     * @return bool
+     */
+    public static function countUsersFromOrders(PDO $connection, $userId, $productId)
+    {
+        $sql = "SELECT count(user_id) as user_id
+                FROM orders
+                WHERE product_id = :product_id
+                GROUP BY :user_id";
+        $result = $connection->prepare($sql);
+        $result->bindParam('user_id', $userId);
+        $result->bindParam('product_id', $productId, PDO::PARAM_INT);
+        $result->execute();
+
+        if ($result->rowCount() > 0) {
+            foreach ($result as $row) {
+                return $row['user_id'];
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param PDO $connection
+     * @return PDOStatement
+     */
+    public static function loadWholeShopHistory(PDO $connection)
+    {
+        $sql = "SELECT o.quantity, o.amount, o.status, o.delivery_method, o.kind, 
+                o.payment_method, o.created_at, p.name ,u.username
+                FROM orders o
+                LEFT JOIN products p ON o.product_id = p.id
+                LEFT JOIN users u ON o.user_id = u.id
+                ORDER BY o.created_at DESC";
+
+        $result = $connection->prepare($sql);
+        $result->execute();
+
+        return $result;
+    }
+
+    /**
+     * @param PDO $connection
+     * @param $userId
+     * @return bool
+     */
+    public static function sumOrderAmountByUserId(PDO $connection, $userId)
+    {
+        $sql = "SELECT sum(amount) as amount FROM orders
+                WHERE user_id = :user_id";
+
+        $result = $connection->prepare($sql);
+        $result->bindParam('user_id', $userId);
+        $result->execute();
+
+        if ($result->rowCount() > 0) {
+            foreach ($result as $row) {
+                return $row['amount'];
+            }
+        }
+
+        return false;
     }
 }

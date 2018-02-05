@@ -21,7 +21,7 @@ include '../widget/head.php';
     </div>
     <hr/>
     <?php
-//    var_dump($_SESSION);
+    //    var_dump($_SESSION);
     ?>
     <form method="POST" action="register.php">
         <div>
