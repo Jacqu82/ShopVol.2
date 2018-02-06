@@ -14,15 +14,8 @@ include '../widget/head.php';
 <script src='https://www.google.com/recaptcha/api.js'></script>
 <body>
 <div class="container text-center">
-    <h1>All Or Nothing - stwórz darmowe konto</h1>
-    <div class="row">
-        <h3>Masz konto?</h3>
-        <h4><a href="loginForm.php" class="btn btn-info links">Zaloguj się</a></h4>
-    </div>
+    <h2>All Or Nothing - stwórz darmowe konto</h2>
     <hr/>
-    <?php
-    //    var_dump($_SESSION);
-    ?>
     <form method="POST" action="register.php">
         <div>
             <input type="text" name="username" class="forms" placeholder="Login"
@@ -181,6 +174,11 @@ include '../widget/head.php';
             <button type="submit" class="btn btn-success button">Zarejestruj się</button>
         </div>
     </form>
+    <hr/>
+    <div class="row">
+        <h3>Masz konto?</h3>
+        <h4><a href="loginForm.php" class="btn btn-info links">Zaloguj się</a></h4>
+    </div>
     <hr/>
     <a href="index.php" class="btn btn-default links">Powrót</a>
 </div>

@@ -71,7 +71,7 @@ class ImageRepository
      * @param $productId
      * @return mixed|null
      */
-    public static function loadFirstImageDetailsByProductId(PDO $connection, $productId)
+    public static function loadRandomImageByProductId(PDO $connection, $productId)
     {
         $sql = "SELECT image_path FROM images WHERE product_id = :product_id
                 ORDER BY RAND()";

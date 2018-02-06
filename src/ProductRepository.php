@@ -301,4 +301,42 @@ class ProductRepository
 
         return true;
     }
+
+    /**
+     * @param PDO $connection
+     * @param $name
+     * @return PDOStatement
+     */
+    public static function searchProductsByName(PDO $connection, $name)
+    {
+        $sql = "SELECT id, name, price FROM products WHERE name LIKE :name";
+
+        $result = $connection->prepare($sql);
+        $result->bindValue('name', '%' . $name . '%');
+        $result->execute();
+
+        return $result;
+    }
+
+    /**
+     * @param PDO $connection
+     * @param $name
+     * @param $filter
+     * @param $categoryId
+     * @return PDOStatement
+     */
+    public static function searchProductsByNameAndCategory(PDO $connection, $name, $filter, $categoryId)
+    {
+        $sql = "SELECT id, name, price FROM products
+                WHERE category_id = :category_id 
+                AND name LIKE :name
+                ORDER BY $filter";
+
+        $result = $connection->prepare($sql);
+        $result->bindValue('name', '%' . $name . '%');
+        $result->bindParam('category_id', $categoryId, PDO::PARAM_INT);
+        $result->execute();
+
+        return $result;
+    }
 }

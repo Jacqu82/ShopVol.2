@@ -31,7 +31,46 @@ include '../widget/header.php';
     <h1>All Or Nothing</h1>
     <hr/>
 
+<!--    <form method="post" action="#">-->
+<!--        <input type="text" name="search" class="forms" placeholder="Czego szukasz?">-->
+<!--        <button type="submit">Szukaj</button>-->
+<!--    </form>-->
+
+    <?php
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['search'])) {
+            $_SESSION['search'] = filter_input(INPUT_POST, 'search', FILTER_SANITIZE_STRING);
+            $is_ok = true;
+
+            $searchProducts = ProductRepository::searchProductsByName($connection, $_POST['search']);
+            if (empty($_POST['search'])) {
+                $is_ok = false;
+            }
+            if ($is_ok) {
+                if ($searchProducts->rowCount() > 0) {
+                    $_SESSION['count'] = 'Liczba znalezionych przedmiotów: ' . $searchProducts->rowCount();
+                    header('Location: searchResultsPage.php');
+                } else {
+                    echo "<div class=\"flash-message alert alert-danger alert-dismissible\" role=\"alert\">";
+                    echo '<strong>Brak wyników wyszukiwania</strong>';
+                    echo "</div>";
+                }
+            }
+        }
+    }
+
+    ?>
+
+<!--    <hr/>-->
+
     <div class="col-md-4 navbar-left">
+
+        <form method="post" action="#">
+            <input type="text" name="search" class="forms-search" placeholder="Czego szukasz?"><br/>
+            <button type="submit" class="btn btn-success links-search">Szukaj</button>
+        </form>
+        <hr/>
         <h2>Wszystkie kategorie</h2>
         <hr/>
         <?php
@@ -61,7 +100,7 @@ include '../widget/header.php';
                     $id = $product['id'];
                     $name = substr($product['name'], 0, 30);
 
-                    $image = ImageRepository::loadFirstImageDetailsByProductId($connection, $id);
+                    $image = ImageRepository::loadRandomImageByProductId($connection, $id);
                     $sumProducts = OrderRepository::sumBoughtProducts($connection, $id);
                     $countUsers = OrderRepository::countUsersFromOrders($connection, $user->getId(), $id);
                     echo '<div class="col-md-4 col-md-offset-1"><ul class="nav navbar-nav">';

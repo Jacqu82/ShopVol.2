@@ -44,7 +44,8 @@ class BasketRepository
                 FROM basket b
                 LEFT JOIN products p ON b.product_id = p.id
                 LEFT JOIN images i ON i.product_id = p.id
-                WHERE b.user_id = :user_id";
+                WHERE b.user_id = :user_id
+                ORDER BY image_path LIMIT 1";
 
         $result = $connection->prepare($sql);
         $result->bindParam('user_id', $userId, PDO::PARAM_INT);

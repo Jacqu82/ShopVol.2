@@ -45,7 +45,7 @@ include '../widget/header.php';
 
             if (empty($quantity)) {
                 $is_ok = false;
-                $_SESSION['o_quantity'] = 'Wybierz ilość!';
+                $_SESSION['quantity'] = 'Wybierz ilość!';
             }
             if ($product->getAvailability() < $quantity) {
                 echo '<div class="flash-message alert alert-warning">';
@@ -77,7 +77,7 @@ include '../widget/header.php';
 
             if (empty($quantity)) {
                 $is_ok = false;
-                $_SESSION['b_quantity'] = 'Wybierz ilość!';
+                $_SESSION['quantity'] = 'Wybierz ilość!';
             }
             if ($product->getAvailability() < $quantity) {
                 echo '<div class="flash-message alert alert-warning">';
@@ -99,59 +99,40 @@ include '../widget/header.php';
         }
     }
 
-
     echo '<h3>' . $product->getName() . '</h3>';
+    $category = CategoryRepository::loadCategoryById($connection, $product->getCategoryId());
+    echo '<h4>Kategoria: ' . $category->getName() . '</h4>';
     $price = number_format($product->getPrice(), 2);
-    echo '<h2>Cena: ' . $price . ' zł</h2>';
-    echo '<h4>Dostępnych: ' . $product->getAvailability() . ' szt.</h4>';
+    echo '<h2 class="price">Cena: ' . $price . ' zł</h2>';
+    echo '<h4>Dostępnych: ' . $product->getAvailability() . ' szt.</h4><hr/>';
 
     if ($product->getAvailability() > 0) {
+        if (isset($_SESSION['quantity'])) {
+            echo '<div class="flash-message alert alert-warning">';
+            echo '<strong>' . $_SESSION['quantity'] . '</strong>';
+            echo '</div>';
+            unset($_SESSION['quantity']);
+        }
         ?>
-
+<!--    <div class="col-md-6">-->
         <form method="POST" action="#">
-            <div>
-                <input type="hidden" name="action" value="buyNow"/>
-                <input type="hidden" name="user_id" value="<?php echo $user->getId(); ?>"/>
-                <input type="hidden" name="product_id" value="<?php echo $product->getId(); ?>"/>
-                <?php
-                //                if ($product->getAvailability() > 1) {
-                ?>
-                <input type="number" name="o_quantity" placeholder="Wybierz ilość" class="forms"/><br/>
-                <?php
-                //                }
-                if (isset($_SESSION['o_quantity'])) {
-                    echo '<div class="flash-message alert alert-warning">';
-                    echo '<strong>' . $_SESSION['o_quantity'] . '</strong>';
-                    echo '</div>';
-                    unset($_SESSION['o_quantity']);
-                }
-                ?>
-                <button type="submit" class="btn btn-info links">Kup Teraz</button>
-            </div>
+            <input type="hidden" name="action" value="buyNow"/>
+            <input type="hidden" name="user_id" value="<?php echo $user->getId(); ?>"/>
+            <input type="hidden" name="product_id" value="<?php echo $product->getId(); ?>"/>
+            <input type="number" name="o_quantity" placeholder="Wybierz ilość" class="forms"/>
+            <button type="submit">Kup Teraz</button>
         </form>
         <hr/>
+<!--    </div>-->
+<!--    <div class="col-md-6">-->
         <form method="POST" action="#">
-            <div>
-                <input type="hidden" name="action" value="basket"/>
-                <input type="hidden" name="user_id" value="<?php echo $user->getId(); ?>"/>
-                <input type="hidden" name="product_id" value="<?php echo $product->getId(); ?>"/>
-                <?php
-                //                if ($product->getAvailability() > 1) {
-                ?>
-                <input type="number" name="quantity" placeholder="Wybierz ilość" class="forms"/><br/>
-                <?php
-                //                }
-                if (isset($_SESSION['b_quantity'])) {
-                    echo '<div class="flash-message alert alert-warning">';
-                    echo '<strong>' . $_SESSION['b_quantity'] . '</strong>';
-                    echo '</div>';
-                    unset($_SESSION['b_quantity']);
-                }
-                ?>
-
-                <button type="submit" class="btn btn-danger links">Kup przez koszyk</button>
-            </div>
+            <input type="hidden" name="action" value="basket"/>
+            <input type="hidden" name="user_id" value="<?php echo $user->getId(); ?>"/>
+            <input type="hidden" name="product_id" value="<?php echo $product->getId(); ?>"/>
+            <input type="number" name="quantity" placeholder="Wybierz ilość" class="forms"/>
+            <button type="submit" class="btn btn-warning links">Kup przez koszyk</button>
         </form>
+<!--    </div>-->
 
         <?php
     } else {
