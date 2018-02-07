@@ -30,44 +30,10 @@ include '../widget/header.php';
 <div class="container text-center">
     <h1>All Or Nothing</h1>
     <hr/>
-
+    <h2>Twoje obserwowane oferty</h2>
     <?php
-    $category = CategoryRepository::loadCategoryById($connection, $_GET['id']);
-    ?>
 
-    <div class="col-md-6">
-        <form method="post" action="#">
-            <input type="text" name="search" class="forms-filter"
-                   placeholder='Szukaj w <?php echo $category->getName() ?>'>
-            <button type="submit" class="btn btn-primary links">Szukaj</button>
-        </form>
-    </div>
-    <div class="col-md-6">
-        <form method="post" action="#">
-            <select name="filter" class="forms-filter">
-                <option value="" selected>Sortowanie</option>
-                <option value="name">Nazwa</option>
-                <option value="price">Cena: od najniższej</option>
-                <option value="price DESC">Cena: od najwyższej</option>
-            </select>
-            <button type="submit" class="btn btn-warning links">Sortuj</button>
-        </form>
-    </div>
-
-    <?php
-    $search = '';
-    $filter = 'name';
-
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        if (isset($_POST['search'])) {
-            $search = filter_input(INPUT_POST, 'search', FILTER_SANITIZE_STRING);
-        }
-        if (isset($_POST['filter'])) {
-            $filter = ($_POST['filter']);
-        }
-    }
-
-    $products = ProductRepository::searchProductsByNameAndCategory($connection, $search, $filter, $_GET['id']);
+    $products = FollowRepository::loadAllFollowedProductsByUserId($connection, $user->getId());
 
     foreach ($products as $product) {
         $id = $product['id'];
@@ -86,11 +52,9 @@ include '../widget/header.php';
         }
         echo '<hr/>';
     }
-
-
     ?>
+
     <h3><a href="mainPage.php" class="btn btn-default links">Powrót do strony głównej</a></h3>
-    <hr/>
 </div>
 <?php
 

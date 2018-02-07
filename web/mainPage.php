@@ -31,11 +31,6 @@ include '../widget/header.php';
     <h1>All Or Nothing</h1>
     <hr/>
 
-<!--    <form method="post" action="#">-->
-<!--        <input type="text" name="search" class="forms" placeholder="Czego szukasz?">-->
-<!--        <button type="submit">Szukaj</button>-->
-<!--    </form>-->
-
     <?php
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -59,17 +54,14 @@ include '../widget/header.php';
             }
         }
     }
-
     ?>
 
-<!--    <hr/>-->
-
     <div class="col-md-4 navbar-left">
-
         <form method="post" action="#">
             <input type="text" name="search" class="forms-search" placeholder="Czego szukasz?"><br/>
             <button type="submit" class="btn btn-success links-search">Szukaj</button>
         </form>
+
         <hr/>
         <h2>Wszystkie kategorie</h2>
         <hr/>
@@ -79,10 +71,9 @@ include '../widget/header.php';
         foreach ($categories as $category) {
             $id = $category['id'];
             echo '<h4><ul class="nav nav-pills nav-stacked sidebar">
-                <li><a href="category.php?id=' . $id . '">' . $category['name'] . '</a></li>
+                <li><a href="categoryPage.php?id=' . $id . '">' . $category['name'] . '</a></li>
                 </ul></h4>';
         }
-
         ?>
     </div>
     <div class="col-md-8">
@@ -94,11 +85,10 @@ include '../widget/header.php';
             $categoryName = $category['name'];
             echo '<h2>' . $categoryName . '</h2>';
             $products = ProductRepository::loadTwoRandomProductsByCategoryId($connection, $category['id']);
-
             if ($products->rowCount() > 0) {
                 foreach ($products as $product) {
                     $id = $product['id'];
-                    $name = substr($product['name'], 0, 30);
+                    $name = trim(substr($product['name'], 0, 30));
 
                     $image = ImageRepository::loadRandomImageByProductId($connection, $id);
                     $sumProducts = OrderRepository::sumBoughtProducts($connection, $id);
@@ -113,15 +103,15 @@ include '../widget/header.php';
                         echo '<span class="glyphicon glyphicon-user"></span> ' . $countUsers . ' osób kupiło ' . $sumProducts . ' sztuk';
                     }
                     echo '</ul></div>';
-                    echo "<img src='" . $image['image_path'] . "' width='150' height='100'/><hr/>";
+                    echo "<img src='" . $image['image_path'] . "' width='150' height='100'/><br/><br/>";
                 }
             } else {
                 echo '<div class="alert alert-warning">';
                 echo '<strong>Brak produktów w kategorii ' . $category['name'] . '</strong>';
                 echo '</div>';
             }
+            echo '<hr/>';
         }
-
         ?>
     </div>
     <hr/>

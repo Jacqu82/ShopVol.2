@@ -15,8 +15,6 @@ class ImageOperations
             mkdir($path);
         }
         $path .= $filename;
-//        var_dump($path);
-//        die;
         if (!file_exists($path)) {
             $upload = move_uploaded_file($_FILES['imageFile']['tmp_name'], $path);
         } else {

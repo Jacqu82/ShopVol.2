@@ -22,7 +22,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $street = filter_input(INPUT_POST, 'street', FILTER_SANITIZE_STRING);
         $houseNr = filter_input(INPUT_POST, 'houseNr', FILTER_SANITIZE_NUMBER_INT);
 
-        //check username length
         if ((strlen($username) < 3) || (strlen($username) > 15)) {
             $is_ok = false;
             $_SESSION['e_username'] = 'Login musi zawierać od 3 do 15 znaków!';
@@ -37,7 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header('Location: registerForm.php');
         }
 
-        //alphanumeric letters
         if (ctype_alnum($username) === false) {
             $is_ok = false;
             $_SESSION['e_username'] = 'Login może skaładać się tylko z liter i cyfr (bez polskich znaków)';
@@ -52,14 +50,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header('Location: registerForm.php');
         }
 
-        //check correct e-mail
         if (empty($email)) {
             $is_ok = false;
             $_SESSION['e_email'] = 'To nie jest poprawny adres e-mail!';
             header('Location: registerForm.php');
         }
 
-        //check password length
         if ((strlen($password1) < 6) || (strlen($password1) > 15)) {
             $is_ok = false;
             $_SESSION['e_password'] = 'Hasło musi zawierać od 6 do 15 znaków!';

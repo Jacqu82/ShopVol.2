@@ -35,6 +35,19 @@ include '../widget/header.php';
 
     $product = ProductRepository::loadProductById($connection, $_GET['id']);
 
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['data_user_id']) && isset($_POST['data_product_id'])) {
+            $userId = $_POST['data_user_id'];
+            $productId = $_POST['data_product_id'];
+
+            $follow = new Follow();
+            $follow
+                ->setUserId($userId)
+                ->setProductId($productId);
+            FollowRepository::saveToDB($connection, $follow);
+        }
+    }
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] == 'buyNow') {
         if (isset($_POST['user_id']) && isset($_POST['product_id']) && isset($_POST['o_quantity'])) {
             $userId = (int)$_POST['user_id'];
@@ -67,6 +80,7 @@ include '../widget/header.php';
             }
         }
     }
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] == 'basket') {
         if (isset($_POST['user_id']) && isset($_POST['product_id']) && isset($_POST['quantity'])) {
             $userId = (int)$_POST['user_id'];
@@ -106,6 +120,25 @@ include '../widget/header.php';
     echo '<h2 class="price">Cena: ' . $price . ' zł</h2>';
     echo '<h4>Dostępnych: ' . $product->getAvailability() . ' szt.</h4><hr/>';
 
+    $secureOneVote = FollowRepository::secureToAddOneProductToFollow($connection, $user->getId(), $product->getId());
+    if ($secureOneVote->rowCount() == 0) {
+        ?>
+
+        <div class="vote">
+            <a href="#" class="btn btn-danger links follow"
+               data-user_id="<?php echo $user->getId(); ?>"
+               data-product_id="<?php echo $product->getId(); ?>">Dodaj do obserwowanych</a>
+        </div>
+        <hr/>
+
+        <?php
+    } else {
+        echo "<div class=\"alert alert-success\">";
+        echo '<strong>Obserwujesz tą ofertę!</strong><br/>';
+        echo '<a href="followedProductPage.php">Przejdź do listy obserwowanych ofert</a>';
+        echo "</div><hr/>";
+    }
+
     if ($product->getAvailability() > 0) {
         if (isset($_SESSION['quantity'])) {
             echo '<div class="flash-message alert alert-warning">';
@@ -114,7 +147,6 @@ include '../widget/header.php';
             unset($_SESSION['quantity']);
         }
         ?>
-<!--    <div class="col-md-6">-->
         <form method="POST" action="#">
             <input type="hidden" name="action" value="buyNow"/>
             <input type="hidden" name="user_id" value="<?php echo $user->getId(); ?>"/>
@@ -123,8 +155,6 @@ include '../widget/header.php';
             <button type="submit">Kup Teraz</button>
         </form>
         <hr/>
-<!--    </div>-->
-<!--    <div class="col-md-6">-->
         <form method="POST" action="#">
             <input type="hidden" name="action" value="basket"/>
             <input type="hidden" name="user_id" value="<?php echo $user->getId(); ?>"/>
@@ -132,26 +162,23 @@ include '../widget/header.php';
             <input type="number" name="quantity" placeholder="Wybierz ilość" class="forms"/>
             <button type="submit" class="btn btn-warning links">Kup przez koszyk</button>
         </form>
-<!--    </div>-->
-
         <?php
     } else {
         echo '<div class="alert alert-danger">';
         echo '<strong>Brak na stanie, spróbuj później :)</strong>';
         echo '</div>';
     }
+
     echo '<hr/>';
     echo '<h4>' . $product->getDescription() . '</h4>';
 
     $images = ImageRepository::loadImageByProductId($connection, $_GET['id']);
     foreach ($images as $image) {
-
         echo "
         <div class='img-thumbnail1'>
             <img src='" . $image['image_path'] . "' width='450' height='350'/><br/>
         </div>";
     }
-
     ?>
 
     <hr/>

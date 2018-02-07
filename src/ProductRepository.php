@@ -320,12 +320,12 @@ class ProductRepository
 
     /**
      * @param PDO $connection
-     * @param $name
+     * @param $search
      * @param $filter
      * @param $categoryId
      * @return PDOStatement
      */
-    public static function searchProductsByNameAndCategory(PDO $connection, $name, $filter, $categoryId)
+    public static function searchAndFilterProductsByNameAndCategory(PDO $connection, $search, $filter, $categoryId)
     {
         $sql = "SELECT id, name, price FROM products
                 WHERE category_id = :category_id 
@@ -333,7 +333,7 @@ class ProductRepository
                 ORDER BY $filter";
 
         $result = $connection->prepare($sql);
-        $result->bindValue('name', '%' . $name . '%');
+        $result->bindValue('name', '%' . $search . '%');
         $result->bindParam('category_id', $categoryId, PDO::PARAM_INT);
         $result->execute();
 
