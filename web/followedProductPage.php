@@ -30,27 +30,44 @@ include '../widget/header.php';
 <div class="container text-center">
     <h1>All Or Nothing</h1>
     <hr/>
-    <h2>Twoje obserwowane oferty</h2>
+
     <?php
 
     $products = FollowRepository::loadAllFollowedProductsByUserId($connection, $user->getId());
 
-    foreach ($products as $product) {
-        $id = $product['id'];
-        $name = substr($product['name'], 0, 30);
-        $price = number_format($product['price'], 2);
-        $image = ImageRepository::loadRandomImageByProductId($connection, $id);
-        echo "<h4><a href='productPage.php?id=$id' class='btn btn-success links'>$name</a><br/>
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['follow_id'], $_POST['delete_follow'])) {
+            $followId = $_POST['follow_id'];
+            $toDelete = FollowRepository::loadFollowById($connection, $followId);
+            FollowRepository::delete($connection, $toDelete);
+            header('Location: followedProductPage.php');
+        }
+    }
+
+    if ($products->rowCount() > 0) {
+        echo '<h2>Twoje obserwowane oferty</h2>';
+        foreach ($products as $product) {
+            $id = $product['id'];
+            $name = substr($product['name'], 0, 30);
+            $price = number_format($product['price'], 2);
+            $image = ImageRepository::loadRandomImageByProductId($connection, $id);
+            echo "<h4><a href='productPage.php?id=$id' class='btn btn-success links'>$name</a><br/>
         <img src='" . $image['image_path'] . "' width='300' height='200'/></h4>
         <h3 class='price'>Cena: $price zł</h3>";
-        $sumProducts = OrderRepository::sumBoughtProducts($connection, $id);
-        $countUsers = OrderRepository::countUsersFromOrders($connection, $user->getId(), $id);
-        if (($sumProducts === null) && (!$countUsers)) {
-            echo '<h4><span class="glyphicon glyphicon-user"></span> 0 osób kupiło 0 sztuk</h4>';
-        } else {
-            echo '<h4><span class="glyphicon glyphicon-user"></span> ' . $countUsers . ' osób kupiło ' . $sumProducts . ' sztuk</h4>';
+            $sumProducts = OrderRepository::sumBoughtProducts($connection, $id);
+            $sumUsers = OrderRepository::countUsersFromOrders($connection, $id);
+            handlingPolishGrammaticalCase::sumProductsAndSumUsers($sumProducts, $sumUsers);
+            echo "<form method='POST'>
+                <input type=\"submit\" class=\"btn btn-danger links\" name=\"delete_follow\" value=\"Usuń z obserwowanych\"/>
+                <input type='hidden' name='follow_id' value='" . $product['follow_id'] . " '>
+              </form>";
+            echo '<hr/>';
         }
-        echo '<hr/>';
+    } else {
+        echo '<h3>Nie obserwujesz żadnych przedmiotów!</h3>';
+        echo '<div>
+        <img src="../images/shop.jpg" width="500" height="300"/>
+        </div>';
     }
     ?>
 

@@ -118,7 +118,11 @@ include '../widget/header.php';
     echo '<h4>Kategoria: ' . $category->getName() . '</h4>';
     $price = number_format($product->getPrice(), 2);
     echo '<h2 class="price">Cena: ' . $price . ' zł</h2>';
-    echo '<h4>Dostępnych: ' . $product->getAvailability() . ' szt.</h4><hr/>';
+    echo '<h4>Dostępnych: ' . $product->getAvailability() . ' szt.</h4>';
+    $sumProducts = OrderRepository::sumBoughtProducts($connection, $product->getId());
+    $sumUsers = OrderRepository::countUsersFromOrders($connection, $product->getId());
+    handlingPolishGrammaticalCase::sumProductsAndSumUsers($sumProducts, $sumUsers);
+    echo '<hr/>';
 
     $secureOneVote = FollowRepository::secureToAddOneProductToFollow($connection, $user->getId(), $product->getId());
     if ($secureOneVote->rowCount() == 0) {

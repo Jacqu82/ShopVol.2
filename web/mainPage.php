@@ -92,16 +92,12 @@ include '../widget/header.php';
 
                     $image = ImageRepository::loadRandomImageByProductId($connection, $id);
                     $sumProducts = OrderRepository::sumBoughtProducts($connection, $id);
-                    $countUsers = OrderRepository::countUsersFromOrders($connection, $user->getId(), $id);
+                    $sumUsers = OrderRepository::countUsersFromOrders($connection, $id);
                     echo '<div class="col-md-4 col-md-offset-1"><ul class="nav navbar-nav">';
                     echo "<li><a href='productPage.php?id=$id'>$name</a>";
                     $price = number_format($product['price'], 2);
                     echo '<span class="price">Cena: ' . $price . ' zł</span></li><br/>';
-                    if (($sumProducts === null) && (!$countUsers)) {
-                        echo '<span class="glyphicon glyphicon-user"></span> 0 osób kupiło 0 sztuk';
-                    } else {
-                        echo '<span class="glyphicon glyphicon-user"></span> ' . $countUsers . ' osób kupiło ' . $sumProducts . ' sztuk';
-                    }
+                    handlingPolishGrammaticalCase::sumProductsAndSumUsers($sumProducts, $sumUsers);
                     echo '</ul></div>';
                     echo "<img src='" . $image['image_path'] . "' width='150' height='100'/><br/><br/>";
                 }

@@ -59,7 +59,7 @@ class FollowRepository
      */
     public static function loadAllFollowedProductsByUserId(PDO $connection, $userId)
     {
-        $sql = "SELECT p.id, p.name, p.price FROM products p
+        $sql = "SELECT p.id, p.name, p.price, f.id as follow_id FROM products p
                 LEFT JOIN follow f ON p.id = f.product_id
                 WHERE user_id = :user_id";
 
@@ -68,5 +68,53 @@ class FollowRepository
         $result->execute();
 
         return $result;
+    }
+
+    /**
+     * @param PDO $connection
+     * @param $id
+     * @return bool|Follow
+     */
+    public static function loadFollowById(PDO $connection, $id)
+    {
+        $sql = "SELECT * FROM follow WHERE id = :id";
+
+        $result = $connection->prepare($sql);
+        $result->bindParam('id', $id, PDO::PARAM_INT);
+        $result->execute();
+
+        if ($result->rowCount() > 0) {
+            $row = $result->fetch();
+            $follow = new Follow();
+            $follow
+                ->setId($row['id'])
+                ->setUserId($row['user_id'])
+                ->setProductId($row['product_id'])
+                ->setCreatedAt($row['created_at']);
+
+            return $follow;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param PDO $connection
+     * @param Follow $follow
+     * @return bool
+     */
+    public static function delete(PDO $connection, Follow $follow)
+    {
+        $id = $follow->getId();
+        if ($id != -1) {
+            $sql = "DELETE FROM follow WHERE id = :id";
+            $result = $connection->prepare($sql);
+            $result->bindParam('id', $id, PDO::PARAM_INT);
+            $result->execute();
+
+            return true;
+        }
+
+        return false;
     }
 }

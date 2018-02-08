@@ -125,24 +125,22 @@ class OrderRepository
 
     /**
      * @param PDO $connection
-     * @param $userId
      * @param $productId
      * @return bool
      */
-    public static function countUsersFromOrders(PDO $connection, $userId, $productId)
+    public static function countUsersFromOrders(PDO $connection, $productId)
     {
-        $sql = "SELECT count(user_id) as user_id
+        $sql = "SELECT count(user_id) as user FROM (SELECT count(id) as user_id
                 FROM orders
                 WHERE product_id = :product_id
-                GROUP BY :user_id";
+                GROUP BY user_id) as first";
         $result = $connection->prepare($sql);
-        $result->bindParam('user_id', $userId);
         $result->bindParam('product_id', $productId, PDO::PARAM_INT);
         $result->execute();
 
         if ($result->rowCount() > 0) {
             foreach ($result as $row) {
-                return $row['user_id'];
+                return $row['user'];
             }
         }
 
