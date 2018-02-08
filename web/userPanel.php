@@ -35,8 +35,9 @@ include '../widget/header.php';
     <h3><?php echo $user->getPostalCode() . ', ' . $user->getCity(); ?></h3>
     <h3><?php echo 'ul.' . $user->getStreet() . '/' . $user->getHouseNr(); ?></h3>
     <h3>Data utworzenia profilu: <?php echo $user->getCreatedAt(); ?></h3>
-
+    <hr/>
     <h3><a href="followedProductPage.php" class="btn btn-success links">Twoje obserwowane oferty</a></h3>
+    <h3><a href="unpaidOrdersPage.php" class="btn btn-success links">Nieopłacone zamówienia</a></h3>
     <h3><a href="editUserProfile.php" class="btn btn-warning links">Edytuj profil</a></h3>
     <hr/>
     <h3><a href="mainPage.php" class="btn btn-default links">Powrót do Strony głównej</a></h3>

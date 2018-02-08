@@ -50,7 +50,8 @@ include '../widget/header.php';
     echo '<h2>Wszytkie produkty w Twoim koszyku:</h2>';
     foreach ($basket as $item) {
         $_SESSION['product_id'] = $item['product_id'];
-        echo "<img src='" . $item['image_path'] . "' width='100' height='75'/>";
+        $image = ImageRepository::loadFirstImageByProductId($connection, $item['product_id']);
+        echo "<img src='" . $image['image_path'] . "' width='100' height='75'/>";
         echo '<h3>' . $item['name'] . ' | ';
         $amount = number_format($item['amount'], 2);
         echo 'Cena: ' . $amount . ' zł | Ilość: ' . $item['quantity'] . '</h3>';

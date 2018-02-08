@@ -44,7 +44,7 @@ include 'header.php';
                 $productId = $product['id'];
                 $productName = trim(substr($product['name'], 0, 30));
 
-                echo "<a href='editOrDeleteProduct.php?id=$productId'
+                echo "<a href='editOrDeleteProductImages.php?id=$productId'
                 class='btn btn-success links'>$productName</a> ";
             }
         }
@@ -52,7 +52,7 @@ include 'header.php';
     ?>
 
     <hr/>
-    <h3><a href="categoryProductList.php" class="btn btn-default links">Powrót do listy kategorii</a></h3>
+    <h3><a href="categoryImageList.php" class="btn btn-default links">Powrót do listy kategorii</a></h3>
 </div>
 <?php
 

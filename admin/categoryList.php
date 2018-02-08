@@ -31,8 +31,6 @@ include 'header.php';
     <h1>All Or Nothing</h1>
     <hr/>
 
-    <h3>Edytuj lub kategorie</h3>
-
     <?php
 
     if (isset($_SESSION['delete'])) {
@@ -43,7 +41,6 @@ include 'header.php';
     }
 
     $categories = CategoryRepository::loadAllCategories($connection);
-
     foreach ($categories as $category) {
         $id = $category['id'];
         $name = $category['name'];
@@ -51,9 +48,9 @@ include 'header.php';
         echo "<a href='editOrDeleteCategory.php?id=$id'
                 class='btn btn-success links'>$name</a> ";
     }
-
     ?>
 
+    <hr/>
     <h3><a href="adminPanel.php" class="btn btn-default links">Powrót do panelu Admina</a></h3>
 </div>
 <?php

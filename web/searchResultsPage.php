@@ -43,12 +43,12 @@ include '../widget/header.php';
         $id = $searchProduct['id'];
         $name = substr($searchProduct['name'], 0, 30);
         $price = number_format($searchProduct['price'], 2);
-        $image = ImageRepository::loadRandomImageByProductId($connection, $id);
+        $image = ImageRepository::loadFirstImageByProductId($connection, $id);
         echo "<h4><a href='productPage.php?id=$id' class='btn btn-success links'>$name</a><br/>
         <img src='" . $image['image_path'] . "' width='300' height='200'/></h4>
         <h3 class='price'>Cena: $price zł</h3>";
         $sumProducts = OrderRepository::sumBoughtProducts($connection, $id);
-        $countUsers = OrderRepository::countUsersFromOrders($connection, $user->getId(), $id);
+        $countUsers = OrderRepository::countUsersFromOrders($connection, $id);
         if (($sumProducts === null) && (!$countUsers)) {
             echo '<h4><span class="glyphicon glyphicon-user"></span> 0 osób kupiło 0 sztuk</h4>';
         } else {

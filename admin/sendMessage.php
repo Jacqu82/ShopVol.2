@@ -31,11 +31,10 @@ include 'header.php';
     <hr/>
     <div>
         <form action="#" method="POST">
-            <h3>Napisz wiadomość: </h3>
+            <h3>Wyślij wiadomość do użytkownika: </h3>
             <?php
 
             $users = UserRepository::loadAllUsers($connection);
-
             echo "Wybierz użytkownika: <br/>";
             echo '<div>';
             echo "<select name='userId' class='forms'>";
@@ -64,7 +63,6 @@ include 'header.php';
         ->setUserId($userId)
         ->setText($text)
         ->setIsRead(0);
-
     if ($message) {
     MessageRepository::saveToDB($connection, $message);
     ?>
@@ -80,14 +78,13 @@ include 'header.php';
             }
         }
     }
-
     $sent = MessageRepository::countAllSentMessages($connection, $admin->getId());
-
     ?>
+
     <hr/>
     <a href="outbox.php" class="btn btn-info links">Skrzynka nadawcza
         <span class="badge"><?php echo $sent; ?></span></a>
-
+    <hr/>
     <h3><a href="adminPanel.php" class="btn btn-default links">Powrót do panelu Admina</a></h3>
     </div>
 

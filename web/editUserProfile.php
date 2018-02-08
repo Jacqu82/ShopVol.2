@@ -242,14 +242,12 @@ include '../widget/header.php';
             <br/>
             <button type="submit" name="userSubmit" class="btn btn-warning links">Zmień</button>
         </div>
-        <hr/>
         <p class="text-primary">Aktualizuj adres E-mail:</p>
         <div class="form-group">
             <input type="email" class="forms" name="email" value="<?php echo $user->getEmail(); ?>">
             <br/>
             <button type="submit" name="emailSubmit" class="btn btn-warning links">Zmień</button>
         </div>
-        <hr/>
         <p class="text-primary">Zmień hasło:</p>
         <div class="form-group">
             <input type="password" class="forms" name="oldPassword" placeholder="Stare hasło">
@@ -260,28 +258,24 @@ include '../widget/header.php';
             <br/>
             <button type="submit" name="passSubmit" class="btn btn-warning links">Zmień</button>
         </div>
-        <hr/>
         <p class="text-primary">Aktualizuj swoje miasto:</p>
         <div class="form-group">
             <input type="text" class="forms" name="city" value="<?php echo $user->getCity(); ?>">
             <br/>
             <button type="submit" name="citySubmit" class="btn btn-warning links">Zmień</button>
         </div>
-        <hr/>
         <p class="text-primary">Aktualizuj kod pocztowy:</p>
         <div class="form-group">
             <input type="text" class="forms" name="postalCode" value="<?php echo $user->getPostalCode(); ?>">
             <br/>
             <button type="submit" name="postalCodeSubmit" class="btn btn-warning links">Zmień</button>
         </div>
-        <hr/>
         <p class="text-primary">Aktualizuj ulice i nr domu:</p>
         <div class="form-group">
             <input type="text" class="forms" name="street" value="<?php echo $user->getStreet(); ?>">
             <br/>
             <button type="submit" name="streetSubmit" class="btn btn-warning links">Zmień</button>
         </div>
-        <hr/>
         <p class="text-primary">Aktualizuj nr mieszkania:</p>
         <div class="form-group">
             <input type="text" class="forms" name="houseNr" value="<?php echo $user->getHouseNr(); ?>">
@@ -295,7 +289,7 @@ include '../widget/header.php';
             </div>
         </div>
     </form>
-
+    <hr/>
     <h3><a href="userPanel.php" class="btn btn-default links">Powrót do Strony użytkownika</a></h3>
 </div>
 <?php

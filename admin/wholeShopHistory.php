@@ -30,7 +30,6 @@ include 'header.php';
 <div class="container text-center">
     <h1>All Or Nothing</h1>
     <hr/>
-
     <h3>Pełna historia zakupów</h3>
 
     <table align="center">
@@ -70,7 +69,7 @@ include 'header.php';
         }
         ?>
     </table>
-
+    <hr/>
     <h3><a href="adminPanel.php" class="btn btn-default links">Powrót do panelu Admina</a></h3>
 </div>
 <?php

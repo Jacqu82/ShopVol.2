@@ -2,6 +2,7 @@
 
 require_once '../src/lib.php';
 require_once '../connection.php';
+
 session_start();
 if (!isset($_SESSION['admin'])) {
     header('Location: ../web/index.php');
@@ -28,6 +29,7 @@ include 'header.php';
 <div class="container text-center">
     <h1>All Or Nothing</h1>
     <hr/>
+    <h2>Dodaj kategorię</h2>
 
     <?php
 
@@ -54,14 +56,12 @@ include 'header.php';
                 $category = new Category();
                 $category->setName($name);
                 CategoryRepository::saveToDB($connection, $category);
-
                 echo "<div class=\"flash-message alert alert-success alert-dismissible\" role=\"alert\">";
                 echo '<strong>Poprawnie dodano kategorię do bazy</strong>';
                 echo "</div>";
             }
         }
     }
-
     ?>
 
     <form method="POST" action="#">
@@ -81,7 +81,6 @@ include 'header.php';
     foreach ($categories as $category) {
         echo '<h4>' . $category['name'] . '</h4>';
     }
-
     ?>
 
     <hr/>

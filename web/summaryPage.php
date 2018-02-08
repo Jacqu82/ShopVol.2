@@ -45,9 +45,10 @@ include '../widget/header.php';
     $orders = OrderRepository::loadLastOrderByUserId($connection, $user->getId());
     foreach ($orders as $order) {
         echo "<img src='" . $order['image_path'] . "' width='100' height='75'/>";
-        echo '<h3>' . $order['name'] . ' | ';
+        echo '<h3>' . $order['name'] . ' | Ilość: ' . $order['quantity'] . '</h3>';
         $amount = number_format($order['amount'], 2);
-        echo 'Łączna kwota do zapłaty: ' . $amount . ' zł | Ilość: ' . $order['quantity'] . '</h3>';
+        echo '<h3 class="price">Łączna kwota do zapłaty: ' . $amount . ' zł</h3>';
+        echo '<hr/>';
         echo '<h3>Metoda dostawy: ' . $order['delivery_method'] . '</h3>';
         echo '<h3>Metoda płatności: ' . $order['payment_method'] . '</h3>';
     }

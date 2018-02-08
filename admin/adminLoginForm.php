@@ -13,13 +13,12 @@ include '../widget/head.php';
 ?>
 <body>
 <div class="container text-center">
-    <h1>Zaloguj się jako Administrator</h1>
+    <h2>Zaloguj się jako Administrator</h2>
     <hr/>
     <form method="POST" action="adminLogin.php">
         <div>
             <input type="text" name="login" class="forms" placeholder="Login"/>
         </div>
-
         <div>
             <input type="password" name="password" class="forms" placeholder="Hasło"/>
         </div>

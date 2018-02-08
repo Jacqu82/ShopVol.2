@@ -40,12 +40,10 @@ class BasketRepository
      */
     public static function loadBasketProductsByUserId(PDO $connection, $userId)
     {
-        $sql = "SELECT b.id, b.amount, b.product_id, b.quantity, p.id as product_id, p.name, i.image_path 
+        $sql = "SELECT b.id, b.amount, b.product_id, b.quantity, p.id as product_id, p.name
                 FROM basket b
                 LEFT JOIN products p ON b.product_id = p.id
-                LEFT JOIN images i ON i.product_id = p.id
-                WHERE b.user_id = :user_id
-                ORDER BY image_path LIMIT 1";
+                WHERE b.user_id = :user_id";
 
         $result = $connection->prepare($sql);
         $result->bindParam('user_id', $userId, PDO::PARAM_INT);

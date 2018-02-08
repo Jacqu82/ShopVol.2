@@ -28,7 +28,7 @@ include 'header.php';
 <div class="container text-center">
     <h1>All Or Nothing</h1>
     <hr/>
-    <h3>Witaj <?php echo $admin->getLogin() . "!"; ?></h3>
+    <h2>Witaj <?php echo $admin->getLogin() . "!"; ?></h2>
     <h3>Panel Administracyjny</h3>
 
     <?php
@@ -39,18 +39,13 @@ include 'header.php';
         echo "</div>";
         unset($_SESSION['delete_product']);
     }
-
     ?>
-
     <a href="addCategory.php" class="btn btn-success links">Dodaj kategorię przedmiotów</a>
     <a href="categoryList.php" class="btn btn-warning links">Edytuj lub usuń kategorię</a>
     <a href="addProduct.php" class="btn btn-success links">Dodaj nowy przedmiot do bazy</a>
     <a href="addProductImage.php" class="btn btn-primary links">Dodaj zdjęcia do produktu</a>
     <a href="categoryProductList.php" class="btn btn-info links">Edytuj lub usuń przedmiot</a>
-    <a href="editOrDeleteProductImages.php" class="btn btn-primary links">Edytuj lub usuń zdjęcia przedmiotu</a>
-<!--    <a href="sendMessage.php" class="btn btn-success links">Napisz wiadomość do użytkownika</a>-->
-    <!--    <a href="editNationalTeamFlag.php" class="btn btn-warning links">Edytuj flage reprezentacji</a>-->
-
+    <a href="categoryImageList.php" class="btn btn-primary links">Edytuj lub usuń zdjęcia przedmiotu</a>
     <hr/>
 </div>
 

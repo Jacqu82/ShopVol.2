@@ -30,7 +30,7 @@ include 'header.php';
 <div class="container text-center">
     <h1>All Or Nothing</h1>
     <hr/>
-
+    <h2>Edytuj kategorię</h2>
     <?php
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {

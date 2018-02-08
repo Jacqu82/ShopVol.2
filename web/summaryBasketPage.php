@@ -45,15 +45,16 @@ include '../widget/header.php';
     $sum = BasketRepository::sumBasketProductsByUserId($connection, $user->getId());
     $basket = BasketRepository::loadBasketProductsByUserId($connection, $user->getId());
     foreach ($basket as $item) {
-        echo "<img src='" . $item['image_path'] . "' width='100' height='75'/>";
+        $image = ImageRepository::loadFirstImageByProductId($connection, $item['product_id']);
+        echo "<img src='" . $image['image_path'] . "' width='100' height='75'/>";
         echo '<h3>' . $item['name'] . ' | ';
         $amount = number_format($item['amount'], 2);
         echo 'Cena: ' . $amount . ' zł | Ilość: ' . $item['quantity'] . '</h3>';
     }
 
     $total = number_format($sum, 2);
-    echo '<h3>Łączna kwota do zapłaty: ' . $total . '</h3>';
-
+    echo '<h3 class="price">Łączna kwota do zapłaty: ' . $total . '</h3>';
+    echo '<hr/>';
     if (isset($_SESSION['deliveryMethod'])) {
         echo '<h3>Metoda dostawy: ' . $_SESSION['deliveryMethod'] . '<h3/>';
         unset ($_SESSION['deliveryMethod']);
@@ -72,7 +73,6 @@ include '../widget/header.php';
         $toDelete = BasketRepository::loadBasketById($connection, $item['id']);
         BasketRepository::deleteWholeBasketByUserId($connection, $toDelete, $user->getId());
     }
-
     ?>
 
     <hr/>

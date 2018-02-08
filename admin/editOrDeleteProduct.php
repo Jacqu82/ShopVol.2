@@ -38,8 +38,6 @@ include 'header.php';
         if (isset($_POST['name'], $_POST['nameSubmit'])) {
             $is_ok = true;
             $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
-
-            //validate name
             if (strlen($name) > 30) {
                 echo "<div class=\"text-center alert alert-danger\">";
                 echo "<strong>Nazwa przedmiotu może zawierać max 30 znaków!</strong>";
@@ -52,7 +50,6 @@ include 'header.php';
                 echo "</div>";
                 $is_ok = false;
             }
-
             //validate success
             if ($is_ok) {
                 $product->setName($name);
@@ -66,15 +63,12 @@ include 'header.php';
         if (isset($_POST['price'], $_POST['priceSubmit'])) {
             $is_ok = true;
             $price = filter_input(INPUT_POST, 'price', FILTER_SANITIZE_NUMBER_FLOAT);
-
-            //validate price
             if (!$price > 0) {
                 echo "<div class=\"text-center alert alert-danger\">";
                 echo "<strong>Cena musi być większa od zera!</strong>";
                 echo "</div>";
                 $is_ok = false;
             }
-
             //validate success
             if ($is_ok) {
                 $product->setPrice($price);
@@ -87,7 +81,6 @@ include 'header.php';
 
         if (isset($_POST['description'], $_POST['descriptionSubmit'])) {
             $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
-
             $product->setDescription($description);
             ProductRepository::updateProductDescription($connection, $product);
             echo "<div class=\"flash-message text-center alert alert-success alert-dismissible\" role=\"alert\">";
@@ -97,7 +90,6 @@ include 'header.php';
 
         if (isset($_POST['availability'], $_POST['availabilitySubmit'])) {
             $availability = filter_input(INPUT_POST, 'availability', FILTER_SANITIZE_NUMBER_INT);
-
             $product->setAvailability($availability);
             ProductRepository::updateProductAvailability($connection, $product);
             echo "<div class=\"flash-message text-center alert alert-success alert-dismissible\" role=\"alert\">";
@@ -120,7 +112,6 @@ include 'header.php';
             header('Location: adminPanel.php');
         }
     }
-
     ?>
 
     <div class="container" align="center">
@@ -132,14 +123,12 @@ include 'header.php';
                 <br/>
                 <button type="submit" name="nameSubmit" class="btn btn-warning links">Zmień</button>
             </div>
-            <hr/>
             <p class="text-primary">Zmień cene:</p>
             <div class="form-group">
                 <input type="text" class="forms" name="price" value="<?php echo $product->getPrice(); ?>"/>
                 <br>
                 <button type="submit" name="priceSubmit" class="btn btn-warning links">Zmień</button>
             </div>
-            <hr/>
             <p class="text-primary">Zmień opis:</p>
             <div class="form-group">
                 <textarea rows="5" name="description" class="forms"><?php echo $product->getDescription(); ?></textarea>

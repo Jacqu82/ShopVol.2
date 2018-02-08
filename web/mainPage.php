@@ -90,7 +90,7 @@ include '../widget/header.php';
                     $id = $product['id'];
                     $name = trim(substr($product['name'], 0, 30));
 
-                    $image = ImageRepository::loadRandomImageByProductId($connection, $id);
+                    $image = ImageRepository::loadFirstImageByProductId($connection, $id);
                     $sumProducts = OrderRepository::sumBoughtProducts($connection, $id);
                     $sumUsers = OrderRepository::countUsersFromOrders($connection, $id);
                     echo '<div class="col-md-4 col-md-offset-1"><ul class="nav navbar-nav">';

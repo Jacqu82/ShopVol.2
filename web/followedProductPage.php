@@ -48,12 +48,12 @@ include '../widget/header.php';
         echo '<h2>Twoje obserwowane oferty</h2>';
         foreach ($products as $product) {
             $id = $product['id'];
-            $name = substr($product['name'], 0, 30);
+            $name = substr($product['name'], 0, 28);
             $price = number_format($product['price'], 2);
-            $image = ImageRepository::loadRandomImageByProductId($connection, $id);
+            $image = ImageRepository::loadFirstImageByProductId($connection, $id);
             echo "<h4><a href='productPage.php?id=$id' class='btn btn-success links'>$name</a><br/>
-        <img src='" . $image['image_path'] . "' width='300' height='200'/></h4>
-        <h3 class='price'>Cena: $price zł</h3>";
+            <img src='" . $image['image_path'] . "' width='300' height='200'/></h4>
+            <h3 class='price'>Cena: $price zł</h3>";
             $sumProducts = OrderRepository::sumBoughtProducts($connection, $id);
             $sumUsers = OrderRepository::countUsersFromOrders($connection, $id);
             handlingPolishGrammaticalCase::sumProductsAndSumUsers($sumProducts, $sumUsers);
@@ -71,7 +71,7 @@ include '../widget/header.php';
     }
     ?>
 
-    <h3><a href="mainPage.php" class="btn btn-default links">Powrót do strony głównej</a></h3>
+    <h3><a href="userPanel.php" class="btn btn-default links">Powrót do Strony użytkownika</a></h3>
 </div>
 <?php
 

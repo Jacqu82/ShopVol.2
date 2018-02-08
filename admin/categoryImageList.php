@@ -38,7 +38,7 @@ include 'header.php';
         $id = $category['id'];
         $name = $category['name'];
 
-        echo "<a href='productList.php?id=$id&name=$name'
+        echo "<a href='productImageList.php?id=$id&name=$name'
                 class='btn btn-success links'>$name</a> ";
     }
     ?>

@@ -33,32 +33,24 @@ include '../widget/header.php';
 
     <?php
 
-    $sum = BasketRepository::sumBasketProductsByUserId($connection, $user->getId());
-    $basket = BasketRepository::loadBasketProductsByUserId($connection, $user->getId());
-    foreach ($basket as $item) {
-        $image = ImageRepository::loadFirstImageByProductId($connection, $item['product_id']);
-        echo "<img src='" . $image['image_path'] . "' width='100' height='75'/>";
-        echo '<h3>' . $item['name'] . ' | ';
-        $amount = number_format($item['amount'], 2);
-        echo 'Cena: ' . $amount . ' zł | Ilość: ' . $item['quantity'] . '</h3>';
+    echo '<h3>Kupiłeś:</h3>';
+
+    $unpaidOrder = OrderRepository::loadUnpaidOrderByProductIdAndUserId($connection, $_GET['id'], $user->getId());
+    foreach ($unpaidOrder as $item) {
+        var_dump($item);
     }
-    $total = number_format($sum, 2);
-    echo '<h3 class="price">Łączna kwota do zapłaty ' . $total . '</h3>';
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($_POST['deliveryMethod']) && isset($_POST['paymentMethod'])) {
             $deliveryMethod = filter_input(INPUT_POST, 'deliveryMethod', FILTER_SANITIZE_STRING);
             $paymentMethod = filter_input(INPUT_POST, 'paymentMethod', FILTER_SANITIZE_STRING);
-            $_SESSION['deliveryMethod'] = $deliveryMethod;
-            $_SESSION['paymentMethod'] = $paymentMethod;
 
             if (OrderRepository::updateDeliveryAndPayment($connection, $user->getId(), $deliveryMethod, $paymentMethod)) {
-                header('Location: summaryBasketPage.php');
+                header('Location: summaryPage.php');
                 $_SESSION['payment_done'] = 'Poprawnie dokonano płatności :)';
             }
         }
     }
-
     ?>
     <hr/>
     <form method="post" action="#">

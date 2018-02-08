@@ -47,7 +47,6 @@ include 'header.php';
 
     $countSent = MessageRepository::countAllSentMessages($connection, $admin->getId());
     echo '<h3>Wszystkie wysłane wiadomości ( ' . $countSent . ' )</h3>';
-
     $sent = MessageRepository::loadAllSentMessagesByAdminId($connection, $admin->getId());
     foreach ($sent as $message) {
         echo 'Do: ' . $message['username'] . '<br/>';
@@ -59,7 +58,6 @@ include 'header.php';
               </form>";
         echo "<hr/>";
     }
-
     ?>
 
     <h3><a href="adminPanel.php" class="btn btn-default links">Powrót do panelu Admina</a></h3>

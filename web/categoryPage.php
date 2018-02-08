@@ -71,9 +71,9 @@ include '../widget/header.php';
 
     foreach ($products as $product) {
         $id = $product['id'];
-        $name = substr($product['name'], 0, 30);
+        $name = substr($product['name'], 0, 28);
         $price = number_format($product['price'], 2);
-        $image = ImageRepository::loadRandomImageByProductId($connection, $id);
+        $image = ImageRepository::loadFirstImageByProductId($connection, $id);
         echo "<h4><a href='productPage.php?id=$id' class='btn btn-success links'>$name</a><br/>
         <img src='" . $image['image_path'] . "' width='300' height='200'/></h4>
         <h3 class='price'>Cena: $price zł</h3>";
@@ -86,7 +86,6 @@ include '../widget/header.php';
 
     ?>
     <h3><a href="mainPage.php" class="btn btn-default links">Powrót do strony głównej</a></h3>
-    <hr/>
 </div>
 <?php
 

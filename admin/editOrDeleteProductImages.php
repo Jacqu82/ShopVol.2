@@ -28,6 +28,8 @@ include 'header.php';
 
     <?php
 
+    $product = ProductRepository::loadProductById($connection, $_GET['id']);
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] == 'updateImage') {
         if (isset($_POST['delete_image']) && isset($_POST['image_id'])) {
             $imageId = $_POST['image_id'];
@@ -47,7 +49,6 @@ include 'header.php';
 
             $pathToDelete = ImageRepository::loadImagePath($connection, $imageId);
             unlink($pathToDelete);
-
             $addImage = ImageOperations::imageOperation($productId);
             $path = $addImage['path'];
             $upload = $addImage['upload'];
@@ -65,13 +66,12 @@ include 'header.php';
         }
     }
 
-    $images = ImageRepository::loadAllImagesDetails($connection);
+    $images = ImageRepository::loadAllImagesDetailsByProductId($connection, $_GET['id']);
     foreach ($images as $image) {
 
         ?>
         <div class='img-thumbnail1'>
             <img src="<?php echo $image['image_path'] ?> " width='450' height='300'/><br/>
-            <span><?php echo $image['image_path'] ?></span>
             <form method="POST" action="#" enctype="multipart/form-data">
                 <div class="file forms">
                     <input type="file" name="imageFile"/>
@@ -89,9 +89,12 @@ include 'header.php';
         </div>
         <?php
     }
+    $categoryId = $product->getCategoryId();
+    $catName = CategoryRepository::loadAllCategoriesById($connection, $product->getCategoryId());
+    $categoryName = $catName['name'];
+    echo '<hr/>';
+    echo "<a href='productImageList.php?id=$categoryId&name=$categoryName' class='btn btn-default links'>Powrót do przedmiotów</a>";
     ?>
-
-    <h3><a href="adminPanel.php" class="btn btn-default links">Powrót do panelu Admina</a></h3>
 
 </div>
 <?php

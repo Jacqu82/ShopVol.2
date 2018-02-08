@@ -32,11 +32,12 @@ class ImageRepository
      * @param PDO $connection
      * @return array
      */
-    public static function loadAllImagesDetails(PDO $connection)
+    public static function loadAllImagesDetailsByProductId(PDO $connection, $productId)
     {
-        $sql = "SELECT * FROM images";
+        $sql = "SELECT * FROM images WHERE product_id = :product_id";
 
         $result = $connection->prepare($sql);
+        $result->bindParam('product_id', $productId);
         if (!$result) {
             die("Query Error!" . $connection->errorInfo());
         }
@@ -71,10 +72,9 @@ class ImageRepository
      * @param $productId
      * @return mixed|null
      */
-    public static function loadRandomImageByProductId(PDO $connection, $productId)
+    public static function loadFirstImageByProductId(PDO $connection, $productId)
     {
-        $sql = "SELECT image_path FROM images WHERE product_id = :product_id
-                ORDER BY RAND()";
+        $sql = "SELECT image_path FROM images WHERE product_id = :product_id";
 
         $result = $connection->prepare($sql);
         if (!$result) {
@@ -87,7 +87,8 @@ class ImageRepository
         while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
             return $row;
         }
-        return null;
+
+        return false;
     }
 
     /**

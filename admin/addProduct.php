@@ -2,6 +2,7 @@
 
 require_once '../src/lib.php';
 require_once '../connection.php';
+
 session_start();
 if (!isset($_SESSION['admin'])) {
     header('Location: ../web/index.php');
@@ -28,7 +29,7 @@ include 'header.php';
 <div class="container text-center">
     <h1>All Or Nothing</h1>
     <hr/>
-
+    <h2>Dodaj nowy przedmiot</h2>
     <?php
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -47,28 +48,24 @@ include 'header.php';
                 echo "</div>";
                 $is_ok = false;
             }
-
             if (empty($name)) {
                 echo "<div class=\"text-center alert alert-danger\">";
                 echo "<strong>Nazwa przedmiotu nie może być pusta!</strong>";
                 echo "</div>";
                 $is_ok = false;
             }
-
             if (empty($price)) {
                 echo "<div class=\"text-center alert alert-danger\">";
                 echo "<strong>Cena nie może być pusta!</strong>";
                 echo "</div>";
                 $is_ok = false;
             }
-
             if (!$price > 0) {
                 echo "<div class=\"text-center alert alert-danger\">";
                 echo "<strong>Cena musi być większa od zera!</strong>";
                 echo "</div>";
                 $is_ok = false;
             }
-
             if (empty($availability)) {
                 echo "<div class=\"text-center alert alert-danger\">";
                 echo "<strong>Pole dostępność nie może być puste!</strong>";
@@ -89,16 +86,13 @@ include 'header.php';
                     ->setDescription($description)
                     ->setAvailability($availability)
                     ->setCategoryId($_POST['categories']);
-
                 ProductRepository::saveToDB($connection, $product);
-
                 echo "<div class=\"flash-message alert alert-success alert-dismissible\" role=\"alert\">";
                 echo '<strong>Poprawnie dodano przedmiot do bazy</strong>';
                 echo "</div>";
             }
         }
     }
-
     ?>
 
     <form method="POST" action="#">
@@ -138,7 +132,7 @@ include 'header.php';
                    ?>"/>
         </div>
         <br/>
-        Wybierz kategorie:<br/>
+        <h4>Wybierz kategorie:</h4>
         <select name="categories" class="forms">
             <?php
             $categories = CategoryRepository::loadAllCategories($connection);
@@ -152,9 +146,9 @@ include 'header.php';
         </div>
     </form>
     <hr/>
-
     <h3><a href="adminPanel.php" class="btn btn-default links">Powrót do panelu Admina</a></h3>
 </div>
+
 <?php
 
 if (isset($_SESSION['fr_name'])) {

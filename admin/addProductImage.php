@@ -28,6 +28,7 @@ include 'header.php';
 <div class="container text-center">
     <h1>All Or Nothing</h1>
     <hr/>
+    <h2>Dodaj zdjęcia do przedmiotu</h2>
 
     <?php
 
@@ -44,7 +45,7 @@ include 'header.php';
                 $image = new Image();
                 $image
                     ->setImagePath($path)
-                    ->setProductId($_POST['products']);
+                    ->setProductId($productId);
                 ImageRepository::saveToDB($connection, $image);
                 echo "<div class=\"flash-message text-center alert alert-success alert-dismissible\" role=\"alert\">";
                 echo '<strong>Zdjęcie dodane pomyślnie :)</strong>';
@@ -57,11 +58,9 @@ include 'header.php';
             }
         }
     }
-
     ?>
 
     <form method="POST" action="#" enctype="multipart/form-data">
-        Dodaj zdjęcie:<br/>
         <div class="file forms">
             <input type="file" name="imageFile"/>
         </div>
@@ -81,9 +80,9 @@ include 'header.php';
         </div>
     </form>
     <hr/>
-
     <h3><a href="adminPanel.php" class="btn btn-default links">Powrót do panelu Admina</a></h3>
 </div>
+
 <?php
 
 include '../widget/footer.php';

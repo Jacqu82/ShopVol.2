@@ -42,7 +42,7 @@ class OrderRepository
      */
     public static function loadLastOrderByUserId(PDO $connection, $userId)
     {
-        $sql = "SELECT o.id, o.quantity, o.amount, o.payment_method, o.delivery_method, p.name, i.image_path 
+        $sql = "SELECT o.id, o.quantity, o.amount, p.name, i.image_path 
                 FROM orders o
                 LEFT JOIN products p ON o.product_id = p.id
                 LEFT JOIN images i ON i.product_id = p.id
@@ -187,5 +187,44 @@ class OrderRepository
         }
 
         return false;
+    }
+
+    public static function loadAllUnpaidOrdersByUserId(PDO $connection, $userId)
+    {
+        $sql = "SELECT o.quantity, o.amount, p.id, p.name FROM orders o
+                LEFT JOIN products p ON o.product_id = p.id
+                WHERE user_id = :user_id
+                AND status = :status
+                AND kind = :kind";
+
+        $result = $connection->prepare($sql);
+        $result->bindParam('user_id', $userId, PDO::PARAM_INT);
+        $result->bindValue('status', 'Nieopłacony');
+        $result->bindValue('kind', 'Kup Teraz');
+        $result->execute();
+
+        return $result;
+    }
+
+    public static function loadUnpaidOrderByProductIdAndUserId(PDO $connection, $productId, $userId)
+    {
+        $sql = "SELECT o.id, o.quantity, o.amount, p.name, i.image_path 
+                FROM orders o
+                LEFT JOIN products p ON o.product_id = p.id
+                LEFT JOIN images i ON i.product_id = p.id
+                WHERE o.user_id = :user_id
+                AND o.product_id = :product_id
+                AND status = :status
+                AND kind = :kind
+                ORDER BY o.created_at DESC LIMIT 1";
+
+        $result = $connection->prepare($sql);
+        $result->bindParam('user_id', $userId, PDO::PARAM_INT);
+        $result->bindParam('product_id', $productId, PDO::PARAM_INT);
+        $result->bindValue('status', 'Nieopłacony');
+        $result->bindValue('kind', 'Kup Teraz');
+        $result->execute();
+
+        return $result;
     }
 }

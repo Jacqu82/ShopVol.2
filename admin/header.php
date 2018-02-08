@@ -14,8 +14,6 @@ $admin = loggedAdmin($connection);
                     <li><a href="wholeShopHistory.php">Pełna historia zakupów</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-<!--                    <li><a href="../web/messageSite.php">Messanger-->
-<!--                            <span class="badge">--><?php //echo $unread; ?><!--</span></a></li>-->
                     <li><a href="sendMessage.php">Wyślij wiadomość</a></li>
                     <li style="margin-top: 15px">Zalogowany jako:
                         <a class="user" href="adminPanel.php">
