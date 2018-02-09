@@ -31,8 +31,10 @@ $user = loggedUser($connection);
                     <li style="margin-top: 15px">Zalogowany jako:
                         <a class="user" href="../web/userPanel.php">
                             <?php
+                            $unpaidCount = OrderRepository::countAllUnPaidBuyNowOrdersByUserId($connection, $user->getId());
                             echo $user->getUsername();
                             ?>
+                            <span class="badge"><?php echo $unpaidCount; ?></span>
                         </a>
                     </li>
                     <li><a href="../web/logout.php">

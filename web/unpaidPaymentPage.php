@@ -37,7 +37,12 @@ include '../widget/header.php';
 
     $unpaidOrder = OrderRepository::loadUnpaidOrderByProductIdAndUserId($connection, $_GET['id'], $user->getId());
     foreach ($unpaidOrder as $item) {
-        var_dump($item);
+        $_SESSION['order_id'] = $item['id'];
+        echo '<h2>' . $item['name'] . ' - ' . $item['quantity'] . ' szt.</h2>';
+        $amount = number_format($item['amount'], 2);
+        echo '<h3>Łączna kwota: ' . $amount . ' zł</h3>';
+        $image = ImageRepository::loadFirstImageByProductId($connection, $item['product_id']);
+        echo "<img src='" . $image['image_path'] . "' width='150' height='100'/>";
     }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -45,8 +50,8 @@ include '../widget/header.php';
             $deliveryMethod = filter_input(INPUT_POST, 'deliveryMethod', FILTER_SANITIZE_STRING);
             $paymentMethod = filter_input(INPUT_POST, 'paymentMethod', FILTER_SANITIZE_STRING);
 
-            if (OrderRepository::updateDeliveryAndPayment($connection, $user->getId(), $deliveryMethod, $paymentMethod)) {
-                header('Location: summaryPage.php');
+            if (OrderRepository::updateDeliveryAndPaymentByOrderId($connection, $item['id'], $user->getId(), $deliveryMethod, $paymentMethod)) {
+                header('Location: summaryUnpaidProductPage.php');
                 $_SESSION['payment_done'] = 'Poprawnie dokonano płatności :)';
             }
         }

@@ -24,6 +24,7 @@ include '../widget/head.php';
 <?php
 
 include '../widget/header.php';
+$unpaidCount = OrderRepository::countAllUnPaidBuyNowOrdersByUserId($connection, $user->getId());
 
 ?>
 <div class="container text-center">
@@ -37,7 +38,8 @@ include '../widget/header.php';
     <h3>Data utworzenia profilu: <?php echo $user->getCreatedAt(); ?></h3>
     <hr/>
     <h3><a href="followedProductPage.php" class="btn btn-success links">Twoje obserwowane oferty</a></h3>
-    <h3><a href="unpaidOrdersPage.php" class="btn btn-success links">Nieopłacone zamówienia</a></h3>
+    <h3><a href="unpaidOrdersPage.php" class="btn btn-success links">Nieopłacone zamówienia
+            <span class="badge"><?php echo $unpaidCount; ?></span></a></h3>
     <h3><a href="editUserProfile.php" class="btn btn-warning links">Edytuj profil</a></h3>
     <hr/>
     <h3><a href="mainPage.php" class="btn btn-default links">Powrót do Strony głównej</a></h3>

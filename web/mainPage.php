@@ -56,7 +56,7 @@ include '../widget/header.php';
     }
     ?>
 
-    <div class="col-md-4 navbar-left">
+    <div class="col-md-4 navbar-left text-center">
         <form method="post" action="#">
             <input type="text" name="search" class="forms-search" placeholder="Czego szukasz?"><br/>
             <button type="submit" class="btn btn-success links-search">Szukaj</button>
@@ -74,6 +74,27 @@ include '../widget/header.php';
                 <li><a href="categoryPage.php?id=' . $id . '">' . $category['name'] . '</a></li>
                 </ul></h4>';
         }
+        ?>
+        <hr/>
+        <h2>BestSellery</h2>
+        <hr/>
+        <?php
+
+        $bestSellers = OrderRepository::loadBestSellerProducts($connection);
+        foreach ($bestSellers as $bestSeller) {
+            $id = $bestSeller['id'];
+            $name = substr($bestSeller['name'], 0, 28);
+            $price = number_format($bestSeller['price'], 2);
+            $image = ImageRepository::loadFirstImageByProductId($connection, $id);
+            echo "<h4><a href='productPage.php?id=$id' class='btn btn-success links-search'>$name</a><br/>
+            <img src='" . $image['image_path'] . "' width='200' height='140'/></h4>
+            <h3 class='price'>Cena: $price zł</h3>";
+            $sumProducts = OrderRepository::sumBoughtProducts($connection, $id);
+            $sumUsers = OrderRepository::countUsersFromOrders($connection, $id);
+            handlingPolishGrammaticalCase::sumProductsAndSumUsers($sumProducts, $sumUsers);
+        }
+
+
         ?>
     </div>
     <div class="col-md-8">

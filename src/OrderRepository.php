@@ -42,7 +42,7 @@ class OrderRepository
      */
     public static function loadLastOrderByUserId(PDO $connection, $userId)
     {
-        $sql = "SELECT o.id, o.quantity, o.amount, p.name, i.image_path 
+        $sql = "SELECT o.id, o.quantity, o.amount, o.delivery_method, o.payment_method, p.name, i.image_path 
                 FROM orders o
                 LEFT JOIN products p ON o.product_id = p.id
                 LEFT JOIN images i ON i.product_id = p.id
@@ -189,6 +189,11 @@ class OrderRepository
         return false;
     }
 
+    /**
+     * @param PDO $connection
+     * @param $userId
+     * @return PDOStatement
+     */
     public static function loadAllUnpaidOrdersByUserId(PDO $connection, $userId)
     {
         $sql = "SELECT o.quantity, o.amount, p.id, p.name FROM orders o
@@ -206,23 +211,119 @@ class OrderRepository
         return $result;
     }
 
+    /**
+     * @param PDO $connection
+     * @param $productId
+     * @param $userId
+     * @return PDOStatement
+     */
     public static function loadUnpaidOrderByProductIdAndUserId(PDO $connection, $productId, $userId)
     {
-        $sql = "SELECT o.id, o.quantity, o.amount, p.name, i.image_path 
+        $sql = "SELECT o.id, o.quantity, o.amount, p.name, p.id as product_id
                 FROM orders o
                 LEFT JOIN products p ON o.product_id = p.id
-                LEFT JOIN images i ON i.product_id = p.id
                 WHERE o.user_id = :user_id
                 AND o.product_id = :product_id
                 AND status = :status
-                AND kind = :kind
-                ORDER BY o.created_at DESC LIMIT 1";
+                AND kind = :kind";
 
         $result = $connection->prepare($sql);
         $result->bindParam('user_id', $userId, PDO::PARAM_INT);
         $result->bindParam('product_id', $productId, PDO::PARAM_INT);
         $result->bindValue('status', 'Nieopłacony');
         $result->bindValue('kind', 'Kup Teraz');
+        $result->execute();
+
+        return $result;
+    }
+
+    /**
+     * @param PDO $connection
+     * @param $orderId
+     * @param $userId
+     * @param $delivery
+     * @param $payment
+     * @return bool
+     */
+    public static function updateDeliveryAndPaymentByOrderId(PDO $connection, $orderId, $userId, $delivery, $payment)
+    {
+        $sql = "UPDATE orders SET delivery_method = :delivery_method,
+                                  payment_method = :payment_method,
+                                  status = :status
+                WHERE user_id = :user_id AND id = :order_id";
+
+        $result = $connection->prepare($sql);
+        $result->bindParam('user_id', $userId, PDO::PARAM_INT);
+        $result->bindParam('order_id', $orderId, PDO::PARAM_INT);
+        $result->bindParam('delivery_method', $delivery, PDO::PARAM_STR);
+        $result->bindParam('payment_method', $payment, PDO::PARAM_STR);
+        $result->bindValue('status', 'Opłacony');
+        $result->execute();
+
+        return true;
+    }
+
+    /**
+     * @param PDO $connection
+     * @param $userId
+     * @param $orderId
+     * @return PDOStatement
+     */
+    public static function loadLastUnpaidOrderByUserIdAndOrderId(PDO $connection, $userId, $orderId)
+    {
+        $sql = "SELECT o.quantity, o.amount, o.delivery_method, o.payment_method, 
+                p.id as product_id, p.name
+                FROM orders o
+                LEFT JOIN products p ON o.product_id = p.id
+                WHERE o.user_id = :user_id
+                AND o.id = :order_id
+                AND status = :status";
+
+        $result = $connection->prepare($sql);
+        $result->bindParam('user_id', $userId, PDO::PARAM_INT);
+        $result->bindParam('order_id', $orderId, PDO::PARAM_INT);
+        $result->bindValue('status', 'Opłacony');
+        $result->execute();
+
+        return $result;
+    }
+
+    /**
+     * @param PDO $connection
+     * @param $userId
+     * @return bool
+     */
+    public static function countAllUnPaidBuyNowOrdersByUserId(PDO $connection, $userId)
+    {
+        $sql = "SELECT count(id) as unpaid_count FROM orders
+                WHERE user_id = :user_id
+                AND kind = :kind
+                AND status = :status";
+
+        $result = $connection->prepare($sql);
+        $result->bindParam('user_id', $userId);
+        $result->bindValue('kind', 'Kup Teraz');
+        $result->bindValue('status', 'Nieopłacony');
+        $result->execute();
+
+        if ($result->rowCount() > 0) {
+            foreach ($result as $row) {
+                return $row['unpaid_count'];
+            }
+        }
+
+        return false;
+    }
+
+    public static function loadBestSellerProducts(PDO $connection)
+    {
+        $sql = "SELECT sum(quantity) as suma, p.id, p.name, p.price
+                FROM orders o
+                LEFT JOIN products p ON o.product_id = p.id
+                GROUP BY product_id
+                HAVING suma >= 2
+                ORDER BY suma DESC LIMIT 8";
+        $result = $connection->prepare($sql);
         $result->execute();
 
         return $result;
