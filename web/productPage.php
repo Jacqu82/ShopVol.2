@@ -88,6 +88,7 @@ include '../widget/header.php';
             $quantity = (int)$_POST['quantity'];
             $amount = $product->getPrice() * $quantity;
             $is_ok = true;
+            //aby rozpocząć nowy koszyk sfinalizuj poprzedni
 
             if (empty($quantity)) {
                 $is_ok = false;
@@ -107,6 +108,10 @@ include '../widget/header.php';
                 if ($is_ok) {
                     BasketRepository::saveToDB($connection, $basket);
                     ProductRepository::updateAvailabilityByQuantity($connection, $quantity, $productId);
+                    $unpaidBasket = OrderRepository::loadUnpaidBasketOrdersByUserId($connection, $user->getId());
+                    if ($unpaidBasket->rowCount() > 0) {
+                        OrderRepository::deleteAllUnpaidOrdersByUserId($connection, $user->getId());
+                    }
                     header('Location: basketPage.php');
                 }
             }

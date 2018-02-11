@@ -45,7 +45,6 @@ include '../widget/header.php';
     <div class="col-md-6">
         <form method="post" action="#">
             <select name="filter" class="forms-filter">
-                <option value="" selected>Sortowanie</option>
                 <option value="name">Nazwa</option>
                 <option value="price">Cena: od najniższej</option>
                 <option value="price DESC">Cena: od najwyższej</option>

@@ -30,7 +30,7 @@ $unpaidCount = OrderRepository::countAllUnPaidBuyNowOrdersByUserId($connection, 
 <div class="container text-center">
     <h1>All Or Nothing</h1>
     <hr/>
-    <h3>Witaj <?php echo $user->getUsername() . "!"; ?></h3>
+    <h2>Witaj <?php echo $user->getUsername() . "!"; ?></h2>
     <h3>Twój adres E-mail: <?php echo $user->getEmail(); ?></h3>
     <h3>Adres do wysyłki:</h3>
     <h3><?php echo $user->getPostalCode() . ', ' . $user->getCity(); ?></h3>

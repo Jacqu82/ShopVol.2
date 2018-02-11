@@ -76,7 +76,7 @@ include '../widget/header.php';
         }
         ?>
         <hr/>
-        <h2>BestSellery</h2>
+        <h2>Bestsellery</h2>
         <hr/>
         <?php
 

@@ -44,6 +44,11 @@ include '../widget/header.php';
         }
     }
 
+    $unpaidBasket = OrderRepository::loadUnpaidBasketOrdersByUserId($connection, $user->getId());
+    if ($unpaidBasket->rowCount() > 0) {
+        OrderRepository::deleteAllUnpaidOrdersByUserId($connection, $user->getId());
+    }
+
     $sum = BasketRepository::sumBasketProductsByUserId($connection, $user->getId());
     $basket = BasketRepository::loadBasketProductsByUserId($connection, $user->getId());
     if ($basket->rowCount() > 0) {

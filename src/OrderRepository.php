@@ -68,13 +68,16 @@ class OrderRepository
         $sql = "UPDATE orders SET delivery_method = :delivery_method,
                                   payment_method = :payment_method,
                                   status = :status
-                WHERE user_id = :user_id AND status = 'Nieopłacony'";
+                WHERE user_id = :user_id 
+                AND status = 'Nieopłacony'
+                AND kind = :kind";
 
         $result = $connection->prepare($sql);
         $result->bindParam('user_id', $userId, PDO::PARAM_INT);
         $result->bindParam('delivery_method', $delivery, PDO::PARAM_STR);
         $result->bindParam('payment_method', $payment, PDO::PARAM_STR);
         $result->bindValue('status', 'Opłacony');
+        $result->bindValue('kind', 'Koszyk');
         $result->execute();
 
         return true;
@@ -315,6 +318,10 @@ class OrderRepository
         return false;
     }
 
+    /**
+     * @param PDO $connection
+     * @return PDOStatement
+     */
     public static function loadBestSellerProducts(PDO $connection)
     {
         $sql = "SELECT sum(quantity) as suma, p.id, p.name, p.price
@@ -327,5 +334,47 @@ class OrderRepository
         $result->execute();
 
         return $result;
+    }
+
+    /**
+     * @param PDO $connection
+     * @param $userId
+     * @return PDOStatement
+     */
+    public static function loadUnpaidBasketOrdersByUserId(PDO $connection, $userId)
+    {
+        $sql = "SELECT id FROM orders
+                WHERE user_id = :user_id
+                AND status = :status
+                AND kind = :kind";
+
+        $result = $connection->prepare($sql);
+        $result->bindParam('user_id', $userId);
+        $result->bindValue('kind', 'Koszyk');
+        $result->bindValue('status', 'Nieopłacony');
+        $result->execute();
+
+        return $result;
+    }
+
+    /**
+     * @param PDO $connection
+     * @param $userId
+     * @return bool
+     */
+    public static function deleteAllUnpaidOrdersByUserId(PDO $connection, $userId)
+    {
+        $sql = "DELETE FROM orders 
+                WHERE user_id = :user_id
+                AND status = :status
+                AND kind = :kind";
+
+        $result = $connection->prepare($sql);
+        $result->bindParam('user_id', $userId);
+        $result->bindValue('kind', 'Koszyk');
+        $result->bindValue('status', 'Nieopłacony');
+        $result->execute();
+
+        return true;
     }
 }

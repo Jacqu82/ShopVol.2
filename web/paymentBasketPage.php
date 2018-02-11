@@ -76,7 +76,7 @@ include '../widget/header.php';
             <option value="payU">payU</option>
             <option value="payPal">payPal</option>
         </select><br/>
-        <button type="submit" class="btn btn-success button">Przejdź do płatności</button>
+        <button type="submit" class="btn btn-success button">Zapłać i przejdź do podsmumowania</button>
     </form>
 
     <hr/>
