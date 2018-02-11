@@ -58,6 +58,10 @@ include '../widget/header.php';
     echo '<h3>' . $user->getPostalCode() . ', ' . $user->getCity() . '</h3>';
     echo '<h3>ul.' . $user->getStreet() . '/' . $user->getHouseNr() . '</h3>';
 
+    if (isset($_SESSION['order_id'])) {
+        unset($_SESSION['order_id']);
+    }
+
     ?>
 
     <hr/>

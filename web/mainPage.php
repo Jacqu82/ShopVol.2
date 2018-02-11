@@ -87,11 +87,11 @@ include '../widget/header.php';
             $price = number_format($bestSeller['price'], 2);
             $image = ImageRepository::loadFirstImageByProductId($connection, $id);
             echo "<h4><a href='productPage.php?id=$id' class='btn btn-success links-search'>$name</a><br/>
-            <img src='" . $image['image_path'] . "' width='200' height='140'/></h4>
+            <img src='" . $image['image_path'] . "' width='200' height='150'/></h4>
             <h3 class='price'>Cena: $price zł</h3>";
             $sumProducts = OrderRepository::sumBoughtProducts($connection, $id);
-            $sumUsers = OrderRepository::countUsersFromOrders($connection, $id);
-            handlingPolishGrammaticalCase::sumProductsAndSumUsers($sumProducts, $sumUsers);
+            $countUsers = OrderRepository::countUsersFromOrders($connection, $id);
+            echo handlingPolishGrammaticalCase::sumProductsAndCountUsers($sumProducts, $countUsers);
         }
 
 
@@ -113,14 +113,14 @@ include '../widget/header.php';
 
                     $image = ImageRepository::loadFirstImageByProductId($connection, $id);
                     $sumProducts = OrderRepository::sumBoughtProducts($connection, $id);
-                    $sumUsers = OrderRepository::countUsersFromOrders($connection, $id);
+                    $countUsers = OrderRepository::countUsersFromOrders($connection, $id);
                     echo '<div class="col-md-4 col-md-offset-1"><ul class="nav navbar-nav">';
                     echo "<li><a href='productPage.php?id=$id'>$name</a>";
                     $price = number_format($product['price'], 2);
                     echo '<span class="price">Cena: ' . $price . ' zł</span></li><br/>';
-                    handlingPolishGrammaticalCase::sumProductsAndSumUsers($sumProducts, $sumUsers);
+                    echo handlingPolishGrammaticalCase::sumProductsAndCountUsers($sumProducts, $countUsers);
                     echo '</ul></div>';
-                    echo "<img src='" . $image['image_path'] . "' width='150' height='100'/><br/><br/>";
+                    echo "<img src='" . $image['image_path'] . "' width='150' height='110'/><br/><br/>";
                 }
             } else {
                 echo '<div class="alert alert-warning">';

@@ -22,7 +22,6 @@ class ImageRepository
             $result->bindParam('product_id', $productId, PDO::PARAM_INT);
             $result->execute();
 
-            $id = $connection->lastInsertId();
             return true;
         }
         return false;
@@ -30,6 +29,7 @@ class ImageRepository
 
     /**
      * @param PDO $connection
+     * @param $productId
      * @return array
      */
     public static function loadAllImagesDetailsByProductId(PDO $connection, $productId)
@@ -42,8 +42,8 @@ class ImageRepository
             die("Query Error!" . $connection->errorInfo());
         }
 
-        $imageArray = [];
         $result->execute();
+        $imageArray = [];
 
         while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
             $imageArray[] = $row;
@@ -81,7 +81,7 @@ class ImageRepository
             die("Query Error!" . $connection->errorInfo());
         }
 
-        $result->bindParam('product_id', $productId);
+        $result->bindParam('product_id', $productId, PDO::PARAM_INT);
         $result->execute();
 
         while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
@@ -105,8 +105,9 @@ class ImageRepository
             die("Query Error!" . $connection->errorInfo());
         }
 
-        $result->bindParam('id', $id);
+        $result->bindParam('id', $id, PDO::PARAM_INT);
         $result->execute();
+        $path = '';
 
         while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
             $path = $row['image_path'];
@@ -129,7 +130,7 @@ class ImageRepository
             die("Query Error!" . $connection->errorInfo());
         }
 
-        $result->bindParam('id', $id);
+        $result->bindParam('id', $id, PDO::PARAM_INT);
         $result->execute();
 
         if ($result->rowCount() > 0) {
@@ -159,16 +160,13 @@ class ImageRepository
             $sql = "DELETE FROM images WHERE id = :id";
             $result = $connection->prepare($sql);
 
-            $result->bindParam('id', $id);
+            $result->bindParam('id', $id, PDO::PARAM_INT);
             $result->execute();
 
-            if ($result) {
-                $id = -1;
-                return true;
-            }
-            return false;
+            return true;
         }
-        return true;
+
+        return false;
     }
 
     /**
@@ -182,8 +180,8 @@ class ImageRepository
         $sql = "UPDATE images SET image_path = :image_path WHERE id = :id";
 
         $result = $connection->prepare($sql);
-        $result->bindParam('image_path', $path);
-        $result->bindParam('id', $id);
+        $result->bindParam('image_path', $path, PDO::PARAM_STR);
+        $result->bindParam('id', $id, PDO::PARAM_INT);
         $result->execute();
 
         if (!$result) {

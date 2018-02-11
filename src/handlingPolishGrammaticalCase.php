@@ -3,26 +3,28 @@
 
 class handlingPolishGrammaticalCase
 {
+
     /**
      * @param $sumProducts
-     * @param $sumUsers
+     * @param $countUsers
+     * @return string
      */
-    public static function sumProductsAndSumUsers($sumProducts, $sumUsers)
+    public static function sumProductsAndCountUsers($sumProducts, $countUsers)
     {
-        if (($sumUsers == 1) && ($sumProducts == 1)) {
-            echo $sumUsers . ' osoba kupiła ' . $sumProducts . ' sztukę';
-        } elseif (($sumUsers == 1) && ($sumProducts > 1 && $sumProducts < 5)) {
-            echo $sumUsers . ' osoba kupiła ' . $sumProducts . ' sztuki';
-        } elseif (($sumUsers == 1) && ($sumProducts >= 5)) {
-            echo $sumUsers . ' osoba kupiła ' . $sumProducts . ' sztuk';
-        } elseif (($sumUsers > 1 && $sumUsers <= 4) && ($sumProducts > 1 && $sumProducts <= 4)) {
-            echo $sumUsers . ' osoby kupiło ' . $sumProducts . ' sztuki';
-        } elseif (($sumUsers > 1 && $sumUsers <= 4) && ($sumProducts >= 5)) {
-            echo $sumUsers . ' osoby kupiło ' . $sumProducts . ' sztuk';
-        } elseif (($sumUsers >= 5) && ($sumProducts >= 5)) {
-            echo $sumUsers . ' osób kupiło ' . $sumProducts . ' sztuk';
+        if (($countUsers == 1) && ($sumProducts == 1)) {
+            return $countUsers . ' osoba kupiła ' . $sumProducts . ' sztukę';
+        } elseif (($countUsers == 1) && ($sumProducts > 1 && $sumProducts < 5)) {
+            return $countUsers . ' osoba kupiła ' . $sumProducts . ' sztuki';
+        } elseif (($countUsers == 1) && ($sumProducts >= 5)) {
+            return $countUsers . ' osoba kupiła ' . $sumProducts . ' sztuk';
+        } elseif (($countUsers > 1 && $countUsers <= 4) && ($sumProducts > 1 && $sumProducts <= 4)) {
+            return $countUsers . ' osoby kupiło ' . $sumProducts . ' sztuki';
+        } elseif (($countUsers > 1 && $countUsers <= 4) && ($sumProducts >= 5)) {
+            return $countUsers . ' osoby kupiło ' . $sumProducts . ' sztuk';
+        } elseif (($countUsers >= 5) && ($sumProducts >= 5)) {
+            return $countUsers . ' osób kupiło ' . $sumProducts . ' sztuk';
         } else {
-            echo '0 osób kupiło 0 sztuk';
+            return '0 osób kupiło 0 sztuk';
         }
     }
 }

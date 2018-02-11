@@ -137,3 +137,8 @@ table, th, td
 {
     color: #ff5a00;
 }
+
+.added
+{
+    color: red;
+}

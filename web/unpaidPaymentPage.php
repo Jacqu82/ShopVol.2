@@ -50,8 +50,8 @@ include '../widget/header.php';
             $deliveryMethod = filter_input(INPUT_POST, 'deliveryMethod', FILTER_SANITIZE_STRING);
             $paymentMethod = filter_input(INPUT_POST, 'paymentMethod', FILTER_SANITIZE_STRING);
 
-            if (OrderRepository::updateDeliveryAndPaymentByOrderId($connection, $item['id'], $user->getId(), $deliveryMethod, $paymentMethod)) {
-                header('Location: summaryUnpaidProductPage.php');
+            if (OrderRepository::updateUnpaidDeliveryAndPaymentByOrderId($connection, $item['id'], $user->getId(), $deliveryMethod, $paymentMethod)) {
+                header('Location: summaryUnpaidPage.php');
                 $_SESSION['payment_done'] = 'Poprawnie dokonano płatności :)';
             }
         }
@@ -73,7 +73,7 @@ include '../widget/header.php';
             <option value="payU">payU</option>
             <option value="payPal">payPal</option>
         </select><br/>
-        <button type="submit" class="btn btn-success button">Przejdź do płatności</button>
+        <button type="submit" class="btn btn-success button">Zapłać i przejdź do podsmuwania</button>
     </form>
 
     <hr/>

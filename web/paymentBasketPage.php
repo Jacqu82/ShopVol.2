@@ -52,7 +52,7 @@ include '../widget/header.php';
             $_SESSION['deliveryMethod'] = $deliveryMethod;
             $_SESSION['paymentMethod'] = $paymentMethod;
 
-            if (OrderRepository::updateDeliveryAndPayment($connection, $user->getId(), $deliveryMethod, $paymentMethod)) {
+            if (OrderRepository::updateBasketDeliveryAndPayment($connection, $user->getId(), $deliveryMethod, $paymentMethod)) {
                 header('Location: summaryBasketPage.php');
                 $_SESSION['payment_done'] = 'Poprawnie dokonano płatności :)';
             }

@@ -34,6 +34,7 @@ $user = loggedUser($connection);
                             $unpaidCount = OrderRepository::countAllUnPaidBuyNowOrdersByUserId($connection, $user->getId());
                             echo $user->getUsername();
                             ?>
+                            <span class="glyphicon glyphicon-user"></span>
                             <span class="badge"><?php echo $unpaidCount; ?></span>
                         </a>
                     </li>

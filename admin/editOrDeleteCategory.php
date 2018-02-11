@@ -55,7 +55,6 @@ include 'header.php';
 
     $id = $_GET['id'];
     $category = CategoryRepository::loadCategoryById($connection, $id);
-
     ?>
 
     <form method="POST" action="#">

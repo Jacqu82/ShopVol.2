@@ -52,7 +52,7 @@ include '../widget/header.php';
             $deliveryMethod = filter_input(INPUT_POST, 'deliveryMethod', FILTER_SANITIZE_STRING);
             $paymentMethod = filter_input(INPUT_POST, 'paymentMethod', FILTER_SANITIZE_STRING);
 
-            if (OrderRepository::updateDeliveryAndPayment($connection, $user->getId(), $deliveryMethod, $paymentMethod)) {
+            if (OrderRepository::updateBuyNowDeliveryAndPayment($connection, $user->getId(), $deliveryMethod, $paymentMethod)) {
                 header('Location: summaryPage.php');
                 $_SESSION['payment_done'] = 'Poprawnie dokonano płatności :)';
             }

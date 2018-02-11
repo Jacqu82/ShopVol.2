@@ -148,11 +148,10 @@ class BasketRepository
 
     /**
      * @param PDO $connection
-     * @param Basket $basket
      * @param $userId
      * @return bool
      */
-    public static function deleteWholeBasketByUserId(PDO $connection, Basket $basket, $userId)
+    public static function deleteWholeBasketByUserId(PDO $connection, $userId)
     {
         $sql = "DELETE FROM basket WHERE user_id = :user_id";
 

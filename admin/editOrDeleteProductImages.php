@@ -25,7 +25,7 @@ include 'header.php';
 <div class="container text-center">
     <h1>All Or Nothing</h1>
     <hr/>
-
+    <h2>Edytuj lub usuń zdjęcia przedmiotu</h2>
     <?php
 
     $product = ProductRepository::loadProductById($connection, $_GET['id']);

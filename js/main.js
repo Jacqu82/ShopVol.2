@@ -18,10 +18,9 @@ $(function () {
             dataType: 'json',
             data: {data_user_id: userId, data_product_id: productId},
             complete: function () {
-                $('div.vote').html('<div class="text-center alert alert-success">' +
-                    '<strong>Obserwujesz tą ofertę!</strong><br/>' +
-                    '<a href="followedProductPage.php">Przejdź do listy obserwowanych ofert</a>' +
-                    '</div>');
+                $('div.vote').html(
+                    '<strong class="added">Obserwujesz tą ofertę!</strong><br/>' +
+                    '<a href="followedProductPage.php">Przejdź do listy obserwowanych ofert</a>');
             }
         });
     });

@@ -33,7 +33,7 @@ include '../widget/header.php';
 
     <?php
 
-    $products = FollowRepository::loadAllFollowedProductsByUserId($connection, $user->getId());
+    $followedProducts = FollowRepository::loadAllFollowedProductsByUserId($connection, $user->getId());
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($_POST['follow_id'], $_POST['delete_follow'])) {
@@ -44,9 +44,9 @@ include '../widget/header.php';
         }
     }
 
-    if ($products->rowCount() > 0) {
+    if ($followedProducts->rowCount() > 0) {
         echo '<h2>Twoje obserwowane oferty</h2>';
-        foreach ($products as $product) {
+        foreach ($followedProducts as $product) {
             $id = $product['id'];
             $name = substr($product['name'], 0, 28);
             $price = number_format($product['price'], 2);
@@ -55,8 +55,8 @@ include '../widget/header.php';
             <img src='" . $image['image_path'] . "' width='300' height='200'/></h4>
             <h3 class='price'>Cena: $price zł</h3>";
             $sumProducts = OrderRepository::sumBoughtProducts($connection, $id);
-            $sumUsers = OrderRepository::countUsersFromOrders($connection, $id);
-            handlingPolishGrammaticalCase::sumProductsAndSumUsers($sumProducts, $sumUsers);
+            $countUsers = OrderRepository::countUsersFromOrders($connection, $id);
+            echo handlingPolishGrammaticalCase::sumProductsAndCountUsers($sumProducts, $countUsers);
             echo "<form method='POST'>
                 <input type=\"submit\" class=\"btn btn-danger links\" name=\"delete_follow\" value=\"Usuń z obserwowanych\"/>
                 <input type='hidden' name='follow_id' value='" . $product['follow_id'] . " '>
@@ -66,8 +66,8 @@ include '../widget/header.php';
     } else {
         echo '<h3>Nie obserwujesz żadnych przedmiotów!</h3>';
         echo '<div>
-        <img src="../images/shop.jpg" width="500" height="300"/>
-        </div>';
+            <img src="../images/shop.jpg" width="500" height="300"/>
+            </div>';
     }
     ?>
 

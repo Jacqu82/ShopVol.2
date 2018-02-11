@@ -22,13 +22,13 @@ class ProductRepository
                     VALUES (:name, :price, :description, :availability, :category_id)";
 
             $result = $connection->prepare($sql);
-            $result->bindParam('name', $name);
+            $result->bindParam('name', $name, PDO::PARAM_STR);
             $result->bindParam('price', $price);
-            $result->bindParam('description', $description);
-            $result->bindParam('availability', $availability);
-            $result->bindParam('category_id', $categoryId);
-
+            $result->bindParam('description', $description, PDO::PARAM_STR);
+            $result->bindParam('availability', $availability, PDO::PARAM_INT);
+            $result->bindParam('category_id', $categoryId, PDO::PARAM_INT);
             $result->execute();
+
             return true;
         }
 
@@ -45,7 +45,7 @@ class ProductRepository
         $sql = "SELECT * FROM products WHERE id = :id";
 
         $result = $connection->prepare($sql);
-        $result->bindParam('id', $id);
+        $result->bindParam('id', $id, PDO::PARAM_INT);
         $result->execute();
 
         if ($result->rowCount() > 0) {
@@ -106,7 +106,7 @@ class ProductRepository
             die("Query Error!" . $connection->errorInfo());
         }
 
-        $result->bindParam('price', $price, PDO::PARAM_INT);
+        $result->bindParam('price', $price);
         $result->bindParam('id', $id, PDO::PARAM_INT);
         $result->execute();
 
@@ -211,7 +211,7 @@ class ProductRepository
                 WHERE p.category_id = :category_id";
 
         $result = $connection->prepare($sql);
-        $result->bindParam('category_id', $categoryId);
+        $result->bindParam('category_id', $categoryId, PDO::PARAM_INT);
         $result->execute();
 
         return $result;
@@ -230,7 +230,7 @@ class ProductRepository
                 ORDER BY RAND() LIMIT 2";
 
         $result = $connection->prepare($sql);
-        $result->bindParam('category_id', $categoryId);
+        $result->bindParam('category_id', $categoryId, PDO::PARAM_INT);
         $result->execute();
 
         return $result;

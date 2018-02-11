@@ -41,7 +41,6 @@ include '../widget/header.php';
     }
 
     echo '<h2>Podsmumowanie zakupów</h2>';
-
     $sum = BasketRepository::sumBasketProductsByUserId($connection, $user->getId());
     $basket = BasketRepository::loadBasketProductsByUserId($connection, $user->getId());
     foreach ($basket as $item) {
@@ -70,8 +69,7 @@ include '../widget/header.php';
     echo '<h3>ul.' . $user->getStreet() . '/' . $user->getHouseNr() . '</h3>';
 
     if ($basket->rowCount() > 0) {
-        $toDelete = BasketRepository::loadBasketById($connection, $item['id']);
-        BasketRepository::deleteWholeBasketByUserId($connection, $toDelete, $user->getId());
+        BasketRepository::deleteWholeBasketByUserId($connection, $user->getId());
     }
     ?>
 

@@ -117,4 +117,26 @@ class FollowRepository
 
         return false;
     }
+
+    /**
+     * @param PDO $connection
+     * @param $userId
+     * @return bool
+     */
+    public static function countAllFollowProductsByUserId(PDO $connection, $userId)
+    {
+        $sql = "SELECT count(id) as count FROM follow WHERE user_id = :user_id";
+
+        $result = $connection->prepare($sql);
+        $result->bindParam('user_id', $userId, PDO::PARAM_INT);
+        $result->execute();
+
+        if ($result->rowCount() > 0) {
+            foreach ($result as $row) {
+                return $row['count'];
+            }
+        }
+
+        return false;
+    }
 }

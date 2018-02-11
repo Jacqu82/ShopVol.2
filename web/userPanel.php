@@ -25,6 +25,7 @@ include '../widget/head.php';
 
 include '../widget/header.php';
 $unpaidCount = OrderRepository::countAllUnPaidBuyNowOrdersByUserId($connection, $user->getId());
+$countFollow = FollowRepository::countAllFollowProductsByUserId($connection, $user->getId());
 
 ?>
 <div class="container text-center">
@@ -37,7 +38,8 @@ $unpaidCount = OrderRepository::countAllUnPaidBuyNowOrdersByUserId($connection, 
     <h3><?php echo 'ul.' . $user->getStreet() . '/' . $user->getHouseNr(); ?></h3>
     <h3>Data utworzenia profilu: <?php echo $user->getCreatedAt(); ?></h3>
     <hr/>
-    <h3><a href="followedProductPage.php" class="btn btn-success links">Twoje obserwowane oferty</a></h3>
+    <h3><a href="followedProductPage.php" class="btn btn-success links">Twoje obserwowane oferty
+            <span class="badge"><?php echo $countFollow; ?></span></a></h3>
     <h3><a href="unpaidOrdersPage.php" class="btn btn-success links">Nieopłacone zamówienia
             <span class="badge"><?php echo $unpaidCount; ?></span></a></h3>
     <h3><a href="editUserProfile.php" class="btn btn-warning links">Edytuj profil</a></h3>

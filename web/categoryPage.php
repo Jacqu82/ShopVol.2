@@ -77,8 +77,8 @@ include '../widget/header.php';
         <img src='" . $image['image_path'] . "' width='300' height='200'/></h4>
         <h3 class='price'>Cena: $price zł</h3>";
         $sumProducts = OrderRepository::sumBoughtProducts($connection, $id);
-        $sumUsers = OrderRepository::countUsersFromOrders($connection, $id);
-        handlingPolishGrammaticalCase::sumProductsAndSumUsers($sumProducts, $sumUsers);
+        $countUsers = OrderRepository::countUsersFromOrders($connection, $id);
+        echo handlingPolishGrammaticalCase::sumProductsAndCountUsers($sumProducts, $countUsers);
         echo '<hr/>';
     }
 

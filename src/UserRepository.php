@@ -31,8 +31,8 @@ class UserRepository
             $result->bindParam('postal_code', $postalCode, PDO::PARAM_INT);
             $result->bindParam('street', $street, PDO::PARAM_STR);
             $result->bindParam('house_nr', $houseNr, PDO::PARAM_INT);
-
             $result->execute();
+
             return true;
         }
 

@@ -88,7 +88,6 @@ include '../widget/header.php';
             $quantity = (int)$_POST['quantity'];
             $amount = $product->getPrice() * $quantity;
             $is_ok = true;
-            //aby rozpocząć nowy koszyk sfinalizuj poprzedni
 
             if (empty($quantity)) {
                 $is_ok = false;
@@ -118,6 +117,11 @@ include '../widget/header.php';
         }
     }
 
+    echo '<div class="col-md-6">';
+    $image = ImageRepository::loadFirstImageByProductId($connection, $product->getId());
+    echo "<img src='" . $image['image_path'] . "' width='300' height='260'/>";
+    echo '</div>';
+    echo '<div class="col-md-6">';
     echo '<h3>' . $product->getName() . '</h3>';
     $category = CategoryRepository::loadCategoryById($connection, $product->getCategoryId());
     echo '<h4>Kategoria: ' . $category->getName() . '</h4>';
@@ -125,9 +129,9 @@ include '../widget/header.php';
     echo '<h2 class="price">Cena: ' . $price . ' zł</h2>';
     echo '<h4>Dostępnych: ' . $product->getAvailability() . ' szt.</h4>';
     $sumProducts = OrderRepository::sumBoughtProducts($connection, $product->getId());
-    $sumUsers = OrderRepository::countUsersFromOrders($connection, $product->getId());
-    handlingPolishGrammaticalCase::sumProductsAndSumUsers($sumProducts, $sumUsers);
-    echo '<hr/>';
+    $countUsers = OrderRepository::countUsersFromOrders($connection, $product->getId());
+    echo handlingPolishGrammaticalCase::sumProductsAndCountUsers($sumProducts, $countUsers).'<hr/>';
+    echo '</div>';
 
     $secureOneVote = FollowRepository::secureToAddOneProductToFollow($connection, $user->getId(), $product->getId());
     if ($secureOneVote->rowCount() == 0) {
@@ -142,10 +146,9 @@ include '../widget/header.php';
 
         <?php
     } else {
-        echo "<div class=\"alert alert-success\">";
-        echo '<strong>Obserwujesz tą ofertę!</strong><br/>';
+        echo '<strong class="added">Obserwujesz tą ofertę!</strong><br/>';
         echo '<a href="followedProductPage.php">Przejdź do listy obserwowanych ofert</a>';
-        echo "</div><hr/>";
+        echo '<hr/>';
     }
 
     if ($product->getAvailability() > 0) {
