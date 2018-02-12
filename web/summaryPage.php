@@ -46,13 +46,11 @@ include '../widget/header.php';
     foreach ($orders as $order) {
         echo "<img src='" . $order['image_path'] . "' width='100' height='75'/>";
         echo '<h3>' . $order['name'] . ' | Ilość: ' . $order['quantity'] . '</h3>';
-        $amount = number_format($order['amount'], 2);
-        echo '<h3 class="price">Łączna kwota do zapłaty: ' . $amount . ' zł</h3>';
+        echo '<h3 class="price">Łączna kwota do zapłaty: ' . number_format($order['amount'], 2) . ' zł</h3>';
         echo '<hr/>';
         echo '<h3>Metoda dostawy: ' . $order['delivery_method'] . '</h3>';
         echo '<h3>Metoda płatności: ' . $order['payment_method'] . '</h3>';
     }
-
     echo '<h3>Adres do wysyłki:</h3>';
     echo '<h3>' . $user->getPostalCode() . ', ' . $user->getCity() . '</h3>';
     echo '<h3>ul.' . $user->getStreet() . '/' . $user->getHouseNr() . '</h3>';

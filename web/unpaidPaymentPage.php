@@ -39,8 +39,7 @@ include '../widget/header.php';
     foreach ($unpaidOrder as $item) {
         $_SESSION['order_id'] = $item['id'];
         echo '<h2>' . $item['name'] . ' - ' . $item['quantity'] . ' szt.</h2>';
-        $amount = number_format($item['amount'], 2);
-        echo '<h3>Łączna kwota: ' . $amount . ' zł</h3>';
+        echo '<h3 class="price">Łączna cena: ' . number_format($item['amount'], 2) . ' zł</h3>';
         $image = ImageRepository::loadFirstImageByProductId($connection, $item['product_id']);
         echo "<img src='" . $image['image_path'] . "' width='150' height='100'/>";
     }
@@ -50,33 +49,16 @@ include '../widget/header.php';
             $deliveryMethod = filter_input(INPUT_POST, 'deliveryMethod', FILTER_SANITIZE_STRING);
             $paymentMethod = filter_input(INPUT_POST, 'paymentMethod', FILTER_SANITIZE_STRING);
 
-            if (OrderRepository::updateUnpaidDeliveryAndPaymentByOrderId($connection, $item['id'], $user->getId(), $deliveryMethod, $paymentMethod)) {
+            if (OrderRepository::updateDeliveryAndPaymentByOrderId(
+                $connection, $item['id'], $user->getId(), $deliveryMethod, $paymentMethod)) {
                 header('Location: summaryUnpaidPage.php');
                 $_SESSION['payment_done'] = 'Poprawnie dokonano płatności :)';
             }
         }
     }
+    include '../widget/paymentAndDeliveryForm.php';
     ?>
-    <hr/>
-    <form method="post" action="#">
-        <label for="deliveryMethod">Wybierz sposób dostawy:</label><br/>
-        <select name="deliveryMethod" class="forms">
-            <option value="Kurier">Kurier</option>
-            <option value="Poczta Polska">Poczta Polska</option>
-            <option value="Odbior osobisty">Odbior osobisty</option>
-        </select><br/>
-        <label for="paymentMethod">Wybierz sposób płatności:</label><br/>
-        <select name="paymentMethod" class="forms">
-            <option value="Gotówka">Gotówka</option>
-            <option value="Karta płatnicza">Karta płatnicza</option>
-            <option value="Przelew jednorazowy">Przelew jednorazowy</option>
-            <option value="payU">payU</option>
-            <option value="payPal">payPal</option>
-        </select><br/>
-        <button type="submit" class="btn btn-success button">Zapłać i przejdź do podsmuwania</button>
-    </form>
 
-    <hr/>
     <h3><a href="mainPage.php" class="btn btn-default links">Powrót do strony głównej</a></h3>
 </div>
 <?php

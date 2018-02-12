@@ -39,7 +39,8 @@ include '../widget/header.php';
 
             $toDelete = BasketRepository::loadBasketById($connection, $basketId);
             BasketRepository::delete($connection, $toDelete);
-            ProductRepository::updateAvailabilityAfterDeleteFromBasket($connection, $toDelete->getQuantity(), $_SESSION['product_id']);
+            ProductRepository::updateAvailabilityAfterDeleteFromBasket(
+                $connection, $toDelete->getQuantity(), $toDelete->getProductId());
             header('Location: basketPage.php');
         }
     }
@@ -54,12 +55,11 @@ include '../widget/header.php';
     if ($basket->rowCount() > 0) {
     echo '<h2>Wszytkie produkty w Twoim koszyku:</h2>';
     foreach ($basket as $item) {
-        $_SESSION['product_id'] = $item['product_id'];
         $image = ImageRepository::loadFirstImageByProductId($connection, $item['product_id']);
         echo "<img src='" . $image['image_path'] . "' width='100' height='75'/>";
         echo '<h3>' . $item['name'] . ' | ';
-        $amount = number_format($item['amount'], 2);
-        echo 'Cena: ' . $amount . ' zł | Ilość: ' . $item['quantity'] . '</h3>';
+        echo 'Cena: ' . number_format($item['amount'], 2) . ' zł | Ilość: ' . $item['quantity'] . '</h3>';
+
         echo "<form method='POST'>
                 <input type=\"submit\" class=\"btn btn-danger links\" name=\"delete_basket\" value=\"Usuń z koszyka\"/>
                 <input type='hidden' name='basket_id' value='" . $item['id'] . " '>
@@ -82,9 +82,7 @@ include '../widget/header.php';
             }
         }
     }
-    $total = number_format($sum, 2);
-    echo '<h3>Łączna kwota do zapłaty ' . $total . '</h3>';
-
+    echo '<h3 class="price">Łączna kwota do zapłaty: ' . number_format($sum, 2) . ' zł</h3>';
     ?>
 
     <form method="POST" action="#">

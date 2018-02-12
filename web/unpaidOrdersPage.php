@@ -37,17 +37,14 @@ include '../widget/header.php';
     foreach ($unpaidOrders as $unpaidOrder) {
         $id = $unpaidOrder['id'];
         $name = substr($unpaidOrder['name'], 0, 28);
-        $totalAmount = number_format($unpaidOrder['amount'], 2);
         $image = ImageRepository::loadFirstImageByProductId($connection, $id);
-        echo "<h4><a href='productPage.php?id=$id' class='btn btn-success links'>$name</a><br/>
-            <img src='" . $image['image_path'] . "' width='300' height='200'/></h4>
-            <h3 class='price'>Łączna cena: $totalAmount zł</h3>";
-        echo '<h4>Ilość: ' . $unpaidOrder['quantity']. '</h4>';
-        echo "<a href='unpaidPaymentPage.php?id=$id'
-                class='btn btn-primary links'>Zapłać za przedmiot</a>";
+        echo "<h4><a href='productPage.php?id=$id' class='btn btn-success links'>$name</a></h4>";
+        echo "<img src='" . $image['image_path'] . "' width='300' height='200'/>";
+        echo '<h3 class="price">Łączna cena: ' . number_format($unpaidOrder['amount'], 2) . ' zł</h3>';
+        echo '<h4>Ilość: ' . $unpaidOrder['quantity'] . '</h4>';
+        echo "<a href='unpaidPaymentPage.php?id=$id' class='btn btn-primary links'>Zapłać za przedmiot</a>";
         echo '<hr/>';
     }
-
     ?>
     <h3><a href="userPanel.php" class="btn btn-default links">Powrót do Strony użytkownika</a></h3>
 </div>

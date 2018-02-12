@@ -37,14 +37,12 @@ include '../widget/header.php';
             $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
             $is_ok = true;
 
-            //check username length
             if ((strlen($username) < 3) || (strlen($username) > 15)) {
                 $is_ok = false;
                 echo "<div class=\"text-center alert alert-danger\">";
                 echo "<strong>Login musi zawierać od 3 do 15 znaków!</strong>";
                 echo "</div>";
             }
-
             //check exiting username
             $users = UserRepository::loadAllUsersByUsername($connection, $username);
             if ($users->rowCount() > 0) {
@@ -53,15 +51,12 @@ include '../widget/header.php';
                 echo '<strong>Login ' . $_POST['username'] . ' już znajduje się w bazie danych! Wybierz inny!</strong>';
                 echo "</div>";
             }
-
-            //alphanumeric letters
             if (ctype_alnum($username) === false) {
                 $is_ok = false;
                 echo "<div class=\"text-center alert alert-danger\">";
                 echo "<strong>Login może skaładać się tylko z liter i cyfr (bez polskich znaków)</strong>";
                 echo "</div>";
             }
-
             if ($is_ok) {
                 $user->setUsername($username);
                 UserRepository::updateUsername($connection, $user);
@@ -75,7 +70,6 @@ include '../widget/header.php';
             $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
             $is_ok = true;
 
-            //check unique email
             $emails = UserRepository::loadAllUsersByEmail($connection, $email);
             if ($emails->rowCount() > 0) {
                 $is_ok = false;
@@ -83,7 +77,6 @@ include '../widget/header.php';
                 echo '<strong>Adres ' . $_POST['email'] . ' już istnieje w bazie danych!</strong>';
                 echo "</div>";
             }
-
             //check correct e-mail
             if (empty($email)) {
                 $is_ok = false;
@@ -91,7 +84,6 @@ include '../widget/header.php';
                 echo "<strong>To nie jest poprawny adres e-mail!</strong>";
                 echo "</div>";
             }
-
             if ($is_ok) {
                 $user->setEmail($email);
                 UserRepository::updateEmail($connection, $user);
@@ -115,23 +107,18 @@ include '../widget/header.php';
                 echo "<strong>Wpisz swoje stare hasło!</strong>";
                 echo "</div>";
             }
-
-            //check password length
             if ((strlen($newPassword2) < 6) || (strlen($newPassword2) > 15)) {
                 $is_ok = false;
                 echo "<div class=\"text-center alert alert-danger\">";
                 echo "<strong>Hasło musi zawierać od 6 do 15 znaków!</strong>";
                 echo "</div>";
             }
-
-            //check password repeat
             if ($newPassword1 != $newPassword2) {
                 $is_ok = false;
                 echo "<div class=\"text-center alert alert-danger\">";
                 echo "<strong>Hasła muszą być identyczne!</strong>";
                 echo "</div>";
             }
-
             if ($is_ok) {
                 $user->setPassword1($newPassword2);
                 UserRepository::updatePassword($connection, $user);
@@ -151,7 +138,6 @@ include '../widget/header.php';
                 echo "</div>";
                 $is_ok = false;
             }
-
             if ($is_ok) {
                 $user->setCity($city);
                 UserRepository::updateCity($connection, $user);
@@ -171,7 +157,6 @@ include '../widget/header.php';
                 echo "</div>";
                 $is_ok = false;
             }
-
             if ($is_ok) {
                 $user->setPostalCode($postalCode);
                 UserRepository::updatePostalCode($connection, $user);
@@ -191,7 +176,6 @@ include '../widget/header.php';
                 echo "</div>";
                 $is_ok = false;
             }
-
             if ($is_ok) {
                 $user->setStreet($street);
                 UserRepository::updateStreet($connection, $user);
@@ -211,7 +195,6 @@ include '../widget/header.php';
                 echo "</div>";
                 $is_ok = false;
             }
-
             if ($is_ok) {
                 $user->setHouseNr($houseNr);
                 UserRepository::updateHouseNr($connection, $user);
@@ -231,11 +214,10 @@ include '../widget/header.php';
             }
         }
     }
-
     ?>
 
     <form action="#" method="post">
-        <h3>Edycja profilu</h3>
+        <h2>Edycja profilu</h2>
         <p class="text-primary">Zmień login:</p>
         <div class="form-group">
             <input type="text" class="forms" name="username" value="<?php echo $user->getUsername(); ?>">

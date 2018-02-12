@@ -27,7 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['e_username'] = 'Login musi zawierać od 3 do 15 znaków!';
             header('Location: registerForm.php');
         }
-
         //check exiting username
         $users = UserRepository::loadAllUsersByUsername($connection, $username);
         if ($users->rowCount() > 0) {
@@ -35,7 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['e_username'] = 'Login ' . $_POST['username'] . ' już znajduje się w bazie danych! Wybierz inny!';
             header('Location: registerForm.php');
         }
-
         if (ctype_alnum($username) === false) {
             $is_ok = false;
             $_SESSION['e_username'] = 'Login może skaładać się tylko z liter i cyfr (bez polskich znaków)';
@@ -49,7 +47,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['e_email'] = 'Adres ' . $_POST['email'] . ' już istnieje w bazie danych!';
             header('Location: registerForm.php');
         }
-
         if (empty($email)) {
             $is_ok = false;
             $_SESSION['e_email'] = 'To nie jest poprawny adres e-mail!';
@@ -61,7 +58,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['e_password'] = 'Hasło musi zawierać od 6 do 15 znaków!';
             header('Location: registerForm.php');
         }
-
         if ($password1 != $password2) {
             $is_ok = false;
             $_SESSION['e_password'] = 'Hasła muszą być identyczne!';
@@ -73,19 +69,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['e_city'] = 'Nazwa miasta nie może być pusta!';
             header('Location: registerForm.php');
         }
-
         if (empty($postalCode)) {
             $is_ok = false;
             $_SESSION['e_postal_code'] = 'Uzupełnij kod pocztowy!';
             header('Location: registerForm.php');
         }
-
         if (empty($street)) {
             $is_ok = false;
             $_SESSION['e_street'] = 'Uzupełnij ulice i nr domu!';
             header('Location: registerForm.php');
         }
-
         if (empty($houseNr)) {
             $is_ok = false;
             $_SESSION['e_house_nr'] = 'Uzupełnij nr mieszkania!';
@@ -102,7 +95,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $secret_key = "6Lcj6UEUAAAAALrGkFaVo6ZhIUpXA_aNe3wA5ndL";
         $check = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . $secret_key . '&response=' . $_POST['g-recaptcha-response']);
         $response = json_decode($check);
-
         if ($response->success === false) {
             $is_ok = false;
             $_SESSION['e_bot'] = "Potwierdź że, nie jesteś botem!";
@@ -133,7 +125,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ->setStreet($street)
                 ->setHouseNr($houseNr);
             UserRepository::saveToDB($connection, $user);
-
             $_SESSION['register_success'] = true;
             header('Location: registerSuccess.php');
         }

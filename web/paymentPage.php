@@ -36,15 +36,10 @@ include '../widget/header.php';
     echo '<h3>Kupiłeś:</h3>';
 
     $orders = OrderRepository::loadLastOrderByUserId($connection, $user->getId());
-
     foreach ($orders as $order) {
         echo '<h2>' . $order['name'] . ' - ' . $order['quantity'] . ' szt.</h2>';
-        $amount = number_format($order['amount'], 2);
-        echo '<h3>Łączna kwota: ' . $amount . ' zł</h3>';
-        echo "
-        <div class='img-thumbnail1'>
-            <img src='" . $order['image_path'] . "' width='150' height='100'/><br/>
-        </div><br/>";
+        echo '<h3 class="price">Łączna kwota: ' . number_format($order['amount'], 2) . ' zł</h3>';
+        echo "<img src='" . $order['image_path'] . "' width='150' height='100'/>";
     }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -52,33 +47,16 @@ include '../widget/header.php';
             $deliveryMethod = filter_input(INPUT_POST, 'deliveryMethod', FILTER_SANITIZE_STRING);
             $paymentMethod = filter_input(INPUT_POST, 'paymentMethod', FILTER_SANITIZE_STRING);
 
-            if (OrderRepository::updateBuyNowDeliveryAndPayment($connection, $user->getId(), $deliveryMethod, $paymentMethod)) {
+            if (OrderRepository::updateDeliveryAndPaymentByOrderId(
+                $connection, $order['id'], $user->getId(), $deliveryMethod, $paymentMethod)) {
                 header('Location: summaryPage.php');
                 $_SESSION['payment_done'] = 'Poprawnie dokonano płatności :)';
             }
         }
     }
+    include '../widget/paymentAndDeliveryForm.php';
     ?>
-    <hr/>
-    <form method="post" action="#">
-        <label for="deliveryMethod">Wybierz sposób dostawy:</label><br/>
-        <select name="deliveryMethod" class="forms">
-            <option value="Kurier">Kurier</option>
-            <option value="Poczta Polska">Poczta Polska</option>
-            <option value="Odbior osobisty">Odbior osobisty</option>
-        </select><br/>
-        <label for="paymentMethod">Wybierz sposób płatności:</label><br/>
-        <select name="paymentMethod" class="forms">
-            <option value="Gotówka">Gotówka</option>
-            <option value="Karta płatnicza">Karta płatnicza</option>
-            <option value="Przelew jednorazowy">Przelew jednorazowy</option>
-            <option value="payU">payU</option>
-            <option value="payPal">payPal</option>
-        </select><br/>
-        <button type="submit" class="btn btn-success button">Zapłać i przejdź do podsmumowania</button>
-    </form>
 
-    <hr/>
     <h3><a href="mainPage.php" class="btn btn-default links">Powrót do strony głównej</a></h3>
 </div>
 <?php

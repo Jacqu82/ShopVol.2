@@ -47,23 +47,19 @@ include '../widget/header.php';
         $image = ImageRepository::loadFirstImageByProductId($connection, $item['product_id']);
         echo "<img src='" . $image['image_path'] . "' width='100' height='75'/>";
         echo '<h3>' . $item['name'] . ' | ';
-        $amount = number_format($item['amount'], 2);
-        echo 'Cena: ' . $amount . ' zł | Ilość: ' . $item['quantity'] . '</h3>';
+        echo 'Cena: ' . number_format($item['amount'], 2) . ' zł | Ilość: ' . $item['quantity'] . '</h3>';
     }
 
-    $total = number_format($sum, 2);
-    echo '<h3 class="price">Łączna kwota do zapłaty: ' . $total . '</h3>';
+    echo '<h3 class="price">Łączna kwota do zapłaty: ' . number_format($sum, 2) . ' zł</h3>';
     echo '<hr/>';
     if (isset($_SESSION['deliveryMethod'])) {
         echo '<h3>Metoda dostawy: ' . $_SESSION['deliveryMethod'] . '<h3/>';
         unset ($_SESSION['deliveryMethod']);
     }
-
     if (isset($_SESSION['paymentMethod'])) {
         echo '<h3>Metoda płatności: ' . $_SESSION['paymentMethod'] . '<h3/>';
         unset ($_SESSION['paymentMethod']);
     }
-
     echo '<h3>Adres do wysyłki:</h3>';
     echo '<h3>' . $user->getPostalCode() . ', ' . $user->getCity() . '</h3>';
     echo '<h3>ul.' . $user->getStreet() . '/' . $user->getHouseNr() . '</h3>';

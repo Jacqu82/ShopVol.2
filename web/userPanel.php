@@ -31,18 +31,18 @@ $countFollow = FollowRepository::countAllFollowProductsByUserId($connection, $us
 <div class="container text-center">
     <h1>All Or Nothing</h1>
     <hr/>
-    <h2>Witaj <?php echo $user->getUsername() . "!"; ?></h2>
+    <h2>Witaj <?php echo $user->getUsername() . '!'; ?></h2>
     <h3>Twój adres E-mail: <?php echo $user->getEmail(); ?></h3>
     <h3>Adres do wysyłki:</h3>
     <h3><?php echo $user->getPostalCode() . ', ' . $user->getCity(); ?></h3>
     <h3><?php echo 'ul.' . $user->getStreet() . '/' . $user->getHouseNr(); ?></h3>
-    <h3>Data utworzenia profilu: <?php echo $user->getCreatedAt(); ?></h3>
+    <h3>Data utworzenia profilu: <?php echo date_format(date_create($user->getCreatedAt()), 'd.m.Y H:i:s'); ?></h3>
     <hr/>
     <h3><a href="followedProductPage.php" class="btn btn-success links">Twoje obserwowane oferty
             <span class="badge"><?php echo $countFollow; ?></span></a></h3>
-    <h3><a href="unpaidOrdersPage.php" class="btn btn-success links">Nieopłacone zamówienia
+    <h3><a href="unpaidOrdersPage.php" class="btn btn-warning links">Nieopłacone zamówienia
             <span class="badge"><?php echo $unpaidCount; ?></span></a></h3>
-    <h3><a href="editUserProfile.php" class="btn btn-warning links">Edytuj profil</a></h3>
+    <h3><a href="editUserProfile.php" class="btn btn-danger links">Edytuj profil</a></h3>
     <hr/>
     <h3><a href="mainPage.php" class="btn btn-default links">Powrót do Strony głównej</a></h3>
 </div>

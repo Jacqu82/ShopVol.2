@@ -61,7 +61,6 @@ include '../widget/header.php';
             <input type="text" name="search" class="forms-search" placeholder="Czego szukasz?"><br/>
             <button type="submit" class="btn btn-success links-search">Szukaj</button>
         </form>
-
         <hr/>
         <h2>Wszystkie kategorie</h2>
         <hr/>
@@ -84,18 +83,16 @@ include '../widget/header.php';
         foreach ($bestSellers as $bestSeller) {
             $id = $bestSeller['id'];
             $name = substr($bestSeller['name'], 0, 28);
-            $price = number_format($bestSeller['price'], 2);
             $image = ImageRepository::loadFirstImageByProductId($connection, $id);
             echo "<h4><a href='productPage.php?id=$id' class='btn btn-success links-search'>$name</a><br/>
-            <img src='" . $image['image_path'] . "' width='200' height='150'/></h4>
-            <h3 class='price'>Cena: $price zł</h3>";
+            <img src='" . $image['image_path'] . "' width='200' height='150'/></h4>";
+            echo '<h3 class="price">Cena: ' . number_format($bestSeller['price'], 2) . ' zł</h3>';
             $sumProducts = OrderRepository::sumBoughtProducts($connection, $id);
             $countUsers = OrderRepository::countUsersFromOrders($connection, $id);
             echo handlingPolishGrammaticalCase::sumProductsAndCountUsers($sumProducts, $countUsers);
         }
-
-
         ?>
+
     </div>
     <div class="col-md-8">
 
@@ -103,21 +100,18 @@ include '../widget/header.php';
 
         $categories = CategoryRepository::loadAllCategories($connection);
         foreach ($categories as $category) {
-            $categoryName = $category['name'];
-            echo '<h2>' . $categoryName . '</h2>';
+            echo '<h2>' . $category['name'] . '</h2>';
             $products = ProductRepository::loadTwoRandomProductsByCategoryId($connection, $category['id']);
             if ($products->rowCount() > 0) {
                 foreach ($products as $product) {
                     $id = $product['id'];
                     $name = trim(substr($product['name'], 0, 30));
-
                     $image = ImageRepository::loadFirstImageByProductId($connection, $id);
-                    $sumProducts = OrderRepository::sumBoughtProducts($connection, $id);
-                    $countUsers = OrderRepository::countUsersFromOrders($connection, $id);
                     echo '<div class="col-md-4 col-md-offset-1"><ul class="nav navbar-nav">';
                     echo "<li><a href='productPage.php?id=$id'>$name</a>";
-                    $price = number_format($product['price'], 2);
-                    echo '<span class="price">Cena: ' . $price . ' zł</span></li><br/>';
+                    echo '<span class="price">Cena: ' . number_format($product['price'], 2) . ' zł</span></li><br/>';
+                    $sumProducts = OrderRepository::sumBoughtProducts($connection, $id);
+                    $countUsers = OrderRepository::countUsersFromOrders($connection, $id);
                     echo handlingPolishGrammaticalCase::sumProductsAndCountUsers($sumProducts, $countUsers);
                     echo '</ul></div>';
                     echo "<img src='" . $image['image_path'] . "' width='150' height='110'/><br/><br/>";

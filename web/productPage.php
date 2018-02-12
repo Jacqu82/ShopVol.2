@@ -32,7 +32,6 @@ include '../widget/header.php';
     <hr/>
 
     <?php
-
     $product = ProductRepository::loadProductById($connection, $_GET['id']);
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -59,6 +58,10 @@ include '../widget/header.php';
             if (empty($quantity)) {
                 $is_ok = false;
                 $_SESSION['quantity'] = 'Wybierz ilość!';
+            }
+            if ($quantity < 0) {
+                $is_ok = false;
+                $_SESSION['quantity'] = 'Wybierz wartość większą od zera!';
             }
             if ($product->getAvailability() < $quantity) {
                 echo '<div class="flash-message alert alert-warning">';
@@ -93,6 +96,10 @@ include '../widget/header.php';
                 $is_ok = false;
                 $_SESSION['quantity'] = 'Wybierz ilość!';
             }
+            if ($quantity < 0) {
+                $is_ok = false;
+                $_SESSION['quantity'] = 'Wybierz wartość większą od zera!';
+            }
             if ($product->getAvailability() < $quantity) {
                 echo '<div class="flash-message alert alert-warning">';
                 echo '<strong>Brak takiej ilości na stanie!, dostępnych: ' . $product->getAvailability() . ' szt.</strong>';
@@ -125,12 +132,11 @@ include '../widget/header.php';
     echo '<h3>' . $product->getName() . '</h3>';
     $category = CategoryRepository::loadCategoryById($connection, $product->getCategoryId());
     echo '<h4>Kategoria: ' . $category->getName() . '</h4>';
-    $price = number_format($product->getPrice(), 2);
-    echo '<h2 class="price">Cena: ' . $price . ' zł</h2>';
+    echo '<h2 class="price">Cena: ' . number_format($product->getPrice(), 2) . ' zł</h2>';
     echo '<h4>Dostępnych: ' . $product->getAvailability() . ' szt.</h4>';
     $sumProducts = OrderRepository::sumBoughtProducts($connection, $product->getId());
     $countUsers = OrderRepository::countUsersFromOrders($connection, $product->getId());
-    echo handlingPolishGrammaticalCase::sumProductsAndCountUsers($sumProducts, $countUsers).'<hr/>';
+    echo handlingPolishGrammaticalCase::sumProductsAndCountUsers($sumProducts, $countUsers) . '<hr/>';
     echo '</div>';
 
     $secureOneVote = FollowRepository::secureToAddOneProductToFollow($connection, $user->getId(), $product->getId());
@@ -180,16 +186,11 @@ include '../widget/header.php';
         echo '<strong>Brak na stanie, spróbuj później :)</strong>';
         echo '</div>';
     }
-
     echo '<hr/>';
     echo '<h4>' . $product->getDescription() . '</h4>';
-
     $images = ImageRepository::loadImageByProductId($connection, $_GET['id']);
     foreach ($images as $image) {
-        echo "
-        <div class='img-thumbnail1'>
-            <img src='" . $image['image_path'] . "' width='450' height='350'/><br/>
-        </div>";
+        echo "<div class='img-thumbnail1'><img src='" . $image['image_path'] . "' width='450' height='350'/></div>";
     }
     ?>
 

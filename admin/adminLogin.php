@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $admin = AdminRepository::loadAdminByLogin($connection, $login);
         if (!$admin) {
             $_SESSION['error'] = 'Niepoprawny login lub hasło!';
-            header('Location: adminForm.php');
+            header('Location: adminLoginForm.php');
         }
         if ($password === $admin->getPassword()) {
             $_SESSION['admin'] = true;
@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header('Location: adminPanel.php');
         } else {
             $_SESSION['error'] = 'Niepoprawny login lub hasło!';
-            header('Location: adminForm.php');
+            header('Location: adminLoginForm.php');
         }
     } else {
         header('Location: ../web/index.php');

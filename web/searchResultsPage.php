@@ -33,30 +33,23 @@ include '../widget/header.php';
 
     <?php
 
-    $searchProducts = ProductRepository::searchProductsByName($connection, $_SESSION['search']);
-
     echo "<div class=\"flash-message alert alert-success alert-dismissible\" role=\"alert\">";
     echo '<strong>' . $_SESSION['count'] . '</strong>';
     echo "</div>";
 
+    $searchProducts = ProductRepository::searchProductsByName($connection, $_SESSION['search']);
     foreach ($searchProducts as $searchProduct) {
         $id = $searchProduct['id'];
         $name = substr($searchProduct['name'], 0, 30);
-        $price = number_format($searchProduct['price'], 2);
         $image = ImageRepository::loadFirstImageByProductId($connection, $id);
         echo "<h4><a href='productPage.php?id=$id' class='btn btn-success links'>$name</a><br/>
-        <img src='" . $image['image_path'] . "' width='300' height='200'/></h4>
-        <h3 class='price'>Cena: $price zł</h3>";
+        <img src='" . $image['image_path'] . "' width='300' height='200'/></h4>";
+        echo '<h3 class="price">Cena: ' . number_format($searchProduct['price'], 2) . ' zł</h3>';
         $sumProducts = OrderRepository::sumBoughtProducts($connection, $id);
         $countUsers = OrderRepository::countUsersFromOrders($connection, $id);
-        if (($sumProducts === null) && (!$countUsers)) {
-            echo '<h4><span class="glyphicon glyphicon-user"></span> 0 osób kupiło 0 sztuk</h4>';
-        } else {
-            echo '<h4><span class="glyphicon glyphicon-user"></span> ' . $countUsers . ' osób kupiło ' . $sumProducts . ' sztuk</h4>';
-        }
+        echo handlingPolishGrammaticalCase::sumProductsAndCountUsers($sumProducts, $countUsers);
         echo '<hr/>';
     }
-
     ?>
 
     <h3><a href="mainPage.php" class="btn btn-default links">Powrót do strony głównej</a></h3>

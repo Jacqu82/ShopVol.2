@@ -39,8 +39,10 @@ include '../widget/header.php';
         if (isset($_POST['follow_id'], $_POST['delete_follow'])) {
             $followId = $_POST['follow_id'];
             $toDelete = FollowRepository::loadFollowById($connection, $followId);
-            FollowRepository::delete($connection, $toDelete);
-            header('Location: followedProductPage.php');
+            if (FollowRepository::delete($connection, $toDelete)) {
+                header('Location: followedProductPage.php');
+            }
+
         }
     }
 
@@ -49,14 +51,14 @@ include '../widget/header.php';
         foreach ($followedProducts as $product) {
             $id = $product['id'];
             $name = substr($product['name'], 0, 28);
-            $price = number_format($product['price'], 2);
             $image = ImageRepository::loadFirstImageByProductId($connection, $id);
             echo "<h4><a href='productPage.php?id=$id' class='btn btn-success links'>$name</a><br/>
-            <img src='" . $image['image_path'] . "' width='300' height='200'/></h4>
-            <h3 class='price'>Cena: $price zł</h3>";
+            <img src='" . $image['image_path'] . "' width='300' height='200'/></h4>";
+            echo '<h3 class="price">Cena: ' . number_format($product['price'], 2) . ' zł</h3>';
             $sumProducts = OrderRepository::sumBoughtProducts($connection, $id);
             $countUsers = OrderRepository::countUsersFromOrders($connection, $id);
             echo handlingPolishGrammaticalCase::sumProductsAndCountUsers($sumProducts, $countUsers);
+
             echo "<form method='POST'>
                 <input type=\"submit\" class=\"btn btn-danger links\" name=\"delete_follow\" value=\"Usuń z obserwowanych\"/>
                 <input type='hidden' name='follow_id' value='" . $product['follow_id'] . " '>

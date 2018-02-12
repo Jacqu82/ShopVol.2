@@ -67,22 +67,18 @@ include '../widget/header.php';
     }
 
     $products = ProductRepository::searchAndFilterProductsByNameAndCategory($connection, $search, $filter, $_GET['id']);
-
     foreach ($products as $product) {
         $id = $product['id'];
         $name = substr($product['name'], 0, 28);
-        $price = number_format($product['price'], 2);
         $image = ImageRepository::loadFirstImageByProductId($connection, $id);
-        echo "<h4><a href='productPage.php?id=$id' class='btn btn-success links'>$name</a><br/>
-        <img src='" . $image['image_path'] . "' width='300' height='200'/></h4>
-        <h3 class='price'>Cena: $price zł</h3>";
+        echo "<h4><a href='productPage.php?id=$id' class='btn btn-success links'>$name</a></h4>";
+        echo "<img src='" . $image['image_path'] . "' width='300' height='200'/>";
+        echo '<h3 class="price">Cena: ' . number_format($product['price'], 2) . ' zł</h3>';
         $sumProducts = OrderRepository::sumBoughtProducts($connection, $id);
         $countUsers = OrderRepository::countUsersFromOrders($connection, $id);
         echo handlingPolishGrammaticalCase::sumProductsAndCountUsers($sumProducts, $countUsers);
         echo '<hr/>';
     }
-
-
     ?>
     <h3><a href="mainPage.php" class="btn btn-default links">Powrót do strony głównej</a></h3>
 </div>

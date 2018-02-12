@@ -35,7 +35,6 @@ include '../widget/head.php';
     <div>
         <img src="../images/shop.jpg" width="500" height="300"/>
     </div>
-
     <hr/>
 </div>
 

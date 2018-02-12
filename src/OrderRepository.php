@@ -56,26 +56,6 @@ class OrderRepository
         return $result;
     }
 
-    public static function updateBuyNowDeliveryAndPayment(PDO $connection, $userId, $delivery, $payment)
-    {
-        $sql = "UPDATE orders SET delivery_method = :delivery_method,
-                                  payment_method = :payment_method,
-                                  status = :status
-                WHERE user_id = :user_id 
-                AND status = 'Nieopłacony'
-                AND kind = :kind";
-
-        $result = $connection->prepare($sql);
-        $result->bindParam('user_id', $userId, PDO::PARAM_INT);
-        $result->bindParam('delivery_method', $delivery, PDO::PARAM_STR);
-        $result->bindParam('payment_method', $payment, PDO::PARAM_STR);
-        $result->bindValue('status', 'Opłacony');
-        $result->bindValue('kind', 'Kup Teraz');
-        $result->execute();
-
-        return true;
-    }
-
     /**
      * @param PDO $connection
      * @param $userId
@@ -268,7 +248,7 @@ class OrderRepository
      * @param $payment
      * @return bool
      */
-    public static function updateUnpaidDeliveryAndPaymentByOrderId(PDO $connection, $orderId, $userId, $delivery, $payment)
+    public static function updateDeliveryAndPaymentByOrderId(PDO $connection, $orderId, $userId, $delivery, $payment)
     {
         $sql = "UPDATE orders SET delivery_method = :delivery_method,
                                   payment_method = :payment_method,

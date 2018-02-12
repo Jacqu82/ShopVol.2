@@ -17,7 +17,6 @@ if (isset($_POST['username']) || isset($_POST['password'])) {
     if (password_verify($password, $user->getPassword1())) {
         $_SESSION['login'] = true;
         $_SESSION['id'] = $user->getId();
-
         unset($_SESSION['error']);
         header('Location: mainPage.php');
     } else {

@@ -30,9 +30,7 @@ include '../widget/header.php';
 <div class="container text-center">
     <h1>All Or Nothing</h1>
     <hr/>
-
     <h2>Historia Twoich zakupów</h2>
-
     <table align="center">
         <thead>
         <tr>
@@ -74,7 +72,6 @@ include '../widget/header.php';
         </tr>
         </tfoot>
     </table>
-
     <hr/>
     <h3><a href="mainPage.php" class="btn btn-default links">Powrót do strony głównej</a></h3>
 </div>

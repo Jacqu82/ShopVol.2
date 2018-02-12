@@ -14,7 +14,7 @@ include '../widget/head.php';
 <body>
 <div class="container text-center">
     <h2>Zaloguj się na swoje konto</h2>
-    <form method="POST" action="login.php">
+    <form method="post" action="login.php">
         <div>
             <input type="text" name="username" class="forms" placeholder="Login"/>
         </div>
@@ -42,8 +42,10 @@ include '../widget/head.php';
     <a href="index.php" class="btn btn-default links">Powrót</a>
 </div>
 <?php
+
 include '../widget/footer.php';
 include '../widget/scripts.php';
+
 ?>
 </body>
 </html>

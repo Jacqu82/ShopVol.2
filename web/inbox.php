@@ -55,7 +55,6 @@ include '../widget/header.php';
 
     $countReceived = MessageRepository::countAllReceivedMessages($connection, $user->getId());
     echo '<h3>Wszystkie otrzymane wiadomości ( ' . $countReceived . ' )</h3>';
-
     $countUnread = MessageRepository::countAllUnreadMessagesByUserId($connection, $user->getId());
     echo '<h4>Wszystkie nieprzyczatane wiadomości ( ' . $countUnread . ' )</h4>';
 
@@ -65,23 +64,22 @@ include '../widget/header.php';
         if ($message['is_read'] == 0) {
             echo "<form method='POST'>";
             echo "<b>" . $message['text'] . "<br/>" . $message['created_at'] . "</b><br/>
-                        <input type='submit'  name='set_message_as_read' value='Oznacz jako przeczytaną' class='btn btn-success links' />
-                        <input type='hidden' name='message_id' value='" . $message['id'] . " '>
-                        <input type=\"submit\" class=\"btn btn-danger links\" name=\"delete_message\" value=\"Usuń wiadomość\"/>
-                        <input type='hidden' name='message_id' value='" . $message['id'] . " '>
-                    </form>";
+                    <input type='submit'  name='set_message_as_read' value='Oznacz jako przeczytaną' class='btn btn-success links' />
+                    <input type='hidden' name='message_id' value='" . $message['id'] . " '>
+                    <input type=\"submit\" class=\"btn btn-danger links\" name=\"delete_message\" value=\"Usuń wiadomość\"/>
+                    <input type='hidden' name='message_id' value='" . $message['id'] . " '>
+                </form>";
         } else if ($message['is_read'] == 1) {
             echo "<form method='POST'>";
             echo $message['text'] . "<br/>" . $message['created_at'] . "<br/>
-                        <input type='submit'  name='set_message_as_unread' value='Oznacz jako nie przeczytaną' class='btn btn-success links' />
-                        <input type='hidden' name='message_id' value='" . $message['id'] . " '>
-                        <input type=\"submit\" class=\"btn btn-danger links\" name=\"delete_messege\" value=\"Usuń wiadomość\"/>
-                        <input type='hidden' name='message_id' value='" . $message['id'] . " '>
-                    </form>";
+                    <input type='submit'  name='set_message_as_unread' value='Oznacz jako nie przeczytaną' class='btn btn-success links' />
+                    <input type='hidden' name='message_id' value='" . $message['id'] . " '>
+                    <input type=\"submit\" class=\"btn btn-danger links\" name=\"delete_messege\" value=\"Usuń wiadomość\"/>
+                    <input type='hidden' name='message_id' value='" . $message['id'] . " '>
+                </form>";
         }
         echo "<hr/>";
     }
-
     ?>
     <a href="mainPage.php" class="btn btn-default links">Powrót do Strony głównej</a>
     <hr/>
