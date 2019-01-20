@@ -17,7 +17,7 @@ class CategoryRepository
             $sql = "INSERT INTO categories (name) VALUES (:name)";
 
             $result = $connection->prepare($sql);
-            $result->bindParam('name', $name);
+            $result->bindParam('name', $name, PDO::PARAM_STR);
             $result->execute();
 
             return true;
@@ -38,7 +38,6 @@ class CategoryRepository
         if (!$result) {
             die("Query Error!" . $connection->errorInfo());
         }
-
         $result->execute();
 
         return $result;
